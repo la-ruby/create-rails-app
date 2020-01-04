@@ -13,8 +13,9 @@ export CRA_RAILS_BRANCH="6-0-stable"
 # Some packages
 
 
-
 init_db
+which rbenv || true
+RBENV_VERSION="2.7.0" ruby -v
 ruby -v
 
 
