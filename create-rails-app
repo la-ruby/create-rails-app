@@ -2,16 +2,23 @@
 set -Eeuo pipefail
 
 init_db() {
-  [ -d ~/.cra ] || mkdir ~/.cra
+  [ -d ~/.cra ] || mkdir ~/.cra}
+  [ -d ~/.cra/bin ] || mkdir ~/.cra/bin
 }
 
 # GLOBALS
 export CRA_ROOT="${HOME}/.cra"
 export CRA_RAILS_BRANCH="6-0-stable"
 
-init_db
-git clone -b $CRA_RAILS_BRANCH --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
-(cd $CRA_ROOT/rails/ && ruby --version)
+# Some packages
 
+
+
+init_db
+ruby -v
+
+
+#git clone -b $CRA_RAILS_BRANCH --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
+#(cd $CRA_ROOT/rails/ && ruby --version)
 
 # PATH="$PATH:/Users/administrator/create-rails-app" create-rails-app; echo $?
