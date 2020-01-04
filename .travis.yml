@@ -1,1 +1,4 @@
+rvm:
+  - 2.7.0
+
 script: ./create-rails-app
