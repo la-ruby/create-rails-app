@@ -6,6 +6,11 @@ init_db() {
   [ -d ~/.cra/bin ] || mkdir ~/.cra/bin
 }
 
+verify_ruby_version() {
+  ruby_version=$(RBENV_VERSION ruby -v)
+  echo $ruby_version | grep '2.7.0'
+}
+  
 # GLOBALS
 export CRA_ROOT="${HOME}/.cra"
 export CRA_RAILS_BRANCH="6-0-stable"
@@ -14,9 +19,10 @@ export CRA_RAILS_BRANCH="6-0-stable"
 
 
 init_db
+verify_ruby_version
 which rbenv || true
+rbenv install 2.7.0
 RBENV_VERSION="2.7.0" ruby -v
-ruby -v
 
 
 #git clone -b $CRA_RAILS_BRANCH --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
