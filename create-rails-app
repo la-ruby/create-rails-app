@@ -9,22 +9,21 @@ init_db() {
 }
 
 verify_ruby_version() {
-  ruby_version=$(RBENV_VERSION="2.7.0" ruby -v)
-  echo $ruby_version | grep '2.7.0'
+  export RBENV_VERSION="$(latest_stable_ruby)"
+  ruby_version=$(ruby -v)
+  echo $ruby_version | grep "$(latest_stable_ruby)"
 }
-  
+
+latest_stable_ruby() {
+  curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2
+}
+
 # GLOBALS
 export CRA_ROOT="${HOME}/.cra"
 export CRA_RAILS_BRANCH="6-0-stable"
 
-# Some packages
-
-
 init_db
 verify_ruby_version
-which rbenv || true
-#rbenv install 2.7.0
-RBENV_VERSION="2.7.0" ruby -v
 
 
 #git clone -b $CRA_RAILS_BRANCH --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
