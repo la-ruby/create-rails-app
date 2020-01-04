@@ -7,7 +7,7 @@ init_db() {
 }
 
 verify_ruby_version() {
-  ruby_version=$(RBENV_VERSION ruby -v)
+  ruby_version=$(RBENV_VERSION="2.7.0" ruby -v)
   echo $ruby_version | grep '2.7.0'
 }
   
