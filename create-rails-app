@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 init_db() {
-  [ -d ~/.cra ] || mkdir ~/.cra}
+  [ -d ~/.cra ] || mkdir ~/.cra
   [ -d ~/.cra/bin ] || mkdir ~/.cra/bin
 }
 
