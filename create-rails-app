@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+set -x
+
 init_db() {
   [ -d ~/.cra ] || mkdir ~/.cra
   [ -d ~/.cra/bin ] || mkdir ~/.cra/bin
