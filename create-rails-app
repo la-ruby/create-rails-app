@@ -20,7 +20,7 @@ source ${CRA_ROOT}/insist_on_latest_ruby
 # function to be run in any case
 cra_cleanup() {
     rm -rf $CRA_ROOT
-
+}
 
 insist_on_latest_ruby
 git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
