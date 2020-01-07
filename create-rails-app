@@ -1,32 +1,29 @@
-#!/usr/bin/env bash
-set -Eeuo pipefail
+#!/bin/bash
 
-set -x
+set -e  # fail early
+set -u  # warn about empty variables
+set -x  # debug mode (during development)
 
-init_db() {
-  [ -d ~/.cra ] || mkdir ~/.cra
-  [ -d ~/.cra/bin ] || mkdir ~/.cra/bin
-}
-
-verify_ruby_version() {
-  export RBENV_VERSION="$(latest_stable_ruby)"
-  ruby_version=$(ruby -v)
-  echo $ruby_version | grep "$(latest_stable_ruby)"
-}
-
-latest_stable_ruby() {
-  curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2
-}
-
-# GLOBALS
+# Variables
 export CRA_ROOT="${HOME}/.cra"
-export CRA_RAILS_BRANCH="6-0-stable"
-
-init_db
-verify_ruby_version
+export CRA_RAILS_VERSION="6-0-stable"
 
 
-#git clone -b $CRA_RAILS_BRANCH --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
-#(cd $CRA_ROOT/rails/ && ruby --version)
+# Some working directories
+mkdir -p ${HOME}/.cra
+mkdir -p ${HOME}/.cra/rails
 
-# PATH="$PATH:/Users/administrator/create-rails-app" create-rails-app; echo $?
+# Download some functions
+(cd ${CRA_ROOT} && curl -sO https://raw.githubusercontent.com/la-ruby/insist_on_latest_ruby/master/insist_on_latest_ruby)
+source ${CRA_ROOT}/insist_on_latest_ruby
+
+# function to be run in any case
+cra_cleanup() {
+   rm -rf $CRA_ROOT
+}
+
+insist_on_latest_ruby
+git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
+
+# Housekeeping
+trap cra_cleanup EXIT
