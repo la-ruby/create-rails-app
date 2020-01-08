@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Bash strict mode
 set -e  # fail early
 set -u  # warn about empty variables
 set -x  # debug mode (during development)
@@ -11,24 +12,41 @@ export CRA_RAILS_VERSION="6-0-stable"
 # Some working directories
 mkdir -p ${HOME}/.cra
 mkdir -p ${HOME}/.cra/rails
+mkdir -p ${HOME}/.cra/common-core
 
 # Download some functions
 (cd ${CRA_ROOT} && curl -sO https://raw.githubusercontent.com/la-ruby/insist-on-latest-ruby/master/insist_on_latest_ruby)
 source ${CRA_ROOT}/insist_on_latest_ruby
 
-# function to be run in any case
+# function to be run in any casem using TRAP
 cra_cleanup() {
     rm -rf $CRA_ROOT
 }
 
+# Easier to just support one single version
 insist_on_latest_ruby
 
+# Generate rails application
 git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
 (cd ${CRA_ROOT}/rails && bundle update --bundler)
 (cd ${CRA_ROOT}/rails && bundle install)
 (cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails --version)
 (cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails new ${CRA_ROOT}/common-core --dev --database=postgresql --force)
 (cd ${CRA_ROOT}/common-core/ && bundle exec rails --version)
+
+# Upload artifacts
+git clone git@github.com:la-ruby/common-core.git ${CRA_ROOT}/original_common-core
+cd ${CRA_ROOT}/original_common-core && ((find . -path ./.git -prune -o -exec rm -rf {} \; &>/dev/null) || true)
+rsync -rv --exclude=.git ${CRA_ROOT}/common-core/ ${CRA_ROOT}/original_common-core/ &>/dev/null
+(cd ${CRA_ROOT}/common-core/; \
+  git add --all; \
+  git config user.name "Machine User 4"; \
+  git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'); \
+  git commit -m "Newer rails"; \
+  git remote remove origin; \
+  git remote add origin https://machine-user-4:${GIT_PASSWORD}@github.com/la-ruby/common-core.git; \
+  git push origin HEAD )
+
 
 # Housekeeping
 trap cra_cleanup EXIT
