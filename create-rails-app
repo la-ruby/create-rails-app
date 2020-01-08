@@ -27,6 +27,8 @@ git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails $
 (cd ${CRA_ROOT}/rails && bundle update --bundler)
 (cd ${CRA_ROOT}/rails && bundle install)
 (cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails --version)
+(cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails new ${CRA_ROOT}/common-core --dev --database=postgresql --force)
+
 
 # Housekeeping
 trap cra_cleanup EXIT
