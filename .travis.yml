@@ -1,4 +1,11 @@
+
 rvm:
   - 2.7.0
 
+node_js: node
+
+os:
+  - linux
+  - osx
+  
 script: ./create-rails-app
