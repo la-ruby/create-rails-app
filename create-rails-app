@@ -42,7 +42,7 @@ rsync -rv --exclude=.git ${CRA_ROOT}/common-core/ ${CRA_ROOT}/original_common-co
   git add --all; \
   git config user.name "Machine User 4"; \
   git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'); \
-  git commit -m "Newer rails \($(date +%m-%d-%Y)\)"; \
+  git commit -m "Newer rails ($(date +%m-%d-%Y))"; \
   git remote remove origin; \
   git remote add origin https://machine-user-4:${GIT_PASSWORD}@github.com/la-ruby/common-core.git; \
   git push origin HEAD )
