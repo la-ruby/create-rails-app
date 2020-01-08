@@ -6,6 +6,5 @@ node_js: node
 
 os:
   - linux
-  - osx
   
 script: ./create-rails-app
