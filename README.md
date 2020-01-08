@@ -1,16 +1,16 @@
 # create-rails-app
 
-`create-rails-app` creates a rails application based on the "latest stable version" is out there.
-The end result is posted to https://github.com/la-ruby/common-core, so if you based your rails
+`create-rails-app` creates a rails application based on the "latest stable version" thats out there.
+The end result is posted to https://github.com/la-ruby/common-core, so if your rails
 application is based on the "common core", you can stay up to date by:
 
-- Merging or rebasing off the common core - (weekly)
+- Merging or rebasing off the common core (weekly)
 - Run test suite
 - Deploy to a canary server
-- If monitoring tools are all green, then deploy to all production nodes
+- Deploy to all production nodes (assuming no issues in the canaries)
 
 There's a good article on this topic titled 'Living on the Edge of Rails' 
-<a href="https://engineering.shopify.com/blogs/engineering/living-on-the-edge-of-rails">here</a>
+<a href="https://engineering.shopify.com/blogs/engineering/living-on-the-edge-of-rails">here.</a>
 
 #### Whats included
 
