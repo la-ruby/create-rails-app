@@ -13,7 +13,7 @@ mkdir -p ${HOME}/.cra
 mkdir -p ${HOME}/.cra/rails
 
 # Download some functions
-(cd ${CRA_ROOT} && curl -sO https://raw.githubusercontent.com/la-ruby/insist_on_latest_ruby/master/insist_on_latest_ruby)
+(cd ${CRA_ROOT} && curl -sO https://raw.githubusercontent.com/la-ruby/insist-on-latest-ruby/master/insist_on_latest_ruby)
 source ${CRA_ROOT}/insist_on_latest_ruby
 
 # function to be run in any case
