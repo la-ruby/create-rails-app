@@ -8,7 +8,6 @@ set -x  # debug mode (during development)
 export CRA_ROOT="${HOME}/.cra"
 export CRA_RAILS_VERSION="6-0-stable"
 
-
 # Some working directories
 mkdir -p ${HOME}/.cra
 mkdir -p ${HOME}/.cra/rails
@@ -23,6 +22,7 @@ cra_cleanup() {
 }
 
 insist_on_latest_ruby
+bundle update --bundler
 git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails ${CRA_ROOT}/rails
 (cd ${CRA_ROOT}/rails && bundle install)
 (cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails --version)
