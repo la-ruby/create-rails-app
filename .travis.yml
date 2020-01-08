@@ -4,7 +4,12 @@ rvm:
 
 node_js: node
 
+before_install:
+  - nvm install node
+  
 os:
   - linux
   
-script: ./create-rails-app
+script:
+  - node --version
+  - ./create-rails-app
