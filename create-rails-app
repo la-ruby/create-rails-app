@@ -31,11 +31,11 @@ git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails $
 (cd ${CRA_ROOT}/rails && bundle update --bundler)
 (cd ${CRA_ROOT}/rails && bundle install)
 (cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails --version)
-(cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails new ${CRA_ROOT}/common-core --dev --database=postgresql --force)
+(cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails new ${CRA_ROOT}/common-core --dev --database=postgresql --force | tail)
 (cd ${CRA_ROOT}/common-core/ && bundle exec rails --version)
 
 # Upload artifacts
-git clone git@github.com:la-ruby/common-core.git ${CRA_ROOT}/original_common-core
+git clone https://github.com/la-ruby/common-core ${CRA_ROOT}/original_common-core
 cd ${CRA_ROOT}/original_common-core && ((find . -path ./.git -prune -o -exec rm -rf {} \; &>/dev/null) || true)
 rsync -rv --exclude=.git ${CRA_ROOT}/common-core/ ${CRA_ROOT}/original_common-core/ &>/dev/null
 (cd ${CRA_ROOT}/common-core/; \
