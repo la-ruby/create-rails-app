@@ -1,3 +1,6 @@
+[![Build Status](https://api.travis-ci.org/la-ruby/create-rails-app.svg?branch=master)](http://travis-ci.org/la-ruby/create-rails-app)
+[![Code Climate](https://codeclimate.com/github/la-ruby/create-rails-app.svg)](https://codeclimate.com/github/la-ruby/create-rails-app)
+
 `create-rails-app` creates a rails application based on the "latest stable version" thats out there.
 The end result is posted to https://github.com/la-ruby/common-core, so if your rails
 application is based on the "common core", you can stay up to date by:
