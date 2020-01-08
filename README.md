@@ -10,8 +10,7 @@ application is based on the "common core", you can stay up to date by:
 - Deploy to a canary server
 - Deploy to all production nodes (assuming no issues in the canaries)
 
-There's a good article on this topic titled 'Living on the Edge of Rails' 
-<a href="https://engineering.shopify.com/blogs/engineering/living-on-the-edge-of-rails">here.</a>
+There's a good article on this topic: <a href="https://engineering.shopify.com/blogs/engineering/living-on-the-edge-of-rails">Living on the Edge of Rails</a>
 
 #### Whats included
 
