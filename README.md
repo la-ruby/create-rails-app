@@ -2,7 +2,7 @@
 [![Code Climate](https://codeclimate.com/github/la-ruby/create-rails-app.svg)](https://codeclimate.com/github/la-ruby/create-rails-app)
 
 `create-rails-app` creates a rails application based on the "latest stable version" thats out there.
-The end result is posted to https://github.com/la-ruby/common-core, so if your rails
+The end result is posted to https://github.com/la-ruby/web-common-core, so if your rails
 application is based on the "common core", you can stay up to date by:
 
 - Merging or rebasing off the common core (weekly)
@@ -15,7 +15,7 @@ There's a good article on this topic: <a href="https://engineering.shopify.com/b
 You can use `git merge ...` to sync up - like this:
 
 ```bash
-git remote add upstream git@github.com:la-ruby/common-core.git
+git remote add upstream git@github.com:la-ruby/web-common-core.git
 git fetch upstream
 git checkout master
 git merge upstream/master

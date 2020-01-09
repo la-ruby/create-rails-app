@@ -12,7 +12,7 @@ export CRA_RAILS_VERSION="6-0-stable"
 # Some working directories
 mkdir -p ${HOME}/.cra
 mkdir -p ${HOME}/.cra/rails
-mkdir -p ${HOME}/.cra/common-core
+mkdir -p ${HOME}/.cra/web-common-core
 
 # Download some functions
 (cd ${CRA_ROOT} && curl -sO https://raw.githubusercontent.com/la-ruby/insist-on-latest-ruby/master/insist_on_latest_ruby)
@@ -31,27 +31,27 @@ git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails $
 (cd ${CRA_ROOT}/rails && bundle update --bundler | tail)
 (cd ${CRA_ROOT}/rails && bundle install | tail)
 (cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails --version)
-(cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails new ${CRA_ROOT}/common-core --dev --database=postgresql --force | tail)
-(cd ${CRA_ROOT}/common-core/ && bundle exec rails --version)
+(cd ${CRA_ROOT}/rails/railties/exe && bundle exec rails new ${CRA_ROOT}/web-common-core --dev --database=postgresql --force | tail)
+(cd ${CRA_ROOT}/web-common-core/ && bundle exec rails --version)
 
 # Fix for bundle install error: The path `/home/travis/.cra/rails` does not exist.
 revhash=$(cd ${CRA_ROOT}/rails && git rev-parse --short HEAD)
 s1='gem .rails.,.*'
 s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$revhash'"
-(cd ${CRA_ROOT}/common-core/ && perl -pi.bak -e "s/$s1/$s2/" Gemfile)
-(cd ${CRA_ROOT}/common-core/ && bundle install --jobs 3 --retry 3 --no-deployment)
+(cd ${CRA_ROOT}/web-common-core/ && perl -pi.bak -e "s/$s1/$s2/" Gemfile)
+(cd ${CRA_ROOT}/web-common-core/ && bundle install --jobs 3 --retry 3 --no-deployment)
 
 # Upload artifacts
-git clone https://github.com/la-ruby/common-core ${CRA_ROOT}/original_common-core
-cd ${CRA_ROOT}/original_common-core && ((find . -path ./.git -prune -o -exec rm -rf {} \; &>/dev/null) || true)
-rsync -rv --exclude=.git ${CRA_ROOT}/common-core/ ${CRA_ROOT}/original_common-core/ &>/dev/null
-(cd ${CRA_ROOT}/original_common-core/; \
+git clone https://github.com/la-ruby/web-common-core ${CRA_ROOT}/original_web-common-core
+cd ${CRA_ROOT}/original_web-common-core && ((find . -path ./.git -prune -o -exec rm -rf {} \; &>/dev/null) || true)
+rsync -rv --exclude=.git ${CRA_ROOT}/web-common-core/ ${CRA_ROOT}/original_web-common-core/ &>/dev/null
+(cd ${CRA_ROOT}/original_web-common-core/; \
   git add --all; \
   git config user.name "Machine User 4"; \
   git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'); \
   git commit -m "Newer rails ($(date +%m-%d-%Y))"; \
   git remote remove origin; \
-  git remote add origin https://machine-user-4:${GIT_PASSWORD}@github.com/la-ruby/common-core.git; \
+  git remote add origin https://machine-user-4:${GIT_PASSWORD}@github.com/la-ruby/web-common-core.git; \
   git push origin HEAD )
 
 
