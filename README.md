@@ -12,9 +12,18 @@ application is based on the "common core", you can stay up to date by:
 
 There's a good article on this topic: <a href="https://engineering.shopify.com/blogs/engineering/living-on-the-edge-of-rails">Living on the Edge of Rails</a>
 
+Example git commands:
+
+```bash
+git remote add upstream git@github.com:la-ruby/common-core.git
+git fetch upstream
+git checkout master
+git merge upstream/master
+```
+
 #### Whats included
 
-- Sidekiq
+- TODO Sidekiq
 - TODO Js testing like at [mapbox](https://github.com/mapbox/mapbox-gl-js) or sharetribe
 - TODO React datatables example
 - TODO Rspec example tests
