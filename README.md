@@ -23,6 +23,7 @@ git merge upstream/master
 
 #### Whats included
 
+- Mention one time tasks in readme, replace web_common_core, replace WEB_COMMON_CORE, bundle exec rake db:setup
 - TODO Sidekiq
 - TODO Js testing like at [mapbox](https://github.com/mapbox/mapbox-gl-js) or sharetribe
 - TODO React datatables example
