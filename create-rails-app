@@ -43,8 +43,10 @@ s1=$'\n\nimport "bootstrap/dist/js/bootstrap";'
 (cd ${CRA_ROOT}/web-common-core/ && echo "$s1" >> app/javascript/packs/application.js)
 (cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/expose-loader.txt ./)
 (cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/stylesheet_pack_tag.txt ./)
-#(cd ${CRA_ROOT}/web-common-core/ && sed $'/module.exports = environment/{e cat expose-loader.txt\n}' config/webpack/environment.js) > ${CRA_ROOT}/web-common-core/config/webpack/environment.js
-#(cd ${CRA_ROOT}/web-common-core/ && sed $'/javascript_pack_tag .application/{e cat stylesheet_pack_tag.txt\n}' app/views/layouts/application.html.erb) > ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb
+(cd ${CRA_ROOT}/web-common-core/ && sed $'/module.exports = environment/{e cat expose-loader.txt\n}' config/webpack/environment.js) > ${CRA_ROOT}/web-common-core/config/webpack/environment.js.new
+mv ${CRA_ROOT}/web-common-core/config/webpack/environment.js.new ${CRA_ROOT}/web-common-core/config/webpack/environment.js
+(cd ${CRA_ROOT}/web-common-core/ && sed $'/javascript_pack_tag .application/{e cat stylesheet_pack_tag.txt\n}' app/views/layouts/application.html.erb) > ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new
+mv ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb
 (cd ${CRA_ROOT}/web-common-core/ && rm expose-loader.txt config/webpacker.yml.bak stylesheet_pack_tag.txt)
  
 # Fix for bundle install error: The path `/home/travis/.cra/rails` does not exist.
