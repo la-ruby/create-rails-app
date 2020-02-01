@@ -41,6 +41,7 @@ git clone -b $CRA_RAILS_VERSION --single-branch https://github.com/rails/rails $
 (cd ${CRA_ROOT}/web-common-core/ && perl -pi.bak -e "s/extract_css: false/extract_css: true/" config/webpacker.yml)
 s1=$'\n\nimport "bootstrap/dist/js/bootstrap";'
 (cd ${CRA_ROOT}/web-common-core/ && echo "$s1" >> app/javascript/packs/application.js)
+(cd ${CRA_ROOT}/web-common-core/ && echo '@import "~bootstrap/scss/bootstrap";' > app/javascript/packs/styles.scss)
 (cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/expose-loader.txt ./)
 (cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/stylesheet_pack_tag.txt ./)
 (cd ${CRA_ROOT}/web-common-core/ && sed $'/module.exports = environment/{e cat expose-loader.txt\n}' config/webpack/environment.js) > ${CRA_ROOT}/web-common-core/config/webpack/environment.js.new
