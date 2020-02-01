@@ -57,6 +57,9 @@ s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$revhash'"
 (cd ${CRA_ROOT}/web-common-core/ && perl -pi.bak -e "s/$s1/$s2/" Gemfile)
 (cd ${CRA_ROOT}/web-common-core/ && bundle install --jobs 3 --retry 3 --no-deployment)
 
+# README
+(cd ${CRA_ROOT}/web-common-core/ && echo 'based on [create-rails-app](https://github.com/la-ruby/create-rails-app/blob/master/create-rails-app)' > README.md)
+
 # Upload artifacts
 git clone https://github.com/la-ruby/web-common-core ${CRA_ROOT}/original_web-common-core
 cd ${CRA_ROOT}/original_web-common-core && ((find . -path ./.git -prune -o -exec rm -rf {} \; &>/dev/null) || true)
