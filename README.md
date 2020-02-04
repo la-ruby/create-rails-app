@@ -46,7 +46,6 @@ https://www.bwmglobalproducts.com
 https://www.raceplace.com
 https://www.sketchbookproject.com
 https://www.hubshop.ly
-https://www.gettract.com
 ```
 
 #### License
