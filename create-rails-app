@@ -52,7 +52,7 @@ mv ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new ${CRA_
 
 # Install fontawesome
 (cd ${CRA_ROOT}/web-common-core/ && yarn add @fortawesome/fontawesome-free)
-(cd ${CRA_ROOT}/web-common-core/ && echo '@import "@fortawesome/fontawesome-free";' > app/javascript/packs/styles.scss)
+(cd ${CRA_ROOT}/web-common-core/ && echo '@import "@fortawesome/fontawesome-free";' >> app/javascript/packs/styles.scss)
 
 # Fix for bundle install error: The path `/home/travis/.cra/rails` does not exist.
 revhash=$(cd ${CRA_ROOT}/rails && git rev-parse --short HEAD)
