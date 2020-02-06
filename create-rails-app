@@ -52,6 +52,7 @@ mv ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new ${CRA_
 
 # Install fontawesome
 (cd ${CRA_ROOT}/web-common-core/ && yarn add @fortawesome/fontawesome-free)
+(cd ${CRA_ROOT}/web-common-core/ && echo 'import "@fortawesome/fontawesome-free/js/all";' >> app/javascript/packs/application.js)
 (cd ${CRA_ROOT}/web-common-core/ && echo '@import "@fortawesome/fontawesome-free";' >> app/javascript/packs/styles.scss)
 
 # Fix for bundle install error: The path `/home/travis/.cra/rails` does not exist.
@@ -60,6 +61,13 @@ s1='gem .rails.,.*'
 s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$revhash'"
 (cd ${CRA_ROOT}/web-common-core/ && perl -pi.bak -e "s/$s1/$s2/" Gemfile)
 (cd ${CRA_ROOT}/web-common-core/ && bundle install --jobs 3 --retry 3 --no-deployment)
+
+# Demos page
+(cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/template/app/controllers/pages_controller.rb ./app/controllers/)
+(cd ${CRA_ROOT}/web-common-core/ && mkdir app/views/pages)
+(cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/template/app/views/pages/demos.html.erb ./app/views/pages/)
+$s1='get "pages/demos"'
+(cd ${CRA_ROOT}/web-common-core/ && sed -i "2i \ \ $s1" config/routes.rb)
 
 # README
 (cd ${CRA_ROOT}/web-common-core/ && echo 'based on [create-rails-app](https://github.com/la-ruby/create-rails-app/blob/master/create-rails-app)' > README.md)
