@@ -49,7 +49,11 @@ mv ${CRA_ROOT}/web-common-core/config/webpack/environment.js.new ${CRA_ROOT}/web
 (cd ${CRA_ROOT}/web-common-core/ && sed $'/javascript_pack_tag .application/{e cat stylesheet_pack_tag.txt\n}' app/views/layouts/application.html.erb) > ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new
 mv ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb
 (cd ${CRA_ROOT}/web-common-core/ && rm expose-loader.txt config/webpacker.yml.bak stylesheet_pack_tag.txt)
- 
+
+# Install fontawesome
+(cd ${CRA_ROOT}/web-common-core/ && yarn add @fortawesome/fontawesome-free)
+(cd ${CRA_ROOT}/web-common-core/ && echo '@import "@fortawesome/fontawesome-free";' > app/javascript/packs/styles.scss)
+
 # Fix for bundle install error: The path `/home/travis/.cra/rails` does not exist.
 revhash=$(cd ${CRA_ROOT}/rails && git rev-parse --short HEAD)
 s1='gem .rails.,.*'
