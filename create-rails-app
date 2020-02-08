@@ -66,7 +66,7 @@ s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$revhash'"
 (cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/template/app/controllers/pages_controller.rb ./app/controllers/)
 (cd ${CRA_ROOT}/web-common-core/ && mkdir app/views/pages)
 (cd ${CRA_ROOT}/web-common-core/ && cp ${CRA_REPO_DIR}/template/app/views/pages/demos.html.erb ./app/views/pages/)
-$s1='get "pages/demos"'
+s1='get "pages/demos"'
 (cd ${CRA_ROOT}/web-common-core/ && sed -i "2i \ \ $s1" config/routes.rb)
 
 # README
