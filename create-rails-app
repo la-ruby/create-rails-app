@@ -69,6 +69,9 @@ s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$revhash'"
 s1='get "pages/demos"'
 (cd ${CRA_ROOT}/web-common-core/ && sed -i "2i \ \ $s1" config/routes.rb)
 
+# .gitignore extras
+(cd ${CRA_ROOT}/web-common-core/ && echo -e "\n.DS_Store" >> .gitignore)
+
 # README
 (cd ${CRA_ROOT}/web-common-core/ && echo 'based on [create-rails-app](https://github.com/la-ruby/create-rails-app/blob/master/create-rails-app)' > README.md)
 
