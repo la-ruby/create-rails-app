@@ -55,6 +55,9 @@ mv ${CRA_ROOT}/web-common-core/app/views/layouts/application.html.erb.new ${CRA_
 (cd ${CRA_ROOT}/web-common-core/ && echo 'import "@fortawesome/fontawesome-free/js/all";' >> app/javascript/packs/application.js)
 (cd ${CRA_ROOT}/web-common-core/ && echo '@import "@fortawesome/fontawesome-free";' >> app/javascript/packs/styles.scss)
 
+# install stimulus js
+(cd ${CRA_ROOT}/web-common-core/ && bundle exec rails webpacker:install:stimulus)
+
 # Fix for bundle install error: The path `/home/travis/.cra/rails` does not exist.
 revhash=$(cd ${CRA_ROOT}/rails && git rev-parse --short HEAD)
 s1='gem .rails.,.*'
