@@ -35,17 +35,6 @@ git merge upstream/master
 - TODO Heroku CI
 
 
-#### Projects
-
-Some projects have started using [it](https://github.com/la-ruby/web-common-core), others -  I
-have stakeholders approval and haven't migrated yet:
-
-```
-https://www2.enroutetire.com
-https://www.bwmglobalproducts.com
-https://www.raceplace.com
-https://www.sketchbookproject.com
-https://www.hubshop.ly
 ```
 
 #### License
