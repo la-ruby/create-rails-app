@@ -250,7 +250,7 @@ git add --all; git commit -m "Added CI config"
 cd ${tmp_dir}/web-common-core
 cat <<- 'EOF' >> app/javascript/packs/application.js
 
-	import ExampleTimer from '../components/example_todo'
+	import ExampleTodo from '../components/example_todo'
 
 	// https://stackoverflow.com/a/44739914
 	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
@@ -266,7 +266,7 @@ git add --all; git commit -m "adding a react custom component in to rails"
 cat <<- 'EOF' >> app/javascript/components/example_todo.js
 	import React from 'react'
 	
-	class TodoApp extends React.Component {
+	class ExampleTodo extends React.Component {
 	  constructor(props) {
 	    super(props);
 	    this.state = { items: [], text: '' };
@@ -327,6 +327,7 @@ cat <<- 'EOF' >> app/javascript/components/example_todo.js
 	    );
 	  }
 	}
+	export default ExampleTodo
 EOF
 git add --all; git commit -m "adding a react custom component in to rails"
 
