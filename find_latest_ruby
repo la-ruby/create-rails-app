@@ -1,0 +1,4 @@
+
+find_latest_ruby() {
+  curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2
+}

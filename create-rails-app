@@ -1,0 +1,496 @@
+#!/bin/bash
+
+##
+# set bash flags for optimal safety
+# 
+set -e  # fail early
+set -u  # warn about empty variables
+set -x  # debug mode (during development)
+
+# declare some global variables and functions
+LATEST_RAILS_VERSION="6-0-stable"
+LATEST_RUBY_VERSION=""
+dir=$(pwd) # current direcotry
+curr_time=$(date +"%Y-%m-%d_%H-%M-%S")
+MY_LATEST_COMMIT=$(git rev-parse --short HEAD)
+
+
+
+##
+# Insist on latest ruby
+#
+insist_on_latest_ruby() {
+  expected_version=$(curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2)
+  found_version=$(ruby -v | perl -nle 'm/ruby ([\d\.]*)/; print $1')
+  if [ "$expected_version" = "$found_version" ]; then
+    echo "Ruby version $found_version detected"
+    return 0
+  else
+    echo "Ruby version $expected_version expected"
+    return 1
+  fi  
+}
+
+
+
+##
+# find latest stable ruby version
+#
+find_latest_ruby() {
+  curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2
+}
+
+
+
+# creates a temporary directory
+tmp_dir=$(mktemp -d -t cra-XXXXX)
+
+# figure out ruby version
+LATEST_RUBY_VERSION=$(find_latest_ruby)
+
+# prerequisites
+insist_on_latest_ruby
+
+# Download child repo
+cd $tmp_dir
+git clone https://github.com/la-ruby/web-common-core
+
+# setup git user
+cd ${tmp_dir}/web-common-core
+git config user.name "Machine User 4"; \
+git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N-ZA-Mn-za-m]')
+
+# Wipe child repo
+cd ${tmp_dir}/web-common-core
+git revert --no-commit 388c3b3..HEAD
+git commit -m "Clean slate"
+[ $(ls -1A . | wc -l) -eq 2 ] # make sure dir is clean (only .git and README remains)
+
+
+
+##
+# install edge rails
+#
+cd ${tmp_dir} 
+git clone -b $LATEST_RAILS_VERSION --single-branch https://github.com/rails/rails
+cd ${tmp_dir}/rails
+LATEST_COMMIT=$(git rev-parse --short HEAD) # comes in handy later
+bundle update --bundler
+bundle install
+cd ${tmp_dir}/rails/railties/exe
+bundle exec rails --version
+bundle exec rails new ${tmp_dir}/web-common-core --dev --database=postgresql --force
+cd ${tmp_dir}/web-common-core
+mkdir doc #nodoc
+(bundle exec rails new --help 2>&1 | tee doc/bundle_exec_rails_new_help.txt) # nodoc
+bundle exec rails --version # verify
+git add --all; git commit -m "bundle exec rails new --dev --database=postgresql"
+# Without this, you'll get the error: The path `/home/travis/.cra/rails` does not exist.
+cd ${tmp_dir}/web-common-core
+s1='gem .rails.,.*'
+s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$LATEST_COMMIT'"
+perl -pi.bak -e "s/$s1/$s2/" Gemfile
+git add --all; git commit -m "Point gem path to github commit"
+bundle install
+git add --all; git commit -m "bundle install --jobs 3 --retry 3 --no-deployment"
+
+
+
+# Update Readme
+cd ${tmp_dir}/web-common-core
+cp ${dir}/__README.md ./README.md
+replacement=${curr_time}
+perl -pi.bak -e "s/__REPLACEME1__/$replacement/" README.md
+replacement=${LATEST_RAILS_VERSION}
+perl -pi.bak -e "s/__REPLACEME2__/$replacement/" README.md
+replacement=${LATEST_COMMIT}
+perl -pi.bak -e "s/__REPLACEME3__/$replacement/" README.md
+replacement=${MY_LATEST_COMMIT}
+perl -pi.bak -e "s/__REPLACEME5__/$replacement/" README.md
+git add --all; git commit -m "Mentioned versions in README"
+
+#
+# Initialize Db to create schema.rb
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails db:create db:migrate
+git add --all; git commit -m "bundle exec rails db:create db:migrate"
+
+
+
+##
+# install react in rails with webpacker
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails webpacker:install:react
+git add --all; git commit -m "install react in rails with webpacker"
+mkdir app/javascript/components/
+cat <<- 'EOF' >> app/javascript/packs/application.js
+
+	import React from 'react'
+	import ReactDOM from 'react-dom'
+
+EOF
+git add --all; git commit -m "install react in rails with webpacker"
+
+
+
+##
+# install devise
+#
+cd ${tmp_dir}/web-common-core
+echo 'gem "devise"' >> Gemfile
+bundle install
+git add --all; git commit -m "Added devise gem"
+bundle exec rails generate devise:install 2>&1 | tee doc/bundle_exec_rails_generate_devise_install.txt
+git add --all; git commit -m "bundle exec rails generate devise:install"
+bundle exec rails generate devise User
+git add --all; git commit -m "bundle exec rails generate devise User"
+bundle exec rails db:migrate
+git add --all; git commit -m "bundle exec rails db:migrate"
+
+
+
+##
+# install pundit
+#
+cd ${tmp_dir}/web-common-core
+echo 'gem "pundit"' >> Gemfile
+git add --all; git commit -m "Added pundit gem"
+bundle install
+git add --all; git commit -m "Added pundit gem"
+bundle exec rails g pundit:install
+git add --all; git commit -m "Added pundit gem"
+# secure by default
+sed -i '$d' app/controllers/application_controller.rb # strips last line
+cat << 'EOF' >> app/controllers/application_controller.rb
+  include Pundit
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+end
+EOF
+git add --all; git commit -m "Added pundit gem"
+bundle exec rails g pundit:policy gallery
+git add --all; git commit -m "Added pundit gem"
+
+
+
+##
+# install bootstrap
+#
+cd ${tmp_dir}/web-common-core
+yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free
+git add --all; git commit -m "Installing bootstrap and jQuery - yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free"
+sed -i '$d' config/webpack/environment.js # strips last line
+cat <<- 'EOF' >> config/webpack/environment.js
+	const webpack = require('webpack')
+	environment.plugins.append('Provide',
+	  new webpack.ProvidePlugin({
+	    $: 'jquery',
+	    jQuery: 'jquery',
+	    Popper: ['popper.js', 'default']
+	  })
+	)
+	
+	// Make $ available on the window object
+	// for SJR views and jQuery plugins
+	// that may expect `$` to be globally available.
+	environment.loaders.append('expose', {
+	    test: require.resolve('jquery'),
+	    use: [{
+	        loader: 'expose-loader',
+	        options: '$'
+	    }, {
+	        loader: 'expose-loader',
+	        options: 'jQuery',
+	    }]
+	})
+	
+	module.exports = environment
+EOF
+cat <<- 'EOF' >> app/javascript/packs/application.js
+	// Make $ available on the window object
+	// for SJR views and jQuery plugins
+	// that may expect `$` to be globally available.
+	require('expose-loader?$!jquery')
+	
+	// js
+	import 'bootstrap'
+	import "@fortawesome/fontawesome-free/js/all";
+	
+	//css
+	import '../stylesheets/application'
+EOF
+mkdir app/javascript/stylesheets || true
+touch app/javascript/stylesheets/_custom.scss
+cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
+	@import "~bootstrap/scss/bootstrap"; // never forget the semicolon
+	@import "./_custom";  // bootstrap custom variants
+	@import '@fortawesome/fontawesome-free';
+EOF
+git add --all; git commit -m "Installed bootstrap and jQuery"
+
+
+
+#
+# CI Config
+#
+cd ${tmp_dir}/web-common-core
+cp ${dir}/__.travis.yml .travis.yml
+git add --all; git commit -m "Added CI config"
+replacement=$(cat .ruby-version | sed 's/^ruby-//')
+perl -pi.bak -e "s/__REPLACEME1__/$replacement/" .travis.yml
+git add --all; git commit -m "Added CI config"
+
+
+
+##
+# adding a react custom component in to rails
+#
+cd ${tmp_dir}/web-common-core
+cat <<- 'EOF' >> app/javascript/packs/application.js
+
+	import ExampleTimer from '../components/example_todo'
+
+	// https://stackoverflow.com/a/44739914
+	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
+	document.addEventListener('turbolinks:load', () => {
+	  var element = document.getElementById("component-10aaaf7");
+	  if (element) {
+	    ReactDOM.render(<ExampleTodo name="example" />, element)
+	  }
+	})
+
+EOF
+git add --all; git commit -m "adding a react custom component in to rails"
+cat <<- 'EOF' >> app/javascript/components/example_todo.js
+	import React from 'react'
+	
+	class TodoApp extends React.Component {
+	  constructor(props) {
+	    super(props);
+	    this.state = { items: [], text: '' };
+	    this.handleChange = this.handleChange.bind(this);
+	    this.handleSubmit = this.handleSubmit.bind(this);
+	  }
+	
+	  render() {
+	    return (
+	      <div>
+	        <h3>TODO</h3>
+	        <TodoList items={this.state.items} />
+	        <form onSubmit={this.handleSubmit}>
+	          <label htmlFor="new-todo">
+	            What needs to be done?
+	          </label>
+	          <input
+	            id="new-todo"
+	            onChange={this.handleChange}
+	            value={this.state.text}
+	          />
+	          <button>
+	            Add #{this.state.items.length + 1}
+	          </button>
+	        </form>
+	      </div>
+	    );
+	  }
+	
+	  handleChange(e) {
+	    this.setState({ text: e.target.value });
+	  }
+	
+	  handleSubmit(e) {
+	    e.preventDefault();
+	    if (this.state.text.length === 0) {
+	      return;
+	    }
+	    const newItem = {
+	      text: this.state.text,
+	      id: Date.now()
+	    };
+	    this.setState(state => ({
+	      items: state.items.concat(newItem),
+	      text: ''
+	    }));
+	  }
+	}
+	
+	class TodoList extends React.Component {
+	  render() {
+	    return (
+	      <ul>
+	        {this.props.items.map(item => (
+	          <li key={item.id}>{item.text}</li>
+	        ))}
+	      </ul>
+	    );
+	  }
+	}
+EOF
+git add --all; git commit -m "adding a react custom component in to rails"
+
+
+
+##
+# Add ag-grid (react component) to rails
+#
+cd ${tmp_dir}/web-common-core
+yarn add ag-grid-community ag-grid-react
+yarn install
+git add --all; git commit -m "Add ag-grid (react component) to rails"
+cat <<- 'EOF' >> app/javascript/packs/application.js
+
+	import AgGrid from '../components/ag_grid'
+	// https://stackoverflow.com/a/44739914
+	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
+	document.addEventListener('turbolinks:load', () => {
+	  var element = document.getElementById("component-6f75c8a");
+	  if (element) {
+	    ReactDOM.render(<AgGrid name="example" />, element)
+	  }
+	})
+
+EOF
+cat <<- 'EOF' >> app/javascript/components/ag_grid.js
+	// example from https://www.ag-grid.com/react-grid/
+	import React, { Component } from 'react';
+	//import './App.css';
+	import { AgGridReact } from 'ag-grid-react';
+	import 'ag-grid-community/dist/styles/ag-grid.css';
+	import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+	
+	class AgGrid extends Component {
+	  constructor(props) {
+	    super(props);
+	    this.state = {
+	      columnDefs: [{
+	        headerName: "Make", field: "make"
+	      }, {
+	        headerName: "Model", field: "model"
+	      }, {
+	        headerName: "Price", field: "price"
+	      }],
+	      rowData: [{
+	        make: "Toyota", model: "Celica", price: 35000
+	      }, {
+	        make: "Ford", model: "Mondeo", price: 32000
+	      }, {
+	        make: "Porsche", model: "Boxter", price: 72000
+	      }]
+	    }
+	  }
+	
+	  render() {
+	    return (
+	      <div
+	        className="ag-theme-alpine"
+	        style={{
+	        height: '250px',
+	        width: '600px' }}
+	      >
+	        <AgGridReact
+	          columnDefs={this.state.columnDefs}
+	          rowData={this.state.rowData}>
+	        </AgGridReact>
+	      </div>
+	    );
+	  }
+	}
+	
+	export default AgGrid;
+EOF
+git add --all; git commit -m "Add ag-grid (react component) to rails"
+
+
+
+##
+# keep an eye on page speed using rack mini profiler
+echo "gem 'rack-mini-profiler'" >> Gemfile
+bundle install
+git add --all; git commit -m "Keep an eye on page speed using rack mini profiler"
+
+
+
+#
+# Update readme
+#
+# bootstrap
+replacement=$(yarn list --pattern bootstrap --depth=1 | grep ' bootstrap@' | cut -d '@' -f 2)
+perl -pi.bak -e "s/__REPLACEME6__/$replacement/" README.md
+git add --all; git commit -m "Mentioned bootstrap version in README"
+# devise
+replacement=$(gem list |grep devise | head -n1)
+perl -pi.bak -e "s/__REPLACEME7__/$replacement/" README.md
+git add --all; git commit -m "Mentioned devise version in README"
+# pundit
+replacement=$(gem list |grep pundit | head -n1)
+perl -pi.bak -e "s/__REPLACEME8__/$replacement/" README.md
+git add --all; git commit -m "Mentioned pundit version in README"
+# react
+replacement=$(yarn list --pattern react --depth=1 | grep ' react@' | cut -d '@' -f 2)
+perl -pi.bak -e "s/__REPLACEME9__/$replacement/" README.md
+git add --all; git commit -m "Mentioned react in README"
+
+#
+# Gallery of features
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails g controller Gallery index --no-helper --no-assets
+git add --all; git commit -m "rails g controller Gallery index --no-helper --no-assets"
+rm -rf ./app/views/gallery
+git add --all; git commit -m "rm -rf ./app/views/gallery"
+cp -r ${dir}/__gallery app/views/gallery
+cp ${dir}/__gallery.rb app/models/gallery.rb
+cp ${dir}/__gallery_controller.rb app/controllers/gallery_controller.rb
+cp ${dir}/__custom.scss app/javascript/stylesheets/_custom.scss
+git add --all; git commit -m 'Added gallery controller, model, views and policy'
+# this prevents an error from happening when running tests
+mv test/fixtures/users.yml test/fixtures/users.yml.txt
+git add --all; git commit -m 'this prevents an error from happening when running tests'
+
+
+
+##
+# setup test coverage metrics in rails
+#
+cd ${tmp_dir}/web-common-core
+echo "gem 'simplecov', '0.16', require: false, group: :test" >> Gemfile
+bundle install
+# prepend something to test/test_helper.rb
+cat <<- 'EOF' >> ${tmp_dir}/part_a
+	require 'simplecov'
+	SimpleCov.start
+EOF
+cp test/test_helper.rb ${tmp_dir}/part_b
+cat ${tmp_dir}/part_a ${tmp_dir}/part_b > test/test_helper.rb
+echo "coverage" >> .gitignore
+git add --all; git commit -m "etup test coverage metrics in rails"
+
+
+
+#
+# Cleanup .bak files
+#
+cd ${tmp_dir}/web-common-core
+rm README.md.bak Gemfile.bak .travis.yml.bak
+git add --all; git commit -m 'Removed backups, .bak files'
+
+#
+# Pack gems
+#
+cd ${tmp_dir}/web-common-core
+bundle package
+git add --all; git commit -m 'bundle pack'
+
+#
+# Push
+#
+# setup git remote
+cd ${tmp_dir}/web-common-core
+git remote remove origin
+git remote add origin https://machine-user-4:${GIT_PASSWORD}@github.com/la-ruby/web-common-core.git
+# push
+git push origin HEAD
+
+

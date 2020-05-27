@@ -1,0 +1,11 @@
+insist_on_latest_ruby() {
+  expected_version=$(curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2)
+  found_version=$(ruby -v | perl -nle 'm/ruby ([\d\.]*)/; print $1')
+  if [ "$expected_version" = "$found_version" ]; then
+    echo "Ruby version $found_version detected"
+    return 0
+  else
+    echo "Ruby version $expected_version expected"
+    return 1
+  fi  
+}
