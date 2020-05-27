@@ -469,6 +469,24 @@ git add --all; git commit -m "etup test coverage metrics in rails"
 
 
 
+##
+# An app.json is required by heroku CI and heroku pipelines
+#
+cd ${tmp_dir}/web-common-core
+cat <<- 'EOF' > app.json
+{
+  "environments": {
+    "test": {
+      "addons":[
+        "heroku-postgresql"
+      ]
+    }
+  }
+}
+git add --all; git commit -m "An app.json is required by heroku CI and heroku pipelines"
+
+
+
 #
 # Cleanup .bak files
 #
