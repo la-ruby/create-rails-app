@@ -13,4 +13,4 @@ Features
 + React (__REPLACEME9__) :purple_heart:
 + ag-Grid :fire:
 
-Built on __REPLACEME1__ by [github.com/la-ruby/ppa-sliar-etaerc](https://github.com/la-ruby/ppa-sliar-etaerc/blob/__REPLACEME5__/create-rails-app)
+Built on __REPLACEME1__ by [github.com/la-ruby/create-rails-app](https://github.com/la-ruby/create-rails-app/blob/__REPLACEME5__/create-rails-app)
