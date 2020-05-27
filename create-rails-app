@@ -483,6 +483,7 @@ cat <<- 'EOF' > app.json
     }
   }
 }
+EOF
 git add --all; git commit -m "An app.json is required by heroku CI and heroku pipelines"
 
 
