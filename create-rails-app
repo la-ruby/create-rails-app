@@ -479,7 +479,7 @@ cat <<- 'EOF' > app.json
   "environments": {
     "test": {
       "scripts": {
-        "test": "bundle exec rails test"
+        "test": "yarn install && bundle install && bundle exec rails test"
       },
       "addons":[
         "heroku-postgresql"
