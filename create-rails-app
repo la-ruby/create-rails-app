@@ -229,9 +229,12 @@ cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
 	@import '@fortawesome/fontawesome-free';
 EOF
 # add stylesheet_pack_tag to layout, without this, production env won't have (bootstrap) styles
+
+OLDIFS=$IFS; IFS=$'~' # https://unix.stackexchange.com/q/264926
 s1="javascript_pack_tag"
-s2="   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>"
-sed "/$s1.*/a \n$s2" app/views/layouts/application.html.erb
+s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>"
+sed -i "/$s1.*/a $s2" app/views/layouts/application.html.erb
+IFS=$OLDIFS
 git add --all; git commit -m "Installed bootstrap and jQuery"
 
 #
