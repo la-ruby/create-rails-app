@@ -5,5 +5,6 @@ class GalleryController < ApplicationController
   end
 
   def page_two
+    @resouces = policy_scope(Gallery)
   end
 end
