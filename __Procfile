@@ -1,1 +1,1 @@
-release:       bundle exec rake db:seed
+# REMOVEME release:       bundle exec rake db:seed
