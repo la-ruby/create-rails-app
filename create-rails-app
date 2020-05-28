@@ -166,8 +166,8 @@ sed -i '$d' app/controllers/application_controller.rb # strips last line
 cat << 'EOF' >> app/controllers/application_controller.rb
   include Pundit
   before_action :authenticate_user!
-  after_action :verify_authorized,    except: :index, except: :index, unless: :devise_controller?
-  after_action :verify_policy_scoped, only:   :index, except: :index, unless: :devise_controller?
+  after_action :verify_authorized, except: [:index, :page_two], unless: :devise_controller?
+  after_action :verify_policy_scoped, only: [:index, :page_two], unless: :devise_controller?
 end
 EOF
 git add --all; git commit -m "Added pundit gem"
