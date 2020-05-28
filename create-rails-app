@@ -442,7 +442,7 @@ git add --all; git commit -m "Mentioned react in README"
 # Gallery of features
 #
 cd ${tmp_dir}/web-common-core
-bundle exec rails g controller Gallery index --no-helper --no-assets
+bundle exec rails g controller Gallery index page_two --no-helper --no-assets
 git add --all; git commit -m "rails g controller Gallery index --no-helper --no-assets"
 rm -rf ./app/views/gallery
 git add --all; git commit -m "rm -rf ./app/views/gallery"
