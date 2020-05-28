@@ -487,6 +487,13 @@ cp ${dir}/__gallery.rb app/models/gallery.rb
 cp ${dir}/__gallery_controller.rb app/controllers/gallery_controller.rb
 cp ${dir}/__custom.scss app/javascript/stylesheets/_custom.scss
 cp ${dir}/__seeds.rb db/seeds.rb
+sed -i '$d' app/policies/gallery_policy.rb # remove last line
+cat << 'EOF' >> app/policies/gallery_policy.rb
+  def page_two
+    true
+  end
+end
+EOF
 git add --all; git commit -m 'Added gallery controller, model, views and policy'
 # this prevents an error from happening when running tests
 mv test/fixtures/users.yml test/fixtures/users.yml.txt
