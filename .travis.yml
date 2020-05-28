@@ -5,6 +5,12 @@ rvm:
 services:
   - postgresql
 
+addons:
+  apt:
+    update: true
+    packages:
+      - moreutils 
+
 before_install:
   - nvm install node
   
