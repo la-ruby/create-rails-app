@@ -1,1 +1,1 @@
-release:       bundle exec db:seed
+release:       bundle exec rake db:seed
