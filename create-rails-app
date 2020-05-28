@@ -489,7 +489,8 @@ cat <<- 'EOF' > app.json
   "environments": {
     "test": {
       "scripts": {
-        "test": "yarn install && bundle install && bundle exec rails test"
+        "test": "yarn install && bundle install && bundle exec rails test",
+        "postdeploy": "bundle exec rake db:seed"
       },
       "addons":[
         "heroku-postgresql"
@@ -505,9 +506,9 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 #
 # Add a Procfile to rails app
 #
-cd ${tmp_dir}/web-common-core
-cp ${dir}/__Procfile Procfile
-git add --all; git commit -m "Add a Procfile to rails app"
+#cd ${tmp_dir}/web-common-core
+#cp ${dir}/__Procfile Procfile
+#git add --all; git commit -m "Add a Procfile to rails app"
 
 
 
