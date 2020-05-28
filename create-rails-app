@@ -445,6 +445,9 @@ git add --all; git commit -m "Mentioned react in README"
 cd ${tmp_dir}/web-common-core
 bundle exec rails g controller Gallery index page_two --no-helper --no-assets
 git add --all; git commit -m "rails g controller Gallery index --no-helper --no-assets"
+# remove last test
+head -n -6 test/controllers/gallery_controller_test.rb  | sponge test/controllers/gallery_controller_test.rb
+echo 'end' >> test/controllers/gallery_controller_test.rb
 rm -rf ./app/views/gallery
 git add --all; git commit -m "rm -rf ./app/views/gallery"
 cp -r ${dir}/__gallery app/views/gallery
