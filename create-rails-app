@@ -260,12 +260,7 @@ cat <<- 'EOF' > app/views/_flash.html.erb
       <% end %>
     </div>
 EOF
-# sed add <%= render "/flash" %>
-# sed add @resouces = policy_scope(Gallery)
-# sed add
-#  def page_two
-#    true
-#  end
+sed "/<body/a \    <%= render \"/flash\" %>" app/views/layouts/application.html.erb | sponge app/views/layouts/application.html.erb
 git add --all; git commit -m "Setup rendering of rails flash messages"
 
 
