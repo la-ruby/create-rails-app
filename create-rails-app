@@ -500,6 +500,15 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 
 
 #
+# Add a Procfile to rails app
+#
+cd ${tmp_dir}/web-common-core
+cp ${dir}/__Procfile Procfile
+git add --all; git commit -m "Add a Procfile to rails app"
+
+
+
+#
 # Cleanup .bak files
 #
 cd ${tmp_dir}/web-common-core
