@@ -131,7 +131,30 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 	import ReactDOM from 'react-dom'
 
 EOF
+yarn install
 git add --all; git commit -m "install react in rails with webpacker"
+
+
+
+##
+# Install Stimulus JS
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails webpacker:install:stimulus
+yarn install
+cat <<- 'EOF' > app/javascript/controllers/gallery_controller.js
+	import { Controller } from "stimulus"
+
+	export default class extends Controller {
+	  static targets = [ "name", "output" ]
+
+	  greet() {
+	    this.outputTarget.textContent =
+	      `Hello, ${this.nameTarget.value}!`
+	  }
+	}
+EOF
+git add --all; git commit -m "Install Stimulus Js"
 
 
 
