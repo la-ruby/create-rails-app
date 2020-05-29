@@ -272,6 +272,23 @@ git add --all; git commit -m "Setup rendering of rails flash messages"
 
 
 
+##
+# Background job using activejob
+#
+cd ${tmp_dir}/web-common-core
+cat <<- 'EOF' > app/jobs/example_job.jb
+	class ExampleJob < ApplicationJob
+	  queue_as :default
+
+	  # example
+	  # ExampleJob.set(wait: 5.seconds).perform_later
+	  def perform(*example)
+	    Rails.logger.info "Performed"
+	  end
+	end
+EOF
+git add --all; git commit -m "Background job using activejob"
+
 #
 # CI Config
 #
