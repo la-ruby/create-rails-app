@@ -2,15 +2,20 @@
 
 [this script](https://github.com/la-ruby/create-rails-app/blob/master/create-rails-app) creates [a rails app](https://github.com/la-ruby/web-common-core) every night.
 
-Whats included
+Features
 
 + Rails 6-0-stable 
 + Bootstrap (4.5.0) :sparkles:
 + devise (4.7.1) :star:
 + pundit (2.1.0) :muscle:
-+ Background Processing using ActiveJob 
 + React (16.13.1) :purple_heart:
 + ag-Grid :fire:
+
+Includes example code for
+
++ Background Processing (ActiveJob)
+
+
 
 Some ideas were borrowed from these articles
 
