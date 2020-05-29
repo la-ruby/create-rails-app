@@ -10,12 +10,11 @@ Features
 + pundit (2.1.0) :muscle:
 + React (16.13.1) :purple_heart:
 + ag-Grid :fire:
++ Stimulus JS :high_brightness:
 
 Includes example code for
 
 + Background Processing (ActiveJob)
-
-
 
 Some ideas were borrowed from these articles
 
