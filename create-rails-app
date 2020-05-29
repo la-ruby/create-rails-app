@@ -247,7 +247,7 @@ cd ${tmp_dir}/web-common-core
 cat <<- 'EOF' > app/views/_flash.html.erb
     <div class="position-absolute w-100 d-flex flex-column p-4">
       <% flash.each do |name, message| %>
-        <div class="toast ml-auto" role="alert" data-delay="700" data-autohide="false">
+        <div class="toast ml-auto" role="status" aria-live="polite" data-delay="700" data-autohide="false">
             <div class="toast-header">
                 <strong class="mr-auto text-primary"><svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#007aff"></rect></svg></strong>
                 <small class="text-muted"><!--3 mins ago--></small>
