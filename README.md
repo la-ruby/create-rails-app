@@ -8,6 +8,7 @@ Whats included
 + Bootstrap (4.5.0) :sparkles:
 + devise (4.7.1) :star:
 + pundit (2.1.0) :muscle:
++ Background Processing using ActiveJob 
 + React (16.13.1) :purple_heart:
 + ag-Grid :fire:
 
