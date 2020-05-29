@@ -261,6 +261,13 @@ cat <<- 'EOF' > app/views/_flash.html.erb
     </div>
 EOF
 sed "/<body/a \    <%= render \"/flash\" %>" app/views/layouts/application.html.erb | sponge app/views/layouts/application.html.erb
+cat <<- 'EOF' >> app/javascript/packs/application.js
+	// show flash messages
+	document.addEventListener("turbolinks:load", function() {
+	  console.log("fired1")
+	  $('.toast').toast('show')
+	})
+EOF
 git add --all; git commit -m "Setup rendering of rails flash messages"
 
 
