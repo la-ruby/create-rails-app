@@ -135,7 +135,6 @@ cat << 'EOF' >> app/controllers/application_controller.rb
   after_action :verify_policy_scoped, only: [:index], unless: :devise_controller?
 end
 EOF
-bundle exec rails g pundit:policy gallery
 git add --all; git commit -m "Added pundit gem"
 
 
@@ -146,18 +145,6 @@ git add --all; git commit -m "Added pundit gem"
 cd ${tmp_dir}/web-common-core
 bundle exec rails webpacker:install:stimulus
 yarn install
-cat <<- 'EOF' > app/javascript/controllers/gallery_controller.js
-	import { Controller } from "stimulus"
-
-	export default class extends Controller {
-	  static targets = [ "name", "output" ]
-
-	  greet() {
-	    this.outputTarget.textContent =
-	      `Hello, ${this.nameTarget.value}!`
-	  }
-	}
-EOF
 
 
 
