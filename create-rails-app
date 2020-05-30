@@ -122,7 +122,6 @@ git add --all; git commit -m "bundle exec rails db:create db:migrate"
 # install react in rails with webpacker
 #
 cd ${tmp_dir}/web-common-core
-if false; then
 bundle exec rails webpacker:install:react
 git add --all; git commit -m "install react in rails with webpacker"
 mkdir app/javascript/components/
@@ -134,7 +133,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 EOF
 yarn install
 git add --all; git commit -m "install react in rails with webpacker"
-fi
+
 
 
 ##
