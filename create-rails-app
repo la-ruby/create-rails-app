@@ -299,7 +299,7 @@ git add --all; git commit -m "Setup rendering of rails flash messages"
 # Background job using activejob
 #
 cd ${tmp_dir}/web-common-core
-cat <<- 'EOF' > app/jobs/example_job.jb
+cat <<- 'EOF' > app/jobs/example_job.rb
 	class ExampleJob < ApplicationJob
 	  queue_as :default
 
@@ -413,75 +413,75 @@ git add --all; git commit -m "adding a react custom component in to rails"
 
 
 
+###
+## Add ag-grid (react component) to rails
 ##
-# Add ag-grid (react component) to rails
+#cd ${tmp_dir}/web-common-core
+#yarn add ag-grid-community ag-grid-react
+#yarn install
+#git add --all; git commit -m "Add ag-grid (react component) to rails"
+#cat <<- 'EOF' >> app/javascript/packs/application.js
 #
-cd ${tmp_dir}/web-common-core
-yarn add ag-grid-community ag-grid-react
-yarn install
-git add --all; git commit -m "Add ag-grid (react component) to rails"
-cat <<- 'EOF' >> app/javascript/packs/application.js
-
-	import AgGrid from '../components/ag_grid'
-	// https://stackoverflow.com/a/44739914
-	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
-	document.addEventListener('turbolinks:load', () => {
-	  var element = document.getElementById("component-6f75c8a");
-	  if (element) {
-	    ReactDOM.render(<AgGrid name="example" />, element)
-	  }
-	})
-
-EOF
-cat <<- 'EOF' >> app/javascript/components/ag_grid.js
-	// example from https://www.ag-grid.com/react-grid/
-	import React, { Component } from 'react';
-	//import './App.css';
-	import { AgGridReact } from 'ag-grid-react';
-	import 'ag-grid-community/dist/styles/ag-grid.css';
-	import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-	
-	class AgGrid extends Component {
-	  constructor(props) {
-	    super(props);
-	    this.state = {
-	      columnDefs: [{
-	        headerName: "Make", field: "make"
-	      }, {
-	        headerName: "Model", field: "model"
-	      }, {
-	        headerName: "Price", field: "price"
-	      }],
-	      rowData: [{
-	        make: "Toyota", model: "Celica", price: 35000
-	      }, {
-	        make: "Ford", model: "Mondeo", price: 32000
-	      }, {
-	        make: "Porsche", model: "Boxter", price: 72000
-	      }]
-	    }
-	  }
-	
-	  render() {
-	    return (
-	      <div
-	        className="ag-theme-alpine"
-	        style={{
-	        height: '250px',
-	        width: '600px' }}
-	      >
-	        <AgGridReact
-	          columnDefs={this.state.columnDefs}
-	          rowData={this.state.rowData}>
-	        </AgGridReact>
-	      </div>
-	    );
-	  }
-	}
-	
-	export default AgGrid;
-EOF
-git add --all; git commit -m "Add ag-grid (react component) to rails"
+#	import AgGrid from '../components/ag_grid'
+#	// https://stackoverflow.com/a/44739914
+#	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
+#	document.addEventListener('turbolinks:load', () => {
+#	  var element = document.getElementById("component-6f75c8a");
+#	  if (element) {
+#	    ReactDOM.render(<AgGrid name="example" />, element)
+#	  }
+#	})
+#
+#EOF
+#cat <<- 'EOF' >> app/javascript/components/ag_grid.js
+#	// example from https://www.ag-grid.com/react-grid/
+#	import React, { Component } from 'react';
+#	//import './App.css';
+#	import { AgGridReact } from 'ag-grid-react';
+#	import 'ag-grid-community/dist/styles/ag-grid.css';
+#	import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+#	
+#	class AgGrid extends Component {
+#	  constructor(props) {
+#	    super(props);
+#	    this.state = {
+#	      columnDefs: [{
+#	        headerName: "Make", field: "make"
+#	      }, {
+#	        headerName: "Model", field: "model"
+#	      }, {
+#	        headerName: "Price", field: "price"
+#	      }],
+#	      rowData: [{
+#	        make: "Toyota", model: "Celica", price: 35000
+#	      }, {
+#	        make: "Ford", model: "Mondeo", price: 32000
+#	      }, {
+#	        make: "Porsche", model: "Boxter", price: 72000
+#	      }]
+#	    }
+#	  }
+#	
+#	  render() {
+#	    return (
+#	      <div
+#	        className="ag-theme-alpine"
+#	        style={{
+#	        height: '250px',
+#	        width: '600px' }}
+#	      >
+#	        <AgGridReact
+#	          columnDefs={this.state.columnDefs}
+#	          rowData={this.state.rowData}>
+#	        </AgGridReact>
+#	      </div>
+#	    );
+#	  }
+#	}
+#	
+#	export default AgGrid;
+#EOF
+#git add --all; git commit -m "Add ag-grid (react component) to rails"
 
 
 
