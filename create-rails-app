@@ -1,11 +1,15 @@
 #!/bin/bash
 
+
+
 ##
 # set bash flags for optimal safety
 # 
 set -e  # fail early
 set -u  # warn about empty variables
 set -x  # debug mode (during development)
+
+
 
 # declare some global variables and functions
 LATEST_RAILS_VERSION="6-0-stable"
@@ -45,32 +49,42 @@ find_latest_ruby() {
 # creates a temporary directory
 tmp_dir=$(mktemp -d -t cra-XXXXX)
 
+
+
 # figure out ruby version
 LATEST_RUBY_VERSION=$(find_latest_ruby)
+
+
 
 # prerequisites
 insist_on_latest_ruby
 
+
+
 # Download child repo
 cd $tmp_dir
 git clone https://github.com/la-ruby/web-common-core
+
+
 
 # setup git user
 cd ${tmp_dir}/web-common-core
 git config user.name "Machine User 4"; \
 git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N-ZA-Mn-za-m]')
 
-# Wipe child repo
+
+
+# Clean slate for child repo
 cd ${tmp_dir}/web-common-core
 git log --oneline | grep 'Clean slate' | head -n 1 | cut -f 1 -d ' '
 git revert --no-commit 388c3b3..HEAD
-git commit -m "Clean slate"
 [ $(ls -1A . | wc -l) -eq 2 ] # make sure dir is clean (only .git and README remains)
+git commit -m "Clean slate for child repo"
 
 
 
 ##
-# install edge rails
+# Install edge rails
 #
 cd ${tmp_dir} 
 git clone -b $LATEST_RAILS_VERSION --single-branch https://github.com/rails/rails
@@ -93,7 +107,7 @@ s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$LATEST_CO
 perl -pi.bak -e "s/$s1/$s2/" Gemfile
 git add --all; git commit -m "Point gem path to github commit"
 bundle install
-git add --all; git commit -m "bundle install"
+git add --all; git commit -m "Install edge rails"
 
 
 
@@ -102,12 +116,12 @@ git add --all; git commit -m "bundle install"
 #
 cd ${tmp_dir}/web-common-core
 bundle exec rails db:create db:migrate
-git add --all; git commit -m "bundle exec rails db:create db:migrate"
+git add --all; git commit -m "Initialize Db, creates schema.rb"
 
 
 
 ##
-# install devise
+# Install devise
 #
 cd ${tmp_dir}/web-common-core
 echo 'gem "devise"' >> Gemfile
@@ -115,12 +129,12 @@ bundle install
 bundle exec rails generate devise:install 2>&1 | tee doc/bundle_exec_rails_generate_devise_install.txt
 bundle exec rails generate devise User
 bundle exec rails db:migrate
-git add --all; git commit -m "Added devise gem"
+git add --all; git commit -m "Install devise"
 
 
 
 ##
-# install pundit
+# Install pundit
 #
 cd ${tmp_dir}/web-common-core
 echo 'gem "pundit"' >> Gemfile
@@ -135,7 +149,7 @@ cat << 'EOF' >> app/controllers/application_controller.rb
   after_action :verify_policy_scoped, only: [:index], unless: :devise_controller?
 end
 EOF
-git add --all; git commit -m "Added pundit gem"
+git add --all; git commit -m "Install pundit"
 
 
 
@@ -145,7 +159,7 @@ git add --all; git commit -m "Added pundit gem"
 cd ${tmp_dir}/web-common-core
 bundle exec rails webpacker:install:stimulus
 yarn install
-
+git add --all; git commit -m "Install Stimulus JS"
 
 
 ##
@@ -182,7 +196,7 @@ git add --all; git commit -m "Setup rendering of rails flash messages"
 
 
 ##
-# keep an eye on page speed with rack mini profiler
+# Keep an eye on page speed with rack mini profiler
 #
 cd ${tmp_dir}/web-common-core
 echo "gem 'rack-mini-profiler'" >> Gemfile
@@ -192,7 +206,7 @@ git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
 
 
 #
-# Update readme
+# Update README
 #
 cd ${tmp_dir}/web-common-core
 cp ${dir}/__README.md ./README.md
@@ -207,19 +221,16 @@ perl -pi.bak -e "s/__REPLACEME5__/$replacement/" README.md
 # bootstrap
 replacement=$(yarn list --pattern bootstrap --depth=1 | grep ' bootstrap@' | cut -d '@' -f 2)
 perl -pi.bak -e "s/__REPLACEME6__/$replacement/" README.md
-git add --all; git commit -m "Mentioned bootstrap version in README"
 # devise
 replacement=$(gem list |grep devise | head -n1)
 perl -pi.bak -e "s/__REPLACEME7__/$replacement/" README.md
-git add --all; git commit -m "Mentioned devise version in README"
 # pundit
 replacement=$(gem list |grep pundit | head -n1)
 perl -pi.bak -e "s/__REPLACEME8__/$replacement/" README.md
-git add --all; git commit -m "Mentioned pundit version in README"
 # react
 replacement=$(yarn list --pattern react --depth=1 | grep ' react@' | cut -d '@' -f 2)
 perl -pi.bak -e "s/__REPLACEME9__/$replacement/" README.md
-git add --all; git commit -m "Mentioned react in README"
+git add --all; git commit -m "Update README"
 
 
 
@@ -231,7 +242,7 @@ cp ${dir}/__.travis.yml .travis.yml
 git add --all; git commit -m "Added CI config"
 replacement=$(cat .ruby-version | sed 's/^ruby-//')
 perl -pi.bak -e "s/__REPLACEME1__/$replacement/" .travis.yml
-git add --all; git commit -m "Added CI config"
+git add --all; git commit -m "CI config"
 
 
 
@@ -249,7 +260,7 @@ EOF
 cp test/test_helper.rb ${tmp_dir}/part_b
 cat ${tmp_dir}/part_a ${tmp_dir}/part_b > test/test_helper.rb
 echo "coverage" >> .gitignore
-git add --all; git commit -m "Setup test coverage metrics in rails"
+git add --all; git commit -m "Install simplecov for test coverage metrics in rails"
 
 
 
@@ -280,7 +291,7 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 #
 cd ${tmp_dir}/web-common-core
 bundle package
-git add --all; git commit -m 'bundle pack'
+git add --all; git commit -m 'Pack gems to make bundle install faster'
 
 
 
@@ -289,7 +300,7 @@ git add --all; git commit -m 'bundle pack'
 #
 cd ${tmp_dir}/web-common-core
 rm README.md.bak Gemfile.bak .travis.yml.bak
-git add --all; git commit -m 'Removed backups, .bak files'
+git add --all; git commit -m 'Cleanup .bak files'
 
 
 
