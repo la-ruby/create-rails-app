@@ -202,7 +202,6 @@ git add --all; git commit -m "Added pundit gem"
 ##
 # install bootstrap
 #
-if false; then
 cd ${tmp_dir}/web-common-core
 yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free
 git add --all; git commit -m "Installing bootstrap and jQuery - yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free"
@@ -261,13 +260,12 @@ s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-t
 sed -i "/$s1.*/a $s2" app/views/layouts/application.html.erb
 IFS=$OLDIFS
 git add --all; git commit -m "Installed bootstrap and jQuery"
-fi
 
 
 
 # fixup
-cd ${tmp_dir}/web-common-core
-mkdir app/javascript/stylesheets || true
+#cd ${tmp_dir}/web-common-core
+#mkdir app/javascript/stylesheets || true
 
 
 
