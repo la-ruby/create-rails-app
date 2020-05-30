@@ -240,7 +240,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 	
 	// js
 	import 'bootstrap'
-	import "@fortawesome/fontawesome-free/js/all";
+	//import "@fortawesome/fontawesome-free/js/all";
 	
 	//css
 	import '../stylesheets/application'
@@ -250,7 +250,7 @@ touch app/javascript/stylesheets/_custom.scss
 cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
 	@import "~bootstrap/scss/bootstrap"; // never forget the semicolon
 	@import "./_custom";  // bootstrap custom variants
-	@import '@fortawesome/fontawesome-free';
+	//@import '@fortawesome/fontawesome-free';
 EOF
 # add stylesheet_pack_tag to layout, without this, production env won't have (bootstrap) styles
 
