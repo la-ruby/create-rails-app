@@ -266,6 +266,12 @@ fi
 
 
 
+# fixup
+cd ${tmp_dir}/web-common-core
+mkdir app/javascript/stylesheets || true
+
+
+
 ##
 # Setup rendering of rails flash messages
 #
