@@ -122,6 +122,7 @@ git add --all; git commit -m "bundle exec rails db:create db:migrate"
 # install react in rails with webpacker
 #
 cd ${tmp_dir}/web-common-core
+if false; then
 bundle exec rails webpacker:install:react
 git add --all; git commit -m "install react in rails with webpacker"
 mkdir app/javascript/components/
@@ -133,7 +134,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 EOF
 yarn install
 git add --all; git commit -m "install react in rails with webpacker"
-
+fi
 
 
 ##
@@ -202,6 +203,7 @@ git add --all; git commit -m "Added pundit gem"
 ##
 # install bootstrap
 #
+if false; then
 cd ${tmp_dir}/web-common-core
 yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free
 git add --all; git commit -m "Installing bootstrap and jQuery - yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free"
@@ -260,6 +262,7 @@ s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-t
 sed -i "/$s1.*/a $s2" app/views/layouts/application.html.erb
 IFS=$OLDIFS
 git add --all; git commit -m "Installed bootstrap and jQuery"
+fi
 
 
 
@@ -287,7 +290,6 @@ sed "/<body/a \    <%= render \"/flash\" %>" app/views/layouts/application.html.
 cat <<- 'EOF' >> app/javascript/packs/application.js
 	// show flash messages
 	document.addEventListener("turbolinks:load", function() {
-	  console.log("fired1")
 	  $('.toast').toast('show')
 	})
 EOF
@@ -327,6 +329,7 @@ git add --all; git commit -m "Added CI config"
 ##
 # adding a react custom component in to rails
 #
+if false; then
 cd ${tmp_dir}/web-common-core
 cat <<- 'EOF' >> app/javascript/packs/application.js
 
@@ -410,7 +413,7 @@ cat <<- 'EOF' >> app/javascript/components/example_todo.js
 	export default ExampleTodo
 EOF
 git add --all; git commit -m "adding a react custom component in to rails"
-
+fi
 
 
 ###
