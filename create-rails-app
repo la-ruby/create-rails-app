@@ -131,8 +131,8 @@ sed -i '$d' app/controllers/application_controller.rb # strips last line
 cat << 'EOF' >> app/controllers/application_controller.rb
   include Pundit
   before_action :authenticate_user!
-  after_action :verify_authorized, except: [:index, :page_two], unless: :devise_controller?
-  after_action :verify_policy_scoped, only: [:index, :page_two], unless: :devise_controller?
+  after_action :verify_authorized, except: [:index], unless: :devise_controller?
+  after_action :verify_policy_scoped, only: [:index], unless: :devise_controller?
 end
 EOF
 bundle exec rails g pundit:policy gallery
