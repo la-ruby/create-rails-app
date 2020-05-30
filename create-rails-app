@@ -162,6 +162,7 @@ yarn install
 git add --all; git commit -m "Install Stimulus JS"
 
 
+
 ##
 # Setup rendering of rails flash messages
 #
