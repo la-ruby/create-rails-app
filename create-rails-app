@@ -62,6 +62,7 @@ git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N
 
 # Wipe child repo
 cd ${tmp_dir}/web-common-core
+git log --oneline | grep 'Clean slate' | head -n 1 | cut -f 1 -d ' '
 git revert --no-commit 388c3b3..HEAD
 git commit -m "Clean slate"
 [ $(ls -1A . | wc -l) -eq 2 ] # make sure dir is clean (only .git and README remains)
@@ -92,25 +93,12 @@ s2="gem 'rails', git: 'https:\/\/github.com\/rails\/rails.git', ref: '$LATEST_CO
 perl -pi.bak -e "s/$s1/$s2/" Gemfile
 git add --all; git commit -m "Point gem path to github commit"
 bundle install
-git add --all; git commit -m "bundle install --jobs 3 --retry 3 --no-deployment"
+git add --all; git commit -m "bundle install"
 
 
-
-# Update Readme
-cd ${tmp_dir}/web-common-core
-cp ${dir}/__README.md ./README.md
-replacement=${curr_time}
-perl -pi.bak -e "s/__REPLACEME1__/$replacement/" README.md
-replacement=${LATEST_RAILS_VERSION}
-perl -pi.bak -e "s/__REPLACEME2__/$replacement/" README.md
-replacement=${LATEST_COMMIT}
-perl -pi.bak -e "s/__REPLACEME3__/$replacement/" README.md
-replacement=${MY_LATEST_COMMIT}
-perl -pi.bak -e "s/__REPLACEME5__/$replacement/" README.md
-git add --all; git commit -m "Mentioned versions in README"
 
 #
-# Initialize Db to create schema.rb
+# Initialize Db, creates schema.rb
 #
 cd ${tmp_dir}/web-common-core
 bundle exec rails db:create db:migrate
@@ -119,20 +107,36 @@ git add --all; git commit -m "bundle exec rails db:create db:migrate"
 
 
 ##
-# install react in rails with webpacker
+# install devise
 #
 cd ${tmp_dir}/web-common-core
-bundle exec rails webpacker:install:react
-git add --all; git commit -m "install react in rails with webpacker"
-mkdir app/javascript/components/
-cat <<- 'EOF' >> app/javascript/packs/application.js
+echo 'gem "devise"' >> Gemfile
+bundle install
+bundle exec rails generate devise:install 2>&1 | tee doc/bundle_exec_rails_generate_devise_install.txt
+bundle exec rails generate devise User
+bundle exec rails db:migrate
+git add --all; git commit -m "Added devise gem"
 
-	import React from 'react'
-	import ReactDOM from 'react-dom'
 
+
+##
+# install pundit
+#
+cd ${tmp_dir}/web-common-core
+echo 'gem "pundit"' >> Gemfile
+bundle install
+bundle exec rails g pundit:install
+# secure by default
+sed -i '$d' app/controllers/application_controller.rb # strips last line
+cat << 'EOF' >> app/controllers/application_controller.rb
+  include Pundit
+  before_action :authenticate_user!
+  after_action :verify_authorized, except: [:index, :page_two], unless: :devise_controller?
+  after_action :verify_policy_scoped, only: [:index, :page_two], unless: :devise_controller?
+end
 EOF
-yarn install
-git add --all; git commit -m "install react in rails with webpacker"
+bundle exec rails g pundit:policy gallery
+git add --all; git commit -m "Added pundit gem"
 
 
 
@@ -154,118 +158,6 @@ cat <<- 'EOF' > app/javascript/controllers/gallery_controller.js
 	  }
 	}
 EOF
-git add --all; git commit -m "Install Stimulus Js"
-
-
-
-##
-# install devise
-#
-cd ${tmp_dir}/web-common-core
-echo 'gem "devise"' >> Gemfile
-bundle install
-git add --all; git commit -m "Added devise gem"
-bundle exec rails generate devise:install 2>&1 | tee doc/bundle_exec_rails_generate_devise_install.txt
-git add --all; git commit -m "bundle exec rails generate devise:install"
-bundle exec rails generate devise User
-git add --all; git commit -m "bundle exec rails generate devise User"
-bundle exec rails db:migrate
-git add --all; git commit -m "bundle exec rails db:migrate"
-
-
-
-##
-# install pundit
-#
-cd ${tmp_dir}/web-common-core
-echo 'gem "pundit"' >> Gemfile
-git add --all; git commit -m "Added pundit gem"
-bundle install
-git add --all; git commit -m "Added pundit gem"
-bundle exec rails g pundit:install
-git add --all; git commit -m "Added pundit gem"
-# secure by default
-sed -i '$d' app/controllers/application_controller.rb # strips last line
-cat << 'EOF' >> app/controllers/application_controller.rb
-  include Pundit
-  before_action :authenticate_user!
-  after_action :verify_authorized, except: [:index, :page_two], unless: :devise_controller?
-  after_action :verify_policy_scoped, only: [:index, :page_two], unless: :devise_controller?
-end
-EOF
-git add --all; git commit -m "Added pundit gem"
-bundle exec rails g pundit:policy gallery
-git add --all; git commit -m "Added pundit gem"
-
-
-
-##
-# install bootstrap
-#
-cd ${tmp_dir}/web-common-core
-yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free
-git add --all; git commit -m "Installing bootstrap and jQuery - yarn add bootstrap jquery popper.js expose-loader @fortawesome/fontawesome-free"
-sed -i '$d' config/webpack/environment.js # strips last line
-cat <<- 'EOF' >> config/webpack/environment.js
-	const webpack = require('webpack')
-	environment.plugins.append('Provide',
-	  new webpack.ProvidePlugin({
-	    $: 'jquery',
-	    jQuery: 'jquery',
-	    Popper: ['popper.js', 'default']
-	  })
-	)
-	
-	// Make $ available on the window object
-	// for SJR views and jQuery plugins
-	// that may expect `$` to be globally available.
-	environment.loaders.append('expose', {
-	    test: require.resolve('jquery'),
-	    use: [{
-	        loader: 'expose-loader',
-	        options: '$'
-	    }, {
-	        loader: 'expose-loader',
-	        options: 'jQuery',
-	    }]
-	})
-	
-	module.exports = environment
-EOF
-cat <<- 'EOF' >> app/javascript/packs/application.js
-	// Make $ available on the window object
-	// for SJR views and jQuery plugins
-	// that may expect `$` to be globally available.
-	require('expose-loader?$!jquery')
-	
-	// js
-	//import 'bootstrap'
-	import "@fortawesome/fontawesome-free/js/all";
-	
-	//css
-	//import '../stylesheets/application'
-EOF
-mkdir app/javascript/stylesheets || true
-touch app/javascript/stylesheets/_custom.scss
-cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
-	//@import "~bootstrap/scss/bootstrap"; // never forget the semicolon
-	//@import "./_custom";  // bootstrap custom variants
-	@import '@fortawesome/fontawesome-free';
-EOF
-# add stylesheet_pack_tag to layout, without this, production env won't have (bootstrap) styles
-
-OLDIFS=$IFS; IFS=$'~' # https://unix.stackexchange.com/q/264926
-s1="javascript_pack_tag"
-s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>"
-sed -i "/$s1.*/a $s2" app/views/layouts/application.html.erb
-IFS=$OLDIFS
-git add --all; git commit -m "Installed bootstrap and jQuery"
-
-
-
-# fixup
-#cd ${tmp_dir}/web-common-core
-#mkdir app/javascript/stylesheets || true
 
 
 
@@ -291,217 +183,40 @@ cat <<- 'EOF' > app/views/_flash.html.erb
 EOF
 sed "/<body/a \    <%= render \"/flash\" %>" app/views/layouts/application.html.erb | sponge app/views/layouts/application.html.erb
 cat <<- 'EOF' >> app/javascript/packs/application.js
+
 	// show flash messages
 	document.addEventListener("turbolinks:load", function() {
 	  $('.toast').toast('show')
 	})
+
 EOF
 git add --all; git commit -m "Setup rendering of rails flash messages"
 
 
 
 ##
-# Background job using activejob
+# keep an eye on page speed with rack mini profiler
 #
 cd ${tmp_dir}/web-common-core
-cat <<- 'EOF' > app/jobs/example_job.rb
-	class ExampleJob < ApplicationJob
-	  queue_as :default
-
-	  # example
-	  # ExampleJob.set(wait: 5.seconds).perform_later
-	  def perform(*example)
-	    Rails.logger.info "Performed"
-	  end
-	end
-EOF
-git add --all; git commit -m "Background job using activejob"
-
-#
-# CI Config
-#
-cd ${tmp_dir}/web-common-core
-cp ${dir}/__.travis.yml .travis.yml
-git add --all; git commit -m "Added CI config"
-replacement=$(cat .ruby-version | sed 's/^ruby-//')
-perl -pi.bak -e "s/__REPLACEME1__/$replacement/" .travis.yml
-git add --all; git commit -m "Added CI config"
-
-
-
-##
-# adding a react custom component in to rails
-#
-if false; then
-cd ${tmp_dir}/web-common-core
-cat <<- 'EOF' >> app/javascript/packs/application.js
-
-	import ExampleTodo from '../components/example_todo'
-
-	// https://stackoverflow.com/a/44739914
-	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
-	document.addEventListener('turbolinks:load', () => {
-	  var element = document.getElementById("component-10aaaf7");
-	  if (element) {
-	    ReactDOM.render(<ExampleTodo name="example" />, element)
-	  }
-	})
-
-EOF
-git add --all; git commit -m "adding a react custom component in to rails"
-cat <<- 'EOF' >> app/javascript/components/example_todo.js
-	import React from 'react'
-	
-	class ExampleTodo extends React.Component {
-	  constructor(props) {
-	    super(props);
-	    this.state = { items: [], text: '' };
-	    this.handleChange = this.handleChange.bind(this);
-	    this.handleSubmit = this.handleSubmit.bind(this);
-	  }
-	
-	  render() {
-	    return (
-	      <div>
-	        <h3>TODO</h3>
-	        <TodoList items={this.state.items} />
-	        <form onSubmit={this.handleSubmit}>
-	          <label htmlFor="new-todo">
-	            What needs to be done?
-	          </label>
-	          <input
-	            id="new-todo"
-	            onChange={this.handleChange}
-	            value={this.state.text}
-	          />
-	          <button>
-	            Add #{this.state.items.length + 1}
-	          </button>
-	        </form>
-	      </div>
-	    );
-	  }
-	
-	  handleChange(e) {
-	    this.setState({ text: e.target.value });
-	  }
-	
-	  handleSubmit(e) {
-	    e.preventDefault();
-	    if (this.state.text.length === 0) {
-	      return;
-	    }
-	    const newItem = {
-	      text: this.state.text,
-	      id: Date.now()
-	    };
-	    this.setState(state => ({
-	      items: state.items.concat(newItem),
-	      text: ''
-	    }));
-	  }
-	}
-	
-	class TodoList extends React.Component {
-	  render() {
-	    return (
-	      <ul>
-	        {this.props.items.map(item => (
-	          <li key={item.id}>{item.text}</li>
-	        ))}
-	      </ul>
-	    );
-	  }
-	}
-	export default ExampleTodo
-EOF
-git add --all; git commit -m "adding a react custom component in to rails"
-fi
-
-
-###
-## Add ag-grid (react component) to rails
-##
-#cd ${tmp_dir}/web-common-core
-#yarn add ag-grid-community ag-grid-react
-#yarn install
-#git add --all; git commit -m "Add ag-grid (react component) to rails"
-#cat <<- 'EOF' >> app/javascript/packs/application.js
-#
-#	import AgGrid from '../components/ag_grid'
-#	// https://stackoverflow.com/a/44739914
-#	// ...if this is included in your application.js, then any page with a #whatever element will get the component.
-#	document.addEventListener('turbolinks:load', () => {
-#	  var element = document.getElementById("component-6f75c8a");
-#	  if (element) {
-#	    ReactDOM.render(<AgGrid name="example" />, element)
-#	  }
-#	})
-#
-#EOF
-#cat <<- 'EOF' >> app/javascript/components/ag_grid.js
-#	// example from https://www.ag-grid.com/react-grid/
-#	import React, { Component } from 'react';
-#	//import './App.css';
-#	import { AgGridReact } from 'ag-grid-react';
-#	import 'ag-grid-community/dist/styles/ag-grid.css';
-#	import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-#	
-#	class AgGrid extends Component {
-#	  constructor(props) {
-#	    super(props);
-#	    this.state = {
-#	      columnDefs: [{
-#	        headerName: "Make", field: "make"
-#	      }, {
-#	        headerName: "Model", field: "model"
-#	      }, {
-#	        headerName: "Price", field: "price"
-#	      }],
-#	      rowData: [{
-#	        make: "Toyota", model: "Celica", price: 35000
-#	      }, {
-#	        make: "Ford", model: "Mondeo", price: 32000
-#	      }, {
-#	        make: "Porsche", model: "Boxter", price: 72000
-#	      }]
-#	    }
-#	  }
-#	
-#	  render() {
-#	    return (
-#	      <div
-#	        className="ag-theme-alpine"
-#	        style={{
-#	        height: '250px',
-#	        width: '600px' }}
-#	      >
-#	        <AgGridReact
-#	          columnDefs={this.state.columnDefs}
-#	          rowData={this.state.rowData}>
-#	        </AgGridReact>
-#	      </div>
-#	    );
-#	  }
-#	}
-#	
-#	export default AgGrid;
-#EOF
-#git add --all; git commit -m "Add ag-grid (react component) to rails"
-
-
-
-##
-# keep an eye on page speed using rack mini profiler
 echo "gem 'rack-mini-profiler'" >> Gemfile
 bundle install
-git add --all; git commit -m "Keep an eye on page speed using rack mini profiler"
+git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
 
 
 
 #
 # Update readme
 #
+cd ${tmp_dir}/web-common-core
+cp ${dir}/__README.md ./README.md
+replacement=${curr_time}
+perl -pi.bak -e "s/__REPLACEME1__/$replacement/" README.md
+replacement=${LATEST_RAILS_VERSION}
+perl -pi.bak -e "s/__REPLACEME2__/$replacement/" README.md
+replacement=${LATEST_COMMIT}
+perl -pi.bak -e "s/__REPLACEME3__/$replacement/" README.md
+replacement=${MY_LATEST_COMMIT}
+perl -pi.bak -e "s/__REPLACEME5__/$replacement/" README.md
 # bootstrap
 replacement=$(yarn list --pattern bootstrap --depth=1 | grep ' bootstrap@' | cut -d '@' -f 2)
 perl -pi.bak -e "s/__REPLACEME6__/$replacement/" README.md
@@ -519,43 +234,27 @@ replacement=$(yarn list --pattern react --depth=1 | grep ' react@' | cut -d '@' 
 perl -pi.bak -e "s/__REPLACEME9__/$replacement/" README.md
 git add --all; git commit -m "Mentioned react in README"
 
+
+
 #
-# Gallery of features
+# CI Config
 #
 cd ${tmp_dir}/web-common-core
-bundle exec rails g controller Gallery index page_two --no-helper --no-assets
-git add --all; git commit -m "rails g controller Gallery index --no-helper --no-assets"
-# remove last test
-head -n -6 test/controllers/gallery_controller_test.rb  | sponge test/controllers/gallery_controller_test.rb
-echo 'end' >> test/controllers/gallery_controller_test.rb
-rm -rf ./app/views/gallery
-git add --all; git commit -m "rm -rf ./app/views/gallery"
-cp -r ${dir}/__gallery app/views/gallery
-cp ${dir}/__gallery.rb app/models/gallery.rb
-cp ${dir}/__gallery_controller.rb app/controllers/gallery_controller.rb
-cp ${dir}/__custom.scss app/javascript/stylesheets/_custom.scss
-cp ${dir}/__seeds.rb db/seeds.rb
-sed -i '$d' app/policies/gallery_policy.rb # remove last line
-cat << 'EOF' >> app/policies/gallery_policy.rb
-  def page_two
-    true
-  end
-end
-EOF
-git add --all; git commit -m 'Added gallery controller, model, views and policy'
-# this prevents an error from happening when running tests
-mv test/fixtures/users.yml test/fixtures/users.yml.txt
-git add --all; git commit -m 'this prevents an error from happening when running tests'
+cp ${dir}/__.travis.yml .travis.yml
+git add --all; git commit -m "Added CI config"
+replacement=$(cat .ruby-version | sed 's/^ruby-//')
+perl -pi.bak -e "s/__REPLACEME1__/$replacement/" .travis.yml
+git add --all; git commit -m "Added CI config"
 
 
 
 ##
-# setup test coverage metrics in rails
+# Install simplecov for test coverage metrics in rails
 #
 cd ${tmp_dir}/web-common-core
 echo "gem 'simplecov', '0.16', require: false, group: :test" >> Gemfile
 bundle install
-# prepend something to test/test_helper.rb
+# prepend to test/test_helper.rb
 cat <<- 'EOF' >> ${tmp_dir}/part_a
 	require 'simplecov'
 	SimpleCov.start
@@ -563,7 +262,7 @@ EOF
 cp test/test_helper.rb ${tmp_dir}/part_b
 cat ${tmp_dir}/part_a ${tmp_dir}/part_b > test/test_helper.rb
 echo "coverage" >> .gitignore
-git add --all; git commit -m "etup test coverage metrics in rails"
+git add --all; git commit -m "Setup test coverage metrics in rails"
 
 
 
@@ -589,12 +288,12 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 
 
 
-#
-# Add a Procfile to rails app
+##
+# Pack gems to make bundle install faster
 #
 cd ${tmp_dir}/web-common-core
-cp ${dir}/__Procfile Procfile
-git add --all; git commit -m "Add a Procfile to rails app"
+bundle package
+git add --all; git commit -m 'bundle pack'
 
 
 
@@ -605,15 +304,10 @@ cd ${tmp_dir}/web-common-core
 rm README.md.bak Gemfile.bak .travis.yml.bak
 git add --all; git commit -m 'Removed backups, .bak files'
 
-#
-# Pack gems
-#
-cd ${tmp_dir}/web-common-core
-bundle package
-git add --all; git commit -m 'bundle pack'
+
 
 #
-# Push
+# Final push
 #
 # setup git remote
 cd ${tmp_dir}/web-common-core
