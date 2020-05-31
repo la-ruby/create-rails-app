@@ -309,20 +309,24 @@ bundle exec rails g controller pages dashboard
 append_to_file 'config/routes.rb' "
   root 'pages#dashboard'
 "
-append_to_file 'app/controllers/pages_controller.rb' '
+
+cat <<- 'EOF' > app/controllers/pages_controller.rb
+class PagesController < ApplicationController
   after_action :verify_authorized
 
   # users end up here after logging in
   def dashboard
     authorize :page, :dashboard?
   end
-'
+end
+EOF
 cat <<- 'EOF' > app/policies/page_policy.rb
 class PagePolicy < Struct.new(:user, :page)
 
   def dashboard?
     user.present?
   end
+
 end
 EOF
 git add --all; git commit -m 'An example application'
