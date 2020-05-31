@@ -45,6 +45,14 @@ find_latest_ruby() {
 }
 
 
+#
+# Append something to ruby file
+#
+append_to_file() {
+  sed -i '$d' $1 # strips last line
+  echo $2 >> $1
+  echo 'end' >> $1
+}
 
 # creates a temporary directory
 tmp_dir=$(mktemp -d -t cra-XXXXX)
@@ -144,9 +152,15 @@ bundle exec rails g pundit:install
 sed -i '$d' app/controllers/application_controller.rb # strips last line
 cat << 'EOF' >> app/controllers/application_controller.rb
   include Pundit
-  before_action :authenticate_user!
-  after_action :verify_authorized, except: [:index], unless: :devise_controller?
-  after_action :verify_policy_scoped, only: [:index], unless: :devise_controller?
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def user_not_authorized
+    if current_user
+      redirect_to pages_dashboard_path
+    else
+      redirect_to new_user_session_path
+    end
+  end
 end
 EOF
 git add --all; git commit -m "Install pundit"
@@ -287,21 +301,31 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 
 
 
-##
-# Pack gems to make bundle install faster
+#
+# An example application
 #
 cd ${tmp_dir}/web-common-core
-bundle package
-git add --all; git commit -m 'Pack gems to make bundle install faster'
+bundle exec rails g controller pages dashboard
+append_to_file 'config/routes.rb' "
+  root 'pages#dashboard'
+"
+append_to_file 'app/controllers/pages_controller.rb' '
+  after_action :verify_authorized
 
+  # users end up here after logging in
+  def dashboard
+    authorize :page, :dashboard?
+  end
+'
+cat <<- 'EOF' > app/policies/page_policy.rb
+class PagePolicy < Struct.new(:user, :page)
 
-
-#
-# Cleanup .bak files
-#
-cd ${tmp_dir}/web-common-core
-rm README.md.bak Gemfile.bak .travis.yml.bak
-git add --all; git commit -m 'Cleanup .bak files'
+  def dashboard?
+    user.present?
+  end
+end
+EOF
+git add --all; git commit -m 'An example application'
 
 
 
@@ -310,6 +334,9 @@ git add --all; git commit -m 'Cleanup .bak files'
 #
 # setup git remote
 cd ${tmp_dir}/web-common-core
+bundle package
+rm README.md.bak Gemfile.bak .travis.yml.bak
+git add --all; git commit -m 'bundle pack and cleanup .bak files'
 git remote remove origin
 git remote add origin https://machine-user-4:${GIT_PASSWORD}@github.com/la-ruby/web-common-core.git
 # push
