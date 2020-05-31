@@ -168,8 +168,10 @@ git add --all; git commit -m "Install pundit"
 
 
 ##
-# Install jQuery
+# Install jQuery, expose-loader
 #
+cd ${tmp_dir}/web-common-core
+yarn add jquery expose-loader
 cat <<- 'EOF' >> app/javascript/packs/application.js
 	require('expose-loader?$!jquery')
 EOF
@@ -199,6 +201,7 @@ cat <<- 'EOF' >> config/webpack/environment.js
 	
 	module.exports = environment
 EOF
+git add --all; git commit -m "Install jQuery, expose-loader"
 
 
 
