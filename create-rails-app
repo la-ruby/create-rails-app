@@ -150,6 +150,15 @@ git add --all; git commit -m "A bit of a hack to reduce noise when doing git pul
 
 
 
+#
+# Mute auto created fixtures since they aren't used yet
+# prevents occasional ActiveRecord::RecordNotUnique: PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+#
+sed -i 's/^/#/' test/fixtures/users.yml
+git add --all; git commit -m "Mute auto created fixtures since they aren't used yet"
+
+
+
 ##
 # Install pundit
 #
