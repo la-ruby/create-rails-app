@@ -141,6 +141,15 @@ git add --all; git commit -m "Install devise"
 
 
 
+#
+# A bit of a hack to reduce noise when doing git pull
+#
+cd ${tmp_dir}/web-common-core
+for f in db/migrate/*.rb; do mv $f "db/migrate/00000000000001"${f:25}; done
+git add --all; git commit -m "A bit of a hack to reduce noise when doing git pull"
+
+
+
 ##
 # Install pundit
 #
