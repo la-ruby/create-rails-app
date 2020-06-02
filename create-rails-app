@@ -410,7 +410,7 @@ git add --all; git commit -m 'An example application'
 # Let views specify page title
 #
 cd ${tmp_dir}/web-common-core
-sed -i 's/<title.*/<title><%= yield :title %><\/title>/g' app/views/layouts/application.html.erb | sponge app/views/layouts/application.html.erb
+sed 's/<title.*/<title><%= yield :title %><\/title>/g' app/views/layouts/application.html.erb | sponge app/views/layouts/application.html.erb
 git add --all; git commit -m "Let views specify page title"
 
 
