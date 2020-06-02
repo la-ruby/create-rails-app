@@ -181,7 +181,6 @@ cat << 'EOF' >> app/controllers/application_controller.rb
   end
 end
 EOF
-sed -i 's/success/redirect/g' test/controllers/pages_controller_test.rb
 git add --all; git commit -m "Install pundit"
 
 
@@ -365,6 +364,7 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 #
 cd ${tmp_dir}/web-common-core
 bundle exec rails g controller pages dashboard
+sed -i 's/success/redirect/g' test/controllers/pages_controller_test.rb
 append_to_file 'config/routes.rb' "
   root 'pages#dashboard'
 "
