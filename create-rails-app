@@ -153,6 +153,7 @@ sed 's/\  # config.secret_key.*/\  # config.secret_key = \x27'$rand1'\x27/' conf
 git add --all; git commit -m "Reduce some noise"
 rand1='5ba7277bf09e255a9a4cb6258a70826e9a8fd8bffc4c71984fa7686a56dd1842b4a8e6436346873e721f5b1bf63ff7b47decbec7174d72e98ff1fa5a777c86ee'
 sed 's/\  # config.pepper.*/\  # config.pepper= \x27'$rand1'\x27/' config/initializers/devise.rb | sponge config/initializers/devise.rb
+sed 's/2020_.._.._....../2020_01_01_000001/' db/schema.rb | sponge db/schema.rb
 git add --all; git commit -m "Reduce some noise"
 
 
