@@ -248,11 +248,11 @@ git add --all; git commit -m "Install Stimulus JS"
 cd ${tmp_dir}/web-common-core
 # https://stackoverflow.com/a/58794513
 yarn add bootstrap popper
-IFS= read -r -d '' cmd <<EOF || true
-import 'bootstrap';
-import '../stylesheets/application'
+cat <<- 'EOF' > /tmp/to_be_prepended
+	import 'bootstrap';
+	import '../stylesheets/application'
 EOF
-<<(echo $to_be_prepended") < app/javascript/packs/application.js | sponge app/javascript/packs/application.js
+(cat /tmp/to_be_prepended app/javascript/packs/application.js) | sponge app/javascript/packs/application.js
 mkdir app/javascript/stylesheets
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "~bootstrap/scss/bootstrap";
