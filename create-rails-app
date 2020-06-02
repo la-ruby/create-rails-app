@@ -144,11 +144,16 @@ git add --all; git commit -m "Install devise"
 
 
 #
-# A bit of a hack to reduce noise when doing git pull
+# Some hacks to reduce daily noise
 #
 cd ${tmp_dir}/web-common-core
 for f in db/migrate/*.rb; do mv $f "db/migrate/00000000000001"${f:25}; done
-git add --all; git commit -m "A bit of a hack to reduce noise when doing git pull"
+rand1 = '5ba7277bf09e255a9a4cb6258a70826e9a8fd8bffc4c71984fa7686a56dd1842b4a8e6436346873e721f5b1bf63ff7b47decbec7174d72e98ff1fa5a777c86ee'
+sed 's/\  # config.secret_key.*/\  # config.secret_key = "'$rand1'\"/' config/initializers/devise.rb | sponge config/initializers/devise.rb
+git add --all; git commit -m "Reduce some noise"
+rand1 = '5ba7277bf09e255a9a4cb6258a70826e9a8fd8bffc4c71984fa7686a56dd1842b4a8e6436346873e721f5b1bf63ff7b47decbec7174d72e98ff1fa5a777c86ee'
+sed 's/\  # config.pepper.*/\  # config.pepper= "'$rand1'\"/' config/initializers/devise.rb | sponge config/initializers/devise.rb
+git add --all; git commit -m "Reduce some noise"
 
 
 
