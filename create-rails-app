@@ -207,7 +207,8 @@ cat <<- 'EOF' >> config/webpack/environment.js
 	environment.plugins.append('Provide',
 	  new webpack.ProvidePlugin({
 	    $: 'jquery',
-	    jQuery: 'jquery'
+	    jQuery: 'jquery',
+	    Popper: ['popper.js', 'default']
 	  })
 	)
 	
@@ -238,6 +239,26 @@ cd ${tmp_dir}/web-common-core
 bundle exec rails webpacker:install:stimulus
 yarn install
 git add --all; git commit -m "Install Stimulus JS"
+
+
+
+##
+# Install bootstrap for rails 6 via webpacker
+#
+cd ${tmp_dir}/web-common-core
+# https://stackoverflow.com/a/58794513
+yarn add bootstrap popper
+IFS= read -r -d '' cmd <<EOF || true
+import 'bootstrap';
+import '../stylesheets/application'
+EOF
+<<(echo $to_be_prepended") < app/javascript/packs/application.js | sponge app/javascript/packs/application.js
+mkdir app/javascript/stylesheets
+cat <<- 'EOF' > app/javascript/stylesheets/application.scss
+	@import "~bootstrap/scss/bootstrap";
+EOF
+yarn install
+git add --all; git commit -m "Install bootstrap for rails 6 via webpacker"
 
 
 
