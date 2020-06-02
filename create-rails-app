@@ -136,6 +136,8 @@ echo 'gem "devise"' >> Gemfile
 bundle install
 bundle exec rails generate devise:install 2>&1 | tee doc/bundle_exec_rails_generate_devise_install.txt
 bundle exec rails generate devise User
+bundle exec rails generate devise:views
+bundle exec rails generate devise:controllers
 bundle exec rails db:migrate
 git add --all; git commit -m "Install devise"
 
@@ -360,7 +362,9 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 
 
 #
+#
 # An example application
+#
 #
 cd ${tmp_dir}/web-common-core
 bundle exec rails g controller pages dashboard
@@ -389,6 +393,20 @@ class PagePolicy < Struct.new(:user, :page)
 end
 EOF
 git add --all; git commit -m 'An example application'
+#
+#
+# /an example application
+#
+#
+
+
+
+##
+# Let views specify page title
+#
+cd ${tmp_dir}/web-common-core
+sed 's/<title.*/<title><%= yield :title %><\/title>/g' app/views/layouts/application.html.erb
+git add --all; git commit -m "Let views specify page title"
 
 
 
