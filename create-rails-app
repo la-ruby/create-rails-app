@@ -353,6 +353,50 @@ git add --all; git commit -m "Let views specify page title"
 # TEMP remove me
 #
 cd ${tmp_dir}/web-common-core
+# https://ifiwere.me/technology/2020/02/21/rails_6_with_bootstrap_4.html
+yarn add bootstrap jquery popper.js expose-loader
+cat <<- 'EOF' >> config/webpack/environment.js
+        // needed?
+	// https://www.vic-l.com/setup-bootstrap-in-rails-6-with-webpacker-for-development-and-production/
+	//const webpack = require('webpack')
+	//environment.plugins.append('Provide',
+	//  new webpack.ProvidePlugin({
+	//    $: 'jquery',
+	//    jQuery: 'jquery',
+	//    Popper: ['popper.js', 'default']
+	//  })
+	//)
+	
+	environment.loaders.append('expose', {
+	    test: require.resolve('jquery'),
+	    use: [
+	        {
+	            loader: 'expose-loader',
+	            options: 'jQuery',
+	        },
+	        {
+	            loader: 'expose-loader',
+	            options: '$',
+	        },
+	    ],
+	});
+
+	module.exports = environment
+EOF
+OLDIFS=$IFS; IFS=$'~' # https://unix.stackexchange.com/q/264926
+s1="javascript_pack_tag"
+s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>"
+sed -i "/$s1.*/a $s2" app/views/layouts/application.html.erb
+cat <<- 'EOF' >> app/javascript/packs/application.js
+
+	import $ from 'jquery';
+	import 'bootstrap/dist/js/bootstrap';
+	import '../stylesheets/application';
+
+EOF
+cat <<- 'EOF' > app/javascript/stylesheets/application.scss
+	@import 'node_modules/bootstrap/scss/bootstrap';
+EOF
 cp ${dir}/__new.html.erb app/views/devise/sessions/new.html.erb
 git add --all; git commit -m "temporary"
 
