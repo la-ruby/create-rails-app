@@ -335,10 +335,8 @@ cat <<- 'EOF' >> config/webpack/environment.js
 
 	module.exports = environment
 EOF
-OLDIFS=$IFS; IFS=$'~' # https://unix.stackexchange.com/q/264926
-s1="javascript_pack_tag"
 s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>"
-sed -i "/$s1.*/a $s2" app/views/layouts/application.html.erb
+sed -i "/javascript_pack_tag.*/a $s2" app/views/layouts/application.html.erb
 cat <<- 'EOF' >> app/javascript/packs/application.js
 
 	import $ from 'jquery';
