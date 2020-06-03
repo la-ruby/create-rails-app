@@ -275,6 +275,15 @@ git add --all; git commit -m "Install simplecov for test coverage metrics in rai
 cd ${tmp_dir}/web-common-core
 cat <<- 'EOF' > app.json
 {
+
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-ruby.git"
+    }
+  ],
   "environments": {
     "test": {
       "scripts": {
