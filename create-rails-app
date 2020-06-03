@@ -289,7 +289,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 
 	// show flash messages
 	document.addEventListener("turbolinks:load", function() {
-          if ( typeof $('.toast').toast == "function" ) {
+	  if ( typeof $('.toast').toast == "function" ) {
 	    $('.toast').toast('show')
 	  }
 	})
