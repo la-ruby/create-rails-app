@@ -394,6 +394,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 	import '../stylesheets/application';
 
 EOF
+mkdir app/javascript/stylesheets
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import 'node_modules/bootstrap/scss/bootstrap';
 EOF
