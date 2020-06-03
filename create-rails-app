@@ -350,6 +350,15 @@ git add --all; git commit -m "Let views specify page title"
 
 
 #
+# TEMP remove me
+#
+cd ${tmp_dir}/web-common-core
+cp ${dir}/__new.html.erb app/views/devise/sessions/new.html.erb
+git add --all; git commit -m "temporary"
+
+
+
+#
 # Final push
 #
 # setup git remote
