@@ -215,7 +215,7 @@ git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
 #
 cd ${tmp_dir}/web-common-core
 bundle exec rails webpacker:install:stimulus
-git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
+git add --all; git commit -m "Install stimulus.js in rails with webpacker"
 
 
 
