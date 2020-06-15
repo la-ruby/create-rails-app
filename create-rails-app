@@ -210,6 +210,15 @@ git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
 
 
 
+##
+# Install stimulus.js in rails with webpacker
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails webpacker:install:stimulus
+git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
+
+
+
 #
 # Update README
 #
