@@ -317,18 +317,14 @@ cd ${tmp_dir}/web-common-core
 yarn add bootstrap jquery popper.js expose-loader
 cat <<- 'EOF' >> config/webpack/environment.js
 	
+	// https://github.com/webpack-contrib/expose-loader/blob/master/README.md
 	environment.loaders.append('expose', {
-	    test: require.resolve('jquery'),
-	    use: [
-	        {
-	            loader: 'expose-loader',
-	            options: 'jQuery',
-	        },
-	        {
-	            loader: 'expose-loader',
-	            options: '$',
-	        },
-	    ],
+	        test: require.resolve('jquery'),
+	        loader: 'expose-loader',
+	        options: {
+	          // For `underscore` library, it can be `_.map map` or `_.map|map`
+	          exposes: 'jquery',
+	        }
 	});
 
         // needed?
