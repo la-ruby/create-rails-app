@@ -1,0 +1,12 @@
+@import "variables";
+
+.logo-login-block {
+    color: $attention-color-for-dark-backgrounds;
+    background-color: $dark-background-1;
+    background-image: $dark-background-2;
+}
+
+.logo-login-block__textual-logo {
+    font-size: $font-size-1;
+}
+
