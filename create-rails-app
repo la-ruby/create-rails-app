@@ -357,6 +357,15 @@ git add --all; git commit -m "Install bootstrap on rails 6 with webpacker"
 
 
 
+##
+# Some css setup for sprockets
+#
+cd ${tmp_dir}/web-common-core
+touch app/assets/stylesheets/_variables.scss
+git add --all; git commit -m "Css setup for sprockets"
+
+
+
 #
 #
 # An example application
@@ -388,6 +397,10 @@ class PagePolicy < Struct.new(:user, :page)
 
 end
 EOF
+# building .logo-login-block
+cat ${dir}/__wip/_variables.scss >> app/assets/stylesheets/_variables.scss
+cp ${dir}/__wip/sessions.scss app/assets/stylesheets/sessions.scss
+cp ${dir}/__wip/sessions_new.html.erb app/views/devise/sessions/new.html.erb
 git add --all; git commit -m 'An example application'
 #
 #
