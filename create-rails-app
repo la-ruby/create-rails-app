@@ -84,8 +84,10 @@ git config user.email $(echo 'fnz+znpuvar-hfre-4@fnz-jr.pbz' | tr '[A-Za-z]' '[N
 
 # Clean slate for child repo
 cd ${tmp_dir}/web-common-core
-git log --oneline | grep 'Clean slate' | head -n 1 | cut -f 1 -d ' '
-git revert --no-commit 388c3b3..HEAD
+most_recent_clean_state=$(git log --oneline | grep 'Clean slate' | head -n 1 | cut -f 1 -d ' ')
+git diff --binary -R $most_recent_clean_state..HEAD > /tmp/1.binary.diff
+git apply /tmp/1.binary.diff
+git add --all; git commit -m "Clean slate for child repo"
 [ $(ls -1A . | wc -l) -eq 2 ] # make sure dir is clean (only .git and README remains)
 git commit -m "Clean slate for child repo"
 
