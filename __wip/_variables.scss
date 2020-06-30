@@ -1,7 +1,22 @@
-$attention-color-for-dark-backgrounds: whitesmoke;
 
-$dark-background-1: #ea6805;
+/* http://colormind.io/bootstrap/ */
 
-$dark-background-2: linear-gradient(#dca361, #ea6805 50%);
+/* This color should be eye-catching but not harsh. It can be liberally applied to your layout as its main identity. */
+$main-brand-color: #EF901B;
+
+/* Use this color as the background for your dark-on-light designs, or the text color of an inverted design. */
+$light-shade: #F2F4F2;
+
+/* Accent colors can be used to bring attention to design elements by contrasting with the rest of the palette. */
+$light-accent: #C59B77;
+
+/* Another accent color to consider. Not all colors have to be used - sometimes a simple color scheme works best. */
+$dark-accent: #824536;
+
+/* Use as the text color for dark-on-light designs, or as the background for inverted designs. */
+$dark-shade: #554338;
+
+/* a gradient based on two of above colors */
+$dark-shade-gradient: linear-gradient(#C59B77, #554338 80%);
 
 $font-size-1: 300%;

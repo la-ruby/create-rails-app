@@ -1,12 +1,37 @@
 @import "variables";
 
 .logo-login-block {
-    color: $attention-color-for-dark-backgrounds;
-    background-color: $dark-background-1;
-    background-image: $dark-background-2;
+    color: $light-shade;
+    background-color: $dark-shade;
+    background-image: $dark-shade-gradient;
 }
 
 .logo-login-block__textual-logo {
     font-size: $font-size-1;
 }
 
+.logo-login-block__unnamed {
+  text-decoration: none !important;
+}
+
+.logo-login-block__unnamed:link {
+    color: $light-shade;
+}
+
+.logo-login-block__unnamed:visited {
+  color: $light-shade;
+}
+
+.logo-login-block__unnamed:hover {
+  color: $light-shade;
+}
+
+.logo-login-block__unnamed:active {
+  color: $light-shade;
+}
+
+/*
+.btn-custom {
+    @include button-variant(#cece19, #222222, #cece19, #cece19, #cece19, #cece19);
+}
+*/
