@@ -352,6 +352,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 EOF
 mkdir app/javascript/stylesheets
 cp ${dir}/__wip/_custom.scss app/javascript/stylesheets/_custom.scss
+cp ${dir}/__wip/_variables.scss app/javascript/stylesheets/_variables.scss
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "custom";  // brand colors style guide
 	
