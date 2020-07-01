@@ -22,29 +22,38 @@
                     </div>
                     <div class="align-self-center col-md-5 my-3"> 
 
-                        <div class="form-row" data-controller="hello">
+
+                        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                        <div class="form-row">
                             <div class="form-group form-group-sm col-sm mb-0">
                                 <label for="inputEmail4">Email or Phone</label>
-                                <input type="email" class="form-control form-control-sm" id="inputEmail4" data-target="hello.name">
-                                <span data-target="hello.output"></span>
+                                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-sm" %>
+                                <span></span>
                             </div>                             
                             <div class="form-group col-sm mb-0">
                                 <label for="inputEmail4">Password</label>
-                                <input type="email" class="form-control form-control-sm" id="inputEmail5">
-                                <a href="/" class="text-muted">Forgot account?</a>
+                                <%= f.password_field :password, autocomplete: "current-password", class: 'form-control form-control-sm' %>
+
+
+                                <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                                  <%= link_to "Forgot account?", new_password_path(resource_name), class: 'logo-login-block__unnamed' %>
+                                <% end %>
+
+
+
+
                             </div>                             
                             <div class="form-group col-sm col-md-auto mb-0 ">
                                 <label class="d-none d-sm-block" for="inputEmail4">&nbsp;</label>
-                                <!--<input type="email" class="form-control" id="inputEmail4">-->
-                                <button data-action="click->hello#greet" type="submit" class="btn btn-primary btn-sm form-control form-control-sm">Sign in</button>
-                                
+                                <%= f.submit "Sign in", class: 'btn btn-primary btn-sm form-control form-control-sm' %>
                             </div>                             
-                        </div>                         
+                        </div>
+                        <% end %>
+
                     </div>
                 </div>
             </div>
         </div>
-
 
 
 
