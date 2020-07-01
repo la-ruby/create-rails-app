@@ -1,37 +1,8 @@
-@import "variables";
-
 .logo-login-block {
-    color: $light-shade;
-    background-color: $dark-shade;
-    background-image: $dark-shade-gradient;
+    color: $acme-lily-white;
+    background-color: $acme-brown-derby;
 }
 
 .logo-login-block__textual-logo {
-    font-size: $font-size-1;
+    font-size: $h1-font-size;
 }
-
-.logo-login-block__unnamed {
-  text-decoration: none !important;
-}
-
-.logo-login-block__unnamed:link {
-    color: $light-shade;
-}
-
-.logo-login-block__unnamed:visited {
-  color: $light-shade;
-}
-
-.logo-login-block__unnamed:hover {
-  color: $light-shade;
-}
-
-.logo-login-block__unnamed:active {
-  color: $light-shade;
-}
-
-/*
-.btn-custom {
-    @include button-variant(#cece19, #222222, #cece19, #cece19, #cece19, #cece19);
-}
-*/
