@@ -353,12 +353,13 @@ EOF
 mkdir app/javascript/stylesheets
 cp ${dir}/__wip/_custom.scss app/javascript/stylesheets/_custom.scss
 cp ${dir}/__wip/_variables.scss app/javascript/stylesheets/_variables.scss
+touch app/javascript/stylesheets/_acme_variables.scss
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "custom";  // brand colors style guide
 	
 	@import "node_modules/bootstrap/scss/functions";
 	//@import "node_modules/bootstrap/scss/variables";
-	@import "variables";  //customized
+	@import "acme_variables";  //customized
 	@import "node_modules/bootstrap/scss/mixins";
 	@import "node_modules/bootstrap/scss/root";
 	@import "node_modules/bootstrap/scss/reboot";
@@ -434,7 +435,7 @@ end
 EOF
 echo '@import "sessions"' >> app/javascript/stylesheets/application.scss
 # building .logo-login-block
-cat ${dir}/__wip/_variables.scss >> app/javascript/stylesheets/_variables.scss
+cat ${dir}/__wip/_acme_variables.scss >> app/javascript/stylesheets/_acme_variables.scss
 cp ${dir}/__wip/sessions.scss app/javascript/stylesheets/sessions.scss
 cp ${dir}/__wip/sessions_new.html.erb app/views/devise/sessions/new.html.erb
 git add --all; git commit -m 'An example application'
