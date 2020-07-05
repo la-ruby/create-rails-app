@@ -401,6 +401,16 @@ EOF
 git add --all; git commit -m "Install bootstrap on rails 6 with webpacker"
 
 
+
+##
+# Nice rails 6 flash messages using bootstrap toasts
+#
+cd ${tmp_dir}/web-common-core
+cp -r ${dir}/__javascript/acme app/javascript/
+git add --all; git commit -m "Nice rails 6 flash messages using bootstrap toasts"
+
+
+
 #
 #
 # An example application
