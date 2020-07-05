@@ -324,7 +324,7 @@ cat <<- 'EOF' >> config/webpack/environment.js
 	        loader: 'expose-loader',
 	        options: {
 	          // For `underscore` library, it can be `_.map map` or `_.map|map`
-	          exposes: 'jquery',
+	          exposes: ['jquery', '$', 'jQuery']
 	        }
 	});
 
