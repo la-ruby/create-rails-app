@@ -352,8 +352,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 EOF
 mkdir app/javascript/stylesheets
 cp ${dir}/__custom.scss app/javascript/stylesheets/_custom.scss
-cp ${dir}/__wip/_variables.scss app/javascript/stylesheets/_variables.scss
-touch app/javascript/stylesheets/_acme_variables.scss
+cp ${dir}/__acme_variables.scss  app/javascript/stylesheets/_acme_variables.scss
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "custom";  // brand colors style guide
 	
@@ -435,7 +434,6 @@ end
 EOF
 echo '@import "sessions"' >> app/javascript/stylesheets/application.scss
 # building .logo-login-block
-cat ${dir}/__wip/_acme_variables.scss >> app/javascript/stylesheets/_acme_variables.scss
 cp ${dir}/__wip/sessions.scss app/javascript/stylesheets/sessions.scss
 cp ${dir}/__wip/sessions_new.html.erb app/views/devise/sessions/new.html.erb
 git add --all; git commit -m 'An example application'
