@@ -409,6 +409,8 @@ cp -r ${dir}/__javascript/acme app/javascript/
 cp ${dir}/__javascript/packs/* app/javascript/packs/
 cp ${dir}/__flashes.html.erb app/views/
 cp ${dir}/__toasts.html.erb app/views/
+s2="\    <%= javascript_pack_tag 'flash', 'data-turbolinks-track': 'reload' %>"
+sed -i "/stylesheet_pack_tag.*/a $s2" app/views/layouts/application.html.erb
 git add --all; git commit -m "Nice rails 6 flash messages using bootstrap toasts"
 
 
