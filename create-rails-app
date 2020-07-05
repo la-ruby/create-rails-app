@@ -316,6 +316,7 @@ git add --all; git commit -m "An app.json is required by heroku CI and heroku pi
 cd ${tmp_dir}/web-common-core
 # https://ifiwere.me/technology/2020/02/21/rails_6_with_bootstrap_4.html
 yarn add bootstrap jquery popper.js expose-loader
+sed -i '$d' config/webpack/environment.js # strips last line
 cat <<- 'EOF' >> config/webpack/environment.js
 	
 	// https://github.com/webpack-contrib/expose-loader/blob/master/README.md
