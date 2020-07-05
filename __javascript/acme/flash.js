@@ -19,7 +19,6 @@ function create() {
   })
 }
 
-/* private */
 function template(body) {
   return `
     <div class="toast" role="status" aria-live="polite" aria-atomic="true" zdata-delay=3000 style="z-index: 1">
