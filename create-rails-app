@@ -196,9 +196,14 @@ git add --all; git commit -m "Install pundit"
 
 ##
 # Keep an eye on page speed with rack mini profiler
+# rbtrace is useful for tracing, for example if you have a ruby method that
+# takes an unsually long time to return
 #
 cd ${tmp_dir}/web-common-core
+echo "gem 'rbtrace'" >> Gemfile
+echo "gem 'stackprof'" >> Gemfile
 echo "gem 'rack-mini-profiler'" >> Gemfile
+echo "gem 'flamegraph'" >> Gemfile
 bundle install
 git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
 
