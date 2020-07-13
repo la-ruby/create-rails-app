@@ -474,8 +474,13 @@ git add --all; git commit -m 'An example application'
 #
 cd ${tmp_dir}/web-common-core
 sed 's/<title.*/<title><%= yield :title %><\/title>/g' app/views/layouts/application.html.erb | sponge app/views/layouts/application.html.erb
+sed -i '$d' app/helpers/application_helper.rb # strips last line
+cat <<- 'EOF' >> app/helpers/application_helper.rb
+  def title(str)
+    content_for(:title) { str }
+  end
+EOF
 git add --all; git commit -m "Let views specify page title"
-
 
 
 
