@@ -484,6 +484,13 @@ git add --all; git commit -m "Let views specify page title"
 
 
 
+##
+# Run tests of rails application
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails test
+
+
 #
 # Final push
 #
