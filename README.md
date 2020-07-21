@@ -15,14 +15,9 @@ Features
 Includes example code for
 
 + Background Processing (ActiveJob)
++ BEM style
 
-Some ideas were borrowed from these articles
-
-+ https://prathamesh.tech/2019/09/24/mastering-packs-in-webpacker/
-+ https://medium.com/@adrian_teh/ruby-on-rails-6-with-webpacker-and-bootstrap-step-by-step-guide-41b52ef4081f
-
-
-#### Alternatives
+#### See also
 
 -  Ole' classic https://github.com/RailsApps/rails_apps_composer
 -  https://github.com/lockstep/rails_new
