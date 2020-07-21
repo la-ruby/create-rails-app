@@ -479,6 +479,7 @@ cat <<- 'EOF' >> app/helpers/application_helper.rb
   def title(str)
     content_for(:title) { str }
   end
+end
 EOF
 git add --all; git commit -m "Let views specify page title"
 
