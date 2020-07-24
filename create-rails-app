@@ -369,8 +369,6 @@ EOF
 echo 'import "bootstrap/dist/js/bootstrap";' > app/javascript/packs/bootstrap.js
 
 mkdir app/javascript/stylesheets
-cp ${dir}/__custom.scss app/javascript/stylesheets/_custom.scss
-cp ${dir}/__acme_variables.scss  app/javascript/stylesheets/_acme_variables.scss
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "node_modules/bootstrap/scss/functions";
 	@import "node_modules/bootstrap/scss/variables";
