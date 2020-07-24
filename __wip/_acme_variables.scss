@@ -69,7 +69,7 @@ $colors: map-merge(
 );
 
 //$primary:       $blue !default;
-$primary:       $acme-carrot-orange !default;
+$primary:       $main-brand-color !default;
 $secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
@@ -173,9 +173,9 @@ $sizes: map-merge(
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   $white !default;
-$body-color:                $gray-900 !default;
-
+$body-bg:                   $light-shades !default;
+$zbody-color:                $gray-900 !default;
+$body-color:                $dark-shades !default;
 
 // Links
 //
