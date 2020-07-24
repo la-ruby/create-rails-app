@@ -1,0 +1,18 @@
+/* based on the 4 buttons at https://the7.io/nutritionist/#!/contact */
+.acme-btn-secondary {
+  @include button-variant($light-accent, $light-accent);
+  color: $main-brand-color;
+  &:hover { color: $main-brand-color; }
+  .btn-check:focus + &,
+  &:focus {
+    color: $main-brand-color;
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $main-brand-color;
+  }
+}
