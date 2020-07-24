@@ -351,7 +351,6 @@ s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-t
 sed -i "/javascript_pack_tag.*/a $s2" app/views/layouts/application.html.erb
 cat <<- 'EOF' >> app/javascript/packs/application.js
 
-	import 'bootstrap/dist/js/bootstrap';
 	import '../stylesheets/application';
 
 EOF
