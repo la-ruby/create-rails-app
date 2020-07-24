@@ -467,8 +467,18 @@ end
 EOF
 echo '@import "sessions"' >> app/javascript/stylesheets/application.scss
 # building .logo-login-block
-cp ${dir}/__wip/sessions.scss app/javascript/stylesheets/sessions.scss
+cp ${dir}/__wip/_sessions.scss app/javascript/stylesheets/_sessions.scss
 cp ${dir}/__wip/sessions_new.html.erb app/views/devise/sessions/new.html.erb
+cp ${dir}/__wip/_acme_buttons.scss app/javascript/stylesheets/_acme_buttons.scss
+cp ${dir}/__wip/_acme_variables.scss app/javascript/stylesheets/_acme_variables.scss
+mkdir app/views/fishbook/
+cp ${dir}/__wip/_copyright.html.erb  app/views/fishbook/_copyright.html.erb
+cp ${dir}/__wip/_languages.html.erb  app/views/fishbook/_languages.html.erb
+cp ${dir}/__wip/_links.html.erb  app/views/fishbook/_links.html.erb
+cp ${dir}/__wip/_logo-and-login-form.html.erb  app/views/fishbook/_logo-and-login-form.html.erb
+
+
+
 git add --all; git commit -m 'An example application'
 #
 #
