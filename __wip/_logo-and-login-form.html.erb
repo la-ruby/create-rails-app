@@ -1,0 +1,30 @@
+<div class="acme-logo-and-login-form pt-3 pb-1">
+  <div class="container-xl">
+    <div class="row">
+      <div class="col acme-logo-and-login-form__logo align-self-center">
+        fishbook
+      </div>
+      <div class="col-md-5 acme-logo-and-login-form__form align-self-center">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-row">
+            <div class="form-group form-group-sm col-sm mb-0">
+              <%= f.label "Email or Phone" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-sm" %>
+            </div>
+            <div class="form-group col-sm mb-0">
+              <%= f.label "Password" %>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-sm" %>
+              <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                <%= link_to "Forgot account?", new_password_path(resource_name) %>
+              <% end %>
+            </div>
+            <div class="form-group col-sm col-md-auto mb-0">
+              <label class="d-none d-sm-block">&nbsp;</label>
+              <%= f.submit "Sign in", class: "btn btn-primary btn-sm form-control form-control-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
