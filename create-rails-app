@@ -209,31 +209,6 @@ git add --all; git commit -m "Keep an eye on page speed with rack mini profiler"
 
 
 
-##
-# Front end stuff jquery, bootstrap, icons, stimulus, react, vue
-#
-# TODO
-
-
-
-##
-# Install stimulus.js in rails with webpacker
-#
-cd ${tmp_dir}/web-common-core
-bundle exec rails webpacker:install:stimulus
-git add --all; git commit -m "Install stimulus.js in rails with webpacker"
-
-
-
-##
-# Install fontawesome 4
-#
-cd ${tmp_dir}/web-common-core
-s2="\    <link href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN' crossorigin='anonymous'>"
-sed -i "/javascript_pack_tag .application/a $s2" app/views/layouts/application.html.erb
-git add --all; git commit -m "Install fontawesome 4 on latest rails"
-
-
 #
 # Update README
 #
@@ -321,6 +296,32 @@ cat <<- 'EOF' > app.json
 }
 EOF
 git add --all; git commit -m "An app.json is required by heroku CI and heroku pipelines"
+
+
+
+##
+# Front end stuff jquery, bootstrap, icons, stimulus, react, vue
+#
+# TODO
+
+
+
+##
+# Install stimulus.js in rails with webpacker
+#
+cd ${tmp_dir}/web-common-core
+bundle exec rails webpacker:install:stimulus
+git add --all; git commit -m "Install stimulus.js in rails with webpacker"
+
+
+
+##
+# Install fontawesome 4
+#
+cd ${tmp_dir}/web-common-core
+s2="\    <link href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN' crossorigin='anonymous'>"
+sed -i "/javascript_pack_tag .application/a $s2" app/views/layouts/application.html.erb
+git add --all; git commit -m "Install fontawesome 4 on latest rails"
 
 
 
