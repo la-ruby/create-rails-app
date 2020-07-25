@@ -230,7 +230,7 @@ git add --all; git commit -m "Install stimulus.js in rails with webpacker"
 #
 cd ${tmp_dir}/web-common-core
 s2="\    <link href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN' crossorigin='anonymous'>"
-sed -i "/stylesheet_pack_tag.*/a $s2" app/views/layouts/application.html.erb
+sed -i "/\/head/a $s2" app/views/layouts/application.html.erb
 git add --all; git commit -m "Install fontawesome 4 on latest rails"
 
 
