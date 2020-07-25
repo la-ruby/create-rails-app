@@ -365,7 +365,7 @@ cat <<- 'EOF' >> app/javascript/packs/application.js
 EOF
 echo 'import "bootstrap/dist/js/bootstrap";' > app/javascript/packs/bootstrap.js
 s2="\    <%= javascript_pack_tag 'bootstrap',                 'data-turbolinks-track': 'reload' %>"
-sed -i "/javascript_pack_tag.*/a $s2" app/views/layouts/application.html.erb
+sed -i "/stylesheet_pack_tag..application/a $s2" app/views/layouts/application.html.erb
 mkdir app/javascript/stylesheets
 cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "node_modules/bootstrap/scss/functions";
