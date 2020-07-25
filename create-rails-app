@@ -463,10 +463,7 @@ class PagePolicy < Struct.new(:user, :page)
 end
 EOF
 
-cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
 
-	@import "sessions"
-EOF
 # building .logo-login-block
 cp ${dir}/__wip/_sessions.scss app/javascript/stylesheets/_sessions.scss
 cp ${dir}/__wip/sessions_new.html.erb app/views/devise/sessions/new.html.erb
@@ -500,9 +497,16 @@ cat ${tmp_dir}/part_a ${tmp_dir}/part_b > app/javascript/stylesheets/application
 s1='@import "node_modules/bootstrap/scss/variables";'
 s2='@import "acme_variables";  //customized'
 sed -i "s~$s1~$s2~g" app/javascript/stylesheets/application.scss
-s1='@import "node_modules/bootstrap/scss/buttons";'
-s2='@import "acme_buttons";  //customized'
-sed -i "s~$s1~$s2~g" app/javascript/stylesheets/application.scss
+cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
+
+	@import "acme_buttons"
+EOF
+
+cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
+
+	@import "sessions"
+EOF
+
 git add --all; git commit -m 'An example application'
 #
 #
