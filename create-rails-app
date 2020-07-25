@@ -421,7 +421,7 @@ cp ${dir}/__javascript/packs/* app/javascript/packs/
 cp ${dir}/__flashes.html.erb app/views/_flashes.html.erb
 cp ${dir}/__toasts.html.erb app/views/_toasts.html.erb
 s2="\    <%= javascript_pack_tag 'flash', 'data-turbolinks-track': 'reload' %>"
-sed -i "/stylesheet_pack_tag.*/a $s2" app/views/layouts/application.html.erb
+sed -i "/javascript_pack_tag..bootstrap/a $s2" app/views/layouts/application.html.erb
 s2="\    <%= render '/toasts' %>"
 sed -i "/<body.*/a $s2" app/views/layouts/application.html.erb
 s2="\    <%= render '/flashes' %>"
