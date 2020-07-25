@@ -463,7 +463,11 @@ class PagePolicy < Struct.new(:user, :page)
 
 end
 EOF
-echo '@import "sessions"' >> app/javascript/stylesheets/application.scss
+
+cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
+
+	@import "sessions"
+EOF
 # building .logo-login-block
 cp ${dir}/__wip/_sessions.scss app/javascript/stylesheets/_sessions.scss
 cp ${dir}/__wip/sessions_new.html.erb app/views/devise/sessions/new.html.erb
