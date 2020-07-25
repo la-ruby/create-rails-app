@@ -476,9 +476,7 @@ cp ${dir}/__wip/_copyright.html.erb  app/views/fishbook/_copyright.html.erb
 cp ${dir}/__wip/_languages.html.erb  app/views/fishbook/_languages.html.erb
 cp ${dir}/__wip/_links.html.erb  app/views/fishbook/_links.html.erb
 cp ${dir}/__wip/_logo-and-login-form.html.erb  app/views/fishbook/_logo-and-login-form.html.erb
-
-
-
+cp -r ${dir}/__wip/images/fishbook app/assets/images/
 git add --all; git commit -m 'An example application'
 #
 #
