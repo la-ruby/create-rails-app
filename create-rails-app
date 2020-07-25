@@ -499,12 +499,12 @@ s2='@import "acme_variables";  //customized'
 sed -i "s~$s1~$s2~g" app/javascript/stylesheets/application.scss
 cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
 
-	@import "acme_buttons"
+	@import "acme_buttons";
 EOF
 
 cat <<- 'EOF' >> app/javascript/stylesheets/application.scss
 
-	@import "sessions"
+	@import "sessions";
 EOF
 
 git add --all; git commit -m 'An example application'
