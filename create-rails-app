@@ -496,6 +496,12 @@ cat <<- 'EOF' >> ${tmp_dir}/part_a
 EOF
 cp app/javascript/stylesheets/application.scss ${tmp_dir}/part_b
 cat ${tmp_dir}/part_a ${tmp_dir}/part_b > app/javascript/stylesheets/application.scss
+s1='@import "node_modules/bootstrap/scss/variables";'
+s2='@import "acme_variables";  //customized'
+sed -i "s~$s1~$s2~g" app/javascript/stylesheets/application.scss
+s1='@import "node_modules/bootstrap/scss/buttons";'
+s2='@import "acme_buttons";  //customized'
+sed -i "s~$s1~$s2~g" app/javascript/stylesheets/application.scss
 git add --all; git commit -m 'An example application'
 #
 #
