@@ -257,7 +257,7 @@ cd ${tmp_dir}/web-common-core
 echo "gem 'simplecov', '0.16', require: false, group: :test" >> Gemfile
 bundle install
 # prepend to test/test_helper.rb
-cat <<- 'EOF' >> ${tmp_dir}/part_a
+cat <<- 'EOF' > ${tmp_dir}/part_a
 	require 'simplecov'
 	SimpleCov.start
 EOF
@@ -479,7 +479,7 @@ cp ${dir}/__wip/_links.html.erb  app/views/fishbook/_links.html.erb
 cp ${dir}/__wip/_logo-and-login-form.html.erb  app/views/fishbook/_logo-and-login-form.html.erb
 cp -r ${dir}/__wip/images/fishbook app/assets/images/
 # prepend to app/javascript/stylesheets/application.scss
-cat <<- 'EOF' >> ${tmp_dir}/part_a
+cat <<- 'EOF' > ${tmp_dir}/part_a
 	/* like https://the7.io/nutritionist/#!/order */
 
 	$dark-pastel-green: #7bb519;
