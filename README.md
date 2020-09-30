@@ -17,6 +17,10 @@ Includes example code for
 + Background Processing (ActiveJob)
 + BEM style
 
+TODO
+
+ + https://www.getsjabloon.com/ has some good ideas for features
+
 #### See also
 
 -  Ole' classic https://github.com/RailsApps/rails_apps_composer
