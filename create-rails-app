@@ -92,6 +92,7 @@ push_changes() {
   [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
   mv .git .git.renamed
   rsync -aP --exclude=.git ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
+  rm -rf node_modules/*
   mv .git.renamed .git  # redundant because of the exclude above
   git add --all
   git commit -m "Daily update"
