@@ -16,7 +16,13 @@ main() {
   git commit -m "Initial commit" || true
   ruby -i -pe "sub(/gem 'rails', path: .*/, \"gem 'rails', ref: '${RAILS_COMMIT}'\")" Gemfile
   git add Gemfile
-  git commit -m "Point rails gem path to commit"
+  git commit -m "Repoint path"
+  bundle install
+  git add --all
+  git commit -m "Using rails version ${RAILS_COMMIT}"
+  bundle exec rails db:drop db:create db:migrate
+  git add --all
+  git commit -m "bundle exec rails db:drop db:create db:migrate"
 }
 
 ##
