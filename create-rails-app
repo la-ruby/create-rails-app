@@ -6,6 +6,7 @@ main() {
   #
   DIR=$(dirname "$0")         # where this script is
   TARGET="6-0-stable"         # target rails version
+  USE_CACHE="${USE_CACHE:-0}"
   
   ##
   # Prerequisites
@@ -16,8 +17,8 @@ main() {
   # Download rails stub
   #
   cd ${DIR}
-  git clone -b $TARGET --single-branch https://github.com/rails/rails
-  cd ${DIR}/rails
+  [[ $USE_CACHE -eq 1 ]] || git clone -b $TARGET --single-branch https://github.com/rails/rails build/rails
+  cd ${DIR}/build/rails
   bundle install
 }
 
