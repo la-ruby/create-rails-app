@@ -4,9 +4,11 @@
 ##
 # Globals
 #
-DIR=$(dirname "$0")  # where this script is
+DIR=$(dirname "$0")         # where this script is
+TARGET="6-0-stable"         # target rails version
 
 ##
 # Install edge rails
 #
-ls -la $DIR
+cd $DIR
+time git clone -b $TARGET --single-branch https://github.com/rails/rails
