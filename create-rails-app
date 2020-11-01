@@ -1,1 +1,12 @@
 #!/bin/bash
+
+
+##
+# Globals
+#
+DIR=$(dirname "$0")  # where this script is
+
+##
+# Install edge rails
+#
+ls -la $DIR
