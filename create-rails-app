@@ -13,11 +13,12 @@ main() {
   prereq_ruby_version
 
   ##
-  # Install edge rails
+  # Download rails stub
   #
-  cd $DIR
+  cd ${DIR}
   git clone -b $TARGET --single-branch https://github.com/rails/rails
-  which bundle
+  cd ${DIR}/rails
+  bundle install
 }
 
 prereq_ruby_version() {
