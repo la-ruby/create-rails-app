@@ -16,6 +16,10 @@ before_install:
   
 os:
   - linux
+
+env:
+  global:
+    secure: "pgDSb4c8YP9FFweXPDkBl867rIo/O12z7ymfM2sx5NlboRB/M+u5gRjZ42NVi/0QPhvs84cHd8sML21rVYJtsSzFkOWA8OEPVpTjAshDkkOWM6koxcVpMQ1ceCdQoUuuKDvnv/rF8FQN7UtKMdZwnwRthprgK+xO8DIfiIRvGbeH1zGAVnvs8ozIc7FuzZTK8w+e/VDr9fHHvEfgsTe6gktV4uSWndupeUAFFL5kIpime3u4J6hPHE028POAz1va450dZQ7rCeq/fzPU/f/hxaZD9rjri5NUcIA/JjtQB2n0j9oI6DKDrCHPRkx/83DJfoDT1jCYL3u8Uc3Hw33ffg2jU6HzTtIF1voUNVZG+VbbY3tlySqnrBTRqsNWlNyX9k2/OV9vWwde/QSA2rzDWPjD0v8gnQA/dETBmy9L9MwIM/x+BY8MLtqTTi/wpQVIs8RNfSoHrjSXQ5L120A506AyoUUiHlY9Vx8uWnoJTh3a9rKOGrO0KfBbW5dvOtSOfuoILAo7biAWqyyvykGbzNJ+lxkm9sYE/rl8yOKLH0mTzJkHQo399ld661lxnRv6myUmIp0fyWYfa8h9T+br9Ep/7aIczvFxdXViynkiGU+ePt/5g+xerDSYjemsDRtZcgjpk1Vn77ixz9Ro/dxfXMwjCxuzlqmKgfrUNTGCphI="
   
 script:
   - node --version

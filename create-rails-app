@@ -23,6 +23,8 @@ main() {
   bundle exec rails db:drop db:create db:migrate
   git add --all
   git commit -m "bundle exec rails db:drop db:create db:migrate"
+
+  push_changes
 }
 
 ##
@@ -49,4 +51,57 @@ prereq_stub() {
 }
 
 
+##
+# Push changes
+#
+push_changes() {
+  cd ${DIR}
+  git clone https://github.com/la-ruby/rails-app.git build/rails-app-duplicate
+  cd ${DIR}/build/rails-app-duplicate
+  KNOWN_RAILS_FILES=(
+    .browserslistrc
+    .gitignore
+    .ruby-version
+    Gemfile
+    Gemfile.lock
+    README.md
+    Rakefile
+    app
+    babel.config.js
+    bin
+    config
+    config.ru
+    db
+    lib
+    log
+    node_modules
+    package.json
+    postcss.config.js
+    public
+    storage
+    test
+    tmp
+    vendor
+    yarn.lock)
+  for file in "${KNOWN_RAILS_FILES[@]}"
+  do
+     echo "$file"
+     rm -rf $file
+     sleep 1
+  done
+  [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
+  mv .git .git.renamed
+  rsync -aP --exclude=.git ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
+  mv .git.renamed .git  # redundant because of the exclude above
+  git add --all
+  git commit -m "Daily update"
+  if [ ${TRAVIS} = "true" ]; then
+    git remote add origin2 https://${GH_TOKEN}@github.com/la-ruby/rails-app.git > /dev/null 2>&1
+    git push --quiet --set-upstream origin2 master
+  fi
+}
+
+
+
 main "$@"
+echo "ok"
