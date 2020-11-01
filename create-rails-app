@@ -11,7 +11,8 @@ main() {
   # Prerequisites
   #
   prereq_ruby_version
-  
+  prereq_bundler_version
+
   ##
   # Install edge rails
   #
@@ -27,6 +28,11 @@ prereq_ruby_version() {
     echo "error: Ruby $expected_version expected"
     exit 1
   fi  
+}
+
+prereq_bundler_version() {
+  bundle update --bundler
+  bundle --version  
 }
 
 main "$@"
