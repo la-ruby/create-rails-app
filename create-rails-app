@@ -91,7 +91,8 @@ push_changes() {
   done
   [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
   mv .git .git.renamed
-  rm -rf node_modules/*
+  rm -rf ${DIR}/build/rails-app/node_modules/*
+  rm -rf ${DIR}/build/rails-app-duplicate/node_modules/*
   rsync -aP --exclude=.git ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
   mv .git.renamed .git  # redundant because of the exclude above
   git add --all
