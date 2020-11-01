@@ -2,7 +2,6 @@
 
 main() {
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" # where this script is
-  echo "here1 ${DIR}"
   TARGET="6-0-stable"         # target rails version
   USE_CACHE_A="${USE_CACHE_A:-0}"
   USE_CACHE_B="${USE_CACHE_B:-0}"
@@ -14,7 +13,10 @@ main() {
   [[ $USE_CACHE_B -eq 1 ]] || bundle exec railties/exe/rails new ../rails-app --dev --database=postgresql
   cd ${DIR}/build/rails-app
   git add --all
-  git commit -m "Initial commit"
+  git commit -m "Initial commit" || true
+  ruby -i -pe "sub(/gem 'rails', path: .*/, \"gem 'rails', ref: '${RAILS_COMMIT}'\")" Gemfile
+  git add Gemfile
+  git commit -m "Point rails gem path to commit"
 }
 
 ##
@@ -36,6 +38,7 @@ prereq_stub() {
   cd ${DIR}
   [[ $USE_CACHE_A -eq 1 ]] || git clone -b $TARGET --single-branch https://github.com/rails/rails build/stub
   cd ${DIR}/build/stub
+  RAILS_COMMIT=$(git rev-parse --short HEAD) # comes in handy later
   bundle install
 }
 
