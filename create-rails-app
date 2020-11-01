@@ -1,13 +1,33 @@
 #!/bin/bash -x
 
-##
-# Globals
-#
-DIR=$(dirname "$0")         # where this script is
-TARGET="6-0-stable"         # target rails version
+main() {
+  ##
+  # Globals
+  #
+  DIR=$(dirname "$0")         # where this script is
+  TARGET="6-0-stable"         # target rails version
+  
+  ##
+  # Prerequisites
+  #
+  prereq_ruby_version
+  
+  ##
+  # Install edge rails
+  #
+  cd $DIR
+  git clone -b $TARGET --single-branch https://github.com/rails/rails
+}
 
-##
-# Install edge rails
-#
-cd $DIR
-time git clone -b $TARGET --single-branch https://github.com/rails/rails
+prereq_ruby_version() {
+  expected_version=$(curl -s https://cache.ruby-lang.org/pub/ruby/index.txt | tail -n 1 | cut -f1 | cut -d '-' -f2)
+  found_version=$(ruby -v | perl -nle 'm/ruby ([\d\.]*)/; print $1')
+  if [ "$expected_version" = "$found_version" ]; then
+    echo "Ruby version $found_version detected"
+  else
+    echo "Ruby version $expected_version expected"
+    exit 1
+  fi  
+}
+
+main "$@"
