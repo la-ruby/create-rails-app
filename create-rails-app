@@ -18,6 +18,10 @@ main() {
   bundle exec rails db:drop db:create db:migrate
   git add --all
   git commit -m "bundle exec rails db:drop db:create db:migrate"
+
+  setup_devise
+  setup_pundit
+
   push_changes
 }
 
@@ -53,6 +57,28 @@ fix_gemfile() {
   git commit -m "Using rails version ${RAILS_COMMIT}"
 }
 
+# A stock standard devise installation
+setup_devise() {
+  cd ${DIR}/build/rails-app
+  echo -e "\ngem 'devise'" >> Gemfile
+  bundle install
+  git add --all
+  git commit -m "Setup devise"
+  mkdir doc/
+  bundle exec rails generate devise:install | tee doc/devise.txt
+  git add --all
+  git commit -m "Setup devise"
+}
+
+setup_pundit() {
+  cd ${DIR}/build/rails-app
+  echo -e "\ngem 'pundit'" >> Gemfile
+  bundle install
+  bundle exec rails g pundit:install
+  git add --all
+  git commit -m "Setup pundit"
+}
+
 push_changes() {
   cd ${DIR}
   git clone https://github.com/la-ruby/rails-app.git build/rails-app-duplicate
@@ -86,14 +112,13 @@ push_changes() {
      sleep 0.5 && rm -rf $file
   done
   [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
-  rsync -aP --exclude='.git' --exclude='node_modules/*' ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
+  rsync -aP --exclude='.git/' --exclude='node_modules/*' ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
   git add --all
   git commit -m "Daily update"
   git remote remove origin
   git remote add origin https://${GH_TOKEN}@github.com/la-ruby/rails-app.git > /dev/null 2>&1
   [ ${TRAVIS} = "true" ] && git push --quiet origin master
 }
-
 
 main "$@"
 echo "ok"
