@@ -90,16 +90,13 @@ push_changes() {
      sleep 1
   done
   [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
-  mv .git .git.renamed
-  rm -rf ${DIR}/build/rails-app/node_modules/*
-  rm -rf ${DIR}/build/rails-app-duplicate/node_modules/*
-  rsync -aP --exclude=.git ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
-  mv .git.renamed .git  # redundant because of the exclude above
+  rsync -aP --exclude='.git' --exclude='node_modules/*' ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
   git add --all
   git commit -m "Daily update"
   if [ ${TRAVIS} = "true" ]; then
-    git remote add origin2 https://${GH_TOKEN}@github.com/la-ruby/rails-app.git > /dev/null 2>&1
-    git push --quiet --set-upstream origin2 master
+    git remote remove origin
+    git remote add origin https://${GH_TOKEN}@github.com/la-ruby/rails-app.git > /dev/null 2>&1
+    git push --quiet origin master
   fi
 }
 
