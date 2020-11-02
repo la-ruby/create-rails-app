@@ -112,7 +112,7 @@ push_changes() {
      sleep 0.5 && rm -rf $file
   done
   [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
-  rsync -aP --exclude='.git/' --exclude='node_modules/*' ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
+  rsync -aP --exclude='.git/' --exclude='node_modules/*' ${DIR}/build/rails-app/ ${DIR}/build/rails-app-duplicate/
   git add --all
   git commit -m "Daily update"
   git remote remove origin
