@@ -13,17 +13,11 @@ main() {
   [[ $USE_CACHE_B -eq 1 ]] || bundle exec railties/exe/rails new ../rails-app --dev --database=postgresql
   cd ${DIR}/build/rails-app
   git add --all
-  git commit -m "Initial commit" || true
-  ruby -i -pe "sub(/gem 'rails', path: .*/, \"gem 'rails', ref: '${RAILS_COMMIT}'\")" Gemfile
-  git add Gemfile
-  git commit -m "Repoint path"
-  bundle install
-  git add --all
-  git commit -m "Using rails version ${RAILS_COMMIT}"
+  git commit -m "Initial commit"
+  fix_gemfile
   bundle exec rails db:drop db:create db:migrate
   git add --all
   git commit -m "bundle exec rails db:drop db:create db:migrate"
-
   push_changes
 }
 
@@ -50,56 +44,55 @@ prereq_stub() {
   bundle install
 }
 
+fix_gemfile() {
+  ruby -i -pe "sub(/gem 'rails', path: .*/, \"gem 'rails', ref: '${RAILS_COMMIT}'\")" Gemfile
+  git add Gemfile
+  git commit -m "Repoint path"
+  bundle install
+  git add --all
+  git commit -m "Using rails version ${RAILS_COMMIT}"
+}
 
-##
-# Push changes
-#
 push_changes() {
   cd ${DIR}
   git clone https://github.com/la-ruby/rails-app.git build/rails-app-duplicate
   cd ${DIR}/build/rails-app-duplicate
-  KNOWN_RAILS_FILES=(
-    .browserslistrc
-    .gitignore
-    .ruby-version
-    Gemfile
-    Gemfile.lock
-    README.md
-    Rakefile
-    app
-    babel.config.js
-    bin
-    config
-    config.ru
-    db
-    lib
-    log
-    node_modules
-    package.json
-    postcss.config.js
-    public
-    storage
-    test
-    tmp
-    vendor
-    yarn.lock)
+  KNOWN_RAILS_FILES=(.browserslistrc
+                     .gitignore
+                     .ruby-version
+                     Gemfile
+                     Gemfile.lock
+                     README.md
+                     Rakefile
+                     app
+                     babel.config.js
+                     bin
+                     config
+                     config.ru
+                     db
+                     lib
+                     log
+                     node_modules
+                     package.json
+                     postcss.config.js
+                     public
+                     storage
+                     test
+                     tmp
+                     vendor
+                     yarn.lock)
   for file in "${KNOWN_RAILS_FILES[@]}"
   do
-     echo "$file"
-     rm -rf $file
-     sleep 1
+     sleep 0.5 && rm -rf $file
   done
   [ $(ls -1A . | wc -l) -eq 1 ] # make sure dir is clean (only .git remains)
   rsync -aP --exclude='.git' --exclude='node_modules/*' ${DIR}/build/rails-app/* ${DIR}/build/rails-app-duplicate/
   git add --all
   git commit -m "Daily update"
-  if [ ${TRAVIS} = "true" ]; then
-    git remote remove origin
-    git remote add origin https://${GH_TOKEN}@github.com/la-ruby/rails-app.git > /dev/null 2>&1
-    git push --quiet origin master
-  fi
+  git remote remove origin
+  git remote add origin https://${GH_TOKEN}@github.com/la-ruby/rails-app.git > /dev/null 2>&1
+  [ ${TRAVIS} = "true" ] && git push --quiet origin master
 }
-
 
 
 main "$@"
