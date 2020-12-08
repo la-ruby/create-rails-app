@@ -9,6 +9,11 @@ main() {
   prereq_ruby_version
   prereq_stub
 
+  # TODO: remove this hack
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias sed=gsed    
+  fi
+
   cd ${DIR}/build/stub
   [[ $USE_CACHE_B -eq 1 ]] || bundle exec railties/exe/rails new ../rails-app --dev --database=postgresql
   cd ${DIR}/build/rails-app
@@ -167,6 +172,7 @@ push_changes() {
   cd ${DIR}/build/rails-app-duplicate
   KNOWN_RAILS_FILES=(.browserslistrc
                      .gitignore
+                     .gitattributes
                      .ruby-version
                      Gemfile
                      Gemfile.lock
