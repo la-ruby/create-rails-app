@@ -9,11 +9,6 @@ main() {
   prereq_ruby_version
   prereq_stub
 
-  # TODO: remove this hack
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias sed=gsed    
-  fi
-
   cd ${DIR}/build/stub
   [[ $USE_CACHE_B -eq 1 ]] || bundle exec railties/exe/rails new ../rails-app --dev --database=postgresql
   cd ${DIR}/build/rails-app
@@ -27,6 +22,7 @@ main() {
   setup_devise
   setup_pundit
   setup_bootstrap
+  setup_factory_bot
 
   push_changes
 }
@@ -88,7 +84,7 @@ setup_pundit() {
 setup_bootstrap() {
   cd ${DIR}/build/rails-app
   yarn add bootstrap jquery popper.js expose-loader
-  sed -i '$d' config/webpack/environment.js # strips last line
+  ${DIR}/bin/sed -i '$d' config/webpack/environment.js # strips last line
   cat <<- 'EOF' >> config/webpack/environment.js
   	
   	// https://github.com/webpack-contrib/expose-loader/blob/master/README.md
@@ -113,13 +109,13 @@ setup_bootstrap() {
   	module.exports = environment
 EOF
   s2="\    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>"
-  sed -i "/javascript_pack_tag.*/a $s2" app/views/layouts/application.html.erb
+  ${DIR}/bin/sed -i "/javascript_pack_tag.*/a $s2" app/views/layouts/application.html.erb
   cat <<- 'EOF' >> app/javascript/packs/application.js
      import '../stylesheets/application';
 EOF
   echo 'import "bootstrap/dist/js/bootstrap";' > app/javascript/packs/bootstrap.js
   s2="\    <%= javascript_pack_tag 'bootstrap',                 'data-turbolinks-track': 'reload' %>"
-  sed -i "/stylesheet_pack_tag..application/a $s2" app/views/layouts/application.html.erb
+  ${DIR}/bin/sed -i "/stylesheet_pack_tag..application/a $s2" app/views/layouts/application.html.erb
   mkdir app/javascript/stylesheets
   cat <<- 'EOF' > app/javascript/stylesheets/application.scss
 	@import "node_modules/bootstrap/scss/functions";
@@ -165,7 +161,19 @@ EOF
   git add --all; git commit -m "Setup bootstrap"
 
 }
-                   
+
+setup_factory_bot() {
+  cd ${DIR}/build/rails-app
+  cat <<- 'EOF' >> Gemfile
+
+group :development, :test do
+  gem 'factory_bot_rails'
+end
+EOF
+  bundle install
+  git add --all; git commit -m "Setup factory_bot"
+}
+
 push_changes() {
   cd ${DIR}
   git clone https://github.com/la-ruby/rails-app.git build/rails-app-duplicate
