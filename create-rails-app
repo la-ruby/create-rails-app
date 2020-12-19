@@ -23,6 +23,7 @@ main() {
   setup_pundit
   setup_bootstrap
   setup_factory_bot
+  setup_rspec
 
   push_changes
 }
@@ -173,6 +174,20 @@ EOF
   bundle install
   git add --all; git commit -m "Setup factory_bot"
 }
+
+setup_rspec() {
+  cd ${DIR}/build/rails-app
+  cat <<- 'EOF' >> Gemfile
+
+group :development, :test do
+  gem 'rspec-rails'
+end
+EOF
+  bundle install
+  ./bin/rails generate rspec:install
+  git add --all; git commit -m "Setup rspec"
+}
+
 
 push_changes() {
   cd ${DIR}
