@@ -215,6 +215,7 @@ push_changes() {
                      public
                      storage
                      test
+                     spec
                      tmp
                      vendor
                      yarn.lock
