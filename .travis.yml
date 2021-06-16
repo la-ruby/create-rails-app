@@ -1,6 +1,6 @@
 
 rvm:
-  - 2.7.2
+  - 3.0.1
 
 services:
   - postgresql
