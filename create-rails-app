@@ -155,6 +155,11 @@ release() {
   ls -la 
   echo '################################################################################'
   echo "test" > ./test
+  git config user.email "example@example.com"
+39
+  git config --global user.name "Deploy Key User"
+40
+
   git add ./test
   git commit -m "test"
   git push origin main
