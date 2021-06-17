@@ -11,6 +11,7 @@ main() {
   fix_gemfile
   install_turbo
   install_stimulus
+  install_tailwind
   demos
 }
 
@@ -83,6 +84,16 @@ install_stimulus() {
 }
 
 ##
+# Install tailwind css
+#
+install_tailwind() {
+  cd ~/.create-rails-app/created-rails-app
+  ./bin/bundle add tailwindcss-rails
+  ./bin/rails tailwindcss:install
+}
+
+
+##
 # Sets up some basic demo pages
 #
 demos() {
@@ -90,6 +101,7 @@ demos() {
   bin/rails generate scaffold post title:string body:text published:boolean  
   rm app/assets/stylesheets/scaffolds.scss
   cat ${DIR}/demos/posts_index.html.erb >> app/views/posts/index.html.erb
+  cat ${DIR}/demos/posts_index_tailwind.html.erb >> app/views/posts/index.html.erb
   cat ${DIR}/demos/hello_controller.js > app/javascript/controllers/hello_controller.js
 }
 
