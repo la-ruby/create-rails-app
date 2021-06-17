@@ -32,6 +32,9 @@ jobs:
           - 6379:6379
     steps:
       - uses: actions/checkout@v2
+      - uses: webfactory/ssh-agent@v0.5.3
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.1 # Not needed with a .ruby-version file
