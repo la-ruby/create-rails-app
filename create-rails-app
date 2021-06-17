@@ -5,21 +5,18 @@ DIR=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 
 main() {
   create_temp_dir
-
+  check_ruby_version
+  download_railtie
+  install_rails
+  fix_gemfile
+  setup_pundit
+  setup_factory_bot
+  setup_rspec
+  setup_turbo
+  setup_stimulus
+  setup_tailwind
+  demos
   release
-
-  # check_ruby_version
-  # download_railtie
-  # install_rails
-  # fix_gemfile
-  # setup_pundit
-  # setup_factory_bot
-  # setup_rspec
-  # setup_turbo
-  # setup_stimulus
-  # setup_tailwind
-  # demos
-
 }
 
 ##
@@ -153,13 +150,12 @@ release() {
   git clone git@github.com:la-ruby/created-rails-app.git downloaded-rails-app
   cd ~/.create-rails-app/downloaded-rails-app/
   ls -la 
-  echo '################################################################################'
-  echo "test" > ./test
+  find . -path ./.git -prune -o -exec rm -rf {} \; 2> /dev/null
+  rsync -aP --exclude='.git/' --exclude='node_modules/*' ~/.create-rails-app/created-rails-app/ ~/.create-rails-app/downloaded-rails-app/
   git config user.email "example@example.com"
-  git config --global user.name "Deploy Key User"
-
-  git add ./test
-  git commit -m "test"
+  git config --global user.name "Deploy User"
+  git add --all
+  git commit -m "Daily deployment"
   git push origin main
 }
 
