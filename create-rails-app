@@ -150,7 +150,10 @@ release() {
   git clone git@github.com:la-ruby/created-rails-app.git downloaded-rails-app
   cd ~/.create-rails-app/downloaded-rails-app/
   ls -la 
-  find . -path ./.git -prune -o -exec rm -rf {} \; 2> /dev/null
+  # find . -path ./.git -prune -o -exec rm -rf {} \; 2> /dev/null
+  find -not -path "./.git/*" -not -name ".git" -delete
+  echo "###"
+  ls -la 
   rsync -aP --exclude='.git/' --exclude='node_modules/*' ~/.create-rails-app/created-rails-app/ ~/.create-rails-app/downloaded-rails-app/
   git config user.email "example@example.com"
   git config --global user.name "Deploy User"
