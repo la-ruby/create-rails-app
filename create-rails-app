@@ -16,6 +16,7 @@ main() {
   setup_stimulus
   setup_tailwind
   demos
+  update_readme
   release
 }
 
@@ -144,6 +145,12 @@ demos() {
   cat ${DIR}/demos/posts_index_tailwind.html.erb >> app/views/posts/index.html.erb
   cat ${DIR}/demos/hello_controller.js > app/javascript/controllers/hello_controller.js
 }
+
+update_readme() {
+  cd ~/.create-rails-app/created-rails-app
+  cp ${DIR}/demos/readme  README.md
+}
+
 
 release() {
   cd ~/.create-rails-app/
