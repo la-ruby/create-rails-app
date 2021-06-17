@@ -5,6 +5,9 @@ DIR=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 
 main() {
   create_temp_dir
+
+  release
+
   check_ruby_version
   download_railtie
   install_rails
@@ -16,7 +19,7 @@ main() {
   setup_stimulus
   setup_tailwind
   demos
-  release
+
 }
 
 ##
@@ -147,9 +150,9 @@ demos() {
 
 release() {
   cd ~/.create-rails-app/
-  git clone https://github.com/la-ruby/created-rails-app.git
+  git clone git@github.com:la-ruby/created-rails-app.git downloaded-rails-app
   echo '################################################################################'
-  ls -la ~/.create-rails-app/created-rails-app/
+  ls -la ~/.create-rails-app/downloaded-rails-app/
 }
 
 main
