@@ -151,8 +151,13 @@ demos() {
 release() {
   cd ~/.create-rails-app/
   git clone git@github.com:la-ruby/created-rails-app.git downloaded-rails-app
+  cd ~/.create-rails-app/downloaded-rails-app/
+  ls -la 
   echo '################################################################################'
-  ls -la ~/.create-rails-app/downloaded-rails-app/
+  echo "test" > ./test
+  git add ./test
+  git commit -m "test"
+  git push origin main
 }
 
 main
