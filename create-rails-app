@@ -7,8 +7,16 @@ main() {
   create_temp_dir
   check_ruby_version
   download_railtie
-  cd ~/.create-rails-app/rails && bundle exec railties/exe/rails new ~/.create-rails-app/created-rails-app --dev --database=postgresql
+  install_rails
   fix_gemfile
+}
+
+##
+# runs rails new ...
+#
+install_rails() {
+  cd ~/.create-rails-app/rails
+  bundle exec railties/exe/rails new ~/.create-rails-app/created-rails-app --dev --database=postgresql
 }
 
 ##
@@ -18,7 +26,6 @@ create_temp_dir() {
   rm -rf ~/.create-rails-app
   mkdir ~/.create-rails-app
 }
-
 
 ##
 # Targeting latest ruby version
