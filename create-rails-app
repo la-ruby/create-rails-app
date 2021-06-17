@@ -9,6 +9,9 @@ main() {
   download_railtie
   install_rails
   fix_gemfile
+  install_turbo
+  install_stimulus
+  demos
 }
 
 ##
@@ -58,6 +61,35 @@ fix_gemfile() {
   ${DIR}/bin/sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
   rm Gemfile.lock
   bundle install
+}
+
+##
+# Install turbo
+#
+install_turbo() {
+  echo "gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'" >> Gemfile
+  ./bin/bundle install
+  ./bin/rails turbo:install  
+}
+
+##
+# Install stimulus js
+#
+install_stimulus() {
+  cd ~/.create-rails-app/created-rails-app
+  echo "gem 'stimulus-rails', :github => 'hotwired/stimulus-rails', :branch => 'main'" >> Gemfile
+  ./bin/bundle install
+  ./bin/rails stimulus:install
+}
+
+##
+# Sets up some basic demo pages
+#
+demos() {
+  cd ~/.create-rails-app/created-rails-app
+  bin/rails generate scaffold post title:string body:text published:boolean  
+  cat ${DIR}/demos/posts_index.html.erb >> app/views/posts/index.html.erb
+  cat ${DIR}/demos/hello_controller.js > app/javascript/controllers/hello_controller.js
 }
 
 main
