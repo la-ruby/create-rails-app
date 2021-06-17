@@ -1,5 +1,6 @@
 
-Creates a rails app (nightly)
+Creates a rails app (nightly) [![CI](https://github.com/la-ruby/create-rails-app/actions/workflows/ci.yml/badge.svg)](https://github.com/la-ruby/create-rails-app/actions/workflows/ci.yml)
+
 
 Includes
 
