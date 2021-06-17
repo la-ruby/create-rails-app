@@ -16,6 +16,7 @@ main() {
   setup_stimulus
   setup_tailwind
   demos
+  release
 }
 
 ##
@@ -142,6 +143,13 @@ demos() {
   cat ${DIR}/demos/posts_index.html.erb >> app/views/posts/index.html.erb
   cat ${DIR}/demos/posts_index_tailwind.html.erb >> app/views/posts/index.html.erb
   cat ${DIR}/demos/hello_controller.js > app/javascript/controllers/hello_controller.js
+}
+
+release() {
+  cd ~/.create-rails-app/
+  git clone https://github.com/la-ruby/created-rails-app.git
+  echo '################################################################################'
+  ls -la ~/.create-rails-app/created-rails-app/
 }
 
 main
