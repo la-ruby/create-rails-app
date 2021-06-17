@@ -37,7 +37,7 @@ jobs:
       - name: Run
         run: ./create-rails-app
       - name: 'Tar files'
-        run: (cd ~/.create-rails-app; tar -cvf created-rails-app.tar created-rails-app --exclude 'node_modules' --exclude '.git')
+        run: (cd ~/.create-rails-app; tar -cvf created-rails-app.tar --exclude 'node_modules' created-rails-app )
       - uses: actions/upload-artifact@v2
         with:
           name: created-rails-app
