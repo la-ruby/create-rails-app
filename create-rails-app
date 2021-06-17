@@ -8,17 +8,17 @@ main() {
 
   release
 
-  check_ruby_version
-  download_railtie
-  install_rails
-  fix_gemfile
-  setup_pundit
-  setup_factory_bot
-  setup_rspec
-  setup_turbo
-  setup_stimulus
-  setup_tailwind
-  demos
+  # check_ruby_version
+  # download_railtie
+  # install_rails
+  # fix_gemfile
+  # setup_pundit
+  # setup_factory_bot
+  # setup_rspec
+  # setup_turbo
+  # setup_stimulus
+  # setup_tailwind
+  # demos
 
 }
 
