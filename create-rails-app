@@ -9,9 +9,12 @@ main() {
   download_railtie
   install_rails
   fix_gemfile
-  install_turbo
-  install_stimulus
-  install_tailwind
+  setup_pundit
+  setup_factory_bot
+  setup_rspec
+  setup_turbo
+  setup_stimulus
+  setup_tailwind
   demos
 }
 
@@ -67,7 +70,7 @@ fix_gemfile() {
 ##
 # Install turbo
 #
-install_turbo() {
+setup_turbo() {
   echo "gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'" >> Gemfile
   ./bin/bundle install
   ./bin/rails turbo:install  
@@ -76,7 +79,7 @@ install_turbo() {
 ##
 # Install stimulus js
 #
-install_stimulus() {
+setup_stimulus() {
   cd ~/.create-rails-app/created-rails-app
   echo "gem 'stimulus-rails', :github => 'hotwired/stimulus-rails', :branch => 'main'" >> Gemfile
   ./bin/bundle install
@@ -86,12 +89,49 @@ install_stimulus() {
 ##
 # Install tailwind css
 #
-install_tailwind() {
+setup_tailwind() {
   cd ~/.create-rails-app/created-rails-app
   ./bin/bundle add tailwindcss-rails
   ./bin/rails tailwindcss:install
 }
 
+
+##
+# Setup rspec
+#
+setup_rspec() {
+  cd ~/.create-rails-app/created-rails-app
+  cat <<- 'EOF' >> Gemfile
+group :development, :test do
+  gem 'rspec-rails'
+end
+EOF
+  bundle install
+  ./bin/rails generate rspec:install
+}
+
+##
+# Setup factory bot
+#
+setup_factory_bot() {
+  cd ~/.create-rails-app/created-rails-app
+  cat <<- 'EOF' >> Gemfile
+group :development, :test do
+  gem 'factory_bot_rails'
+end
+EOF
+  bundle install
+}
+
+##
+# Setup pundit
+#
+setup_pundit() {
+  cd ~/.create-rails-app/created-rails-app
+  echo -e "\ngem 'pundit'" >> Gemfile
+  bundle install
+  bundle exec rails g pundit:install
+}
 
 ##
 # Sets up some basic demo pages
