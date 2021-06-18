@@ -106,6 +106,8 @@ setup_bootstrap() {
   cd ~/.create-rails-app/created-rails-app
   yarn add bootstrap
   echo '@import "~bootstrap/scss/bootstrap.scss";' >> app/javascript/stylesheets/application.scss
+  cd cd ~/.create-rails-app/demos
+  ${DIR}/bin/sed -i '\|</body>|e cat bootstrap_js_tags' ~/.create-rails-app/created-rails-app/app/views/layouts/application.html.erb # https://stackoverflow.com/a/26142235
 }
 
 
