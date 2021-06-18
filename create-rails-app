@@ -173,9 +173,9 @@ release() {
   find -not -path "./.git/*" -not -name ".git" -delete
   rsync -aP --exclude='.git/' --exclude='node_modules/*' ~/.create-rails-app/created-rails-app/ ~/.create-rails-app/downloaded-rails-app/
   git config user.email "example@example.com"
-  git config --global user.name "Deploy User"
+  git config --global user.name "Sam Bot"
   git add --all
-  git commit -m "Daily deployment"
+  git commit -m "Updates for $(date +%D)"
   git push origin main
 }
 
