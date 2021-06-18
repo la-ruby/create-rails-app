@@ -8,7 +8,8 @@ Includes
 - latest stable rails gem
 - turbo
 - stimulus
-- tailwind (?)
+- tailwind - disabled
+- bootstrap 
 - pundit
 - factorybot
 - rspec

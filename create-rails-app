@@ -104,7 +104,7 @@ setup_tailwind() {
 #
 setup_bootstrap() {
   cd ~/.create-rails-app/created-rails-app
-  yarn add bootstrap
+  yarn add bootstrap # popper
   cat ${DIR}/demos/bootstrap_scss_imports.scss >> app/javascript/stylesheets/application.scss
   cd ${DIR}/demos
   ${DIR}/bin/sed -i '\|</body>|e cat bootstrap_js_tags' ~/.create-rails-app/created-rails-app/app/views/layouts/application.html.erb # https://stackoverflow.com/a/26142235
@@ -163,19 +163,14 @@ demos() {
 
 update_readme() {
   cd ~/.create-rails-app/created-rails-app
-  cp ${DIR}/demos/readme  README.md
+  cp ${DIR}/demos/readme README.md
 }
-
 
 release() {
   cd ~/.create-rails-app/
   git clone git@github.com:la-ruby/created-rails-app.git downloaded-rails-app
   cd ~/.create-rails-app/downloaded-rails-app/
-  ls -la 
-  # find . -path ./.git -prune -o -exec rm -rf {} \; 2> /dev/null
   find -not -path "./.git/*" -not -name ".git" -delete
-  echo "###"
-  ls -la 
   rsync -aP --exclude='.git/' --exclude='node_modules/*' ~/.create-rails-app/created-rails-app/ ~/.create-rails-app/downloaded-rails-app/
   git config user.email "example@example.com"
   git config --global user.name "Deploy User"
