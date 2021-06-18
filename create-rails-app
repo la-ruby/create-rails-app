@@ -96,7 +96,7 @@ setup_tailwind() {
   cd ~/.create-rails-app/created-rails-app
   ./bin/bundle add tailwindcss-rails
   ./bin/rails tailwindcss:install
-  ${DIR}/bin/sed -i "s/^@import/# &/" app/javascript/stylesheets/application.scss
+  ${DIR}/bin/sed -i "s/^@import/\/\/ &/" app/javascript/stylesheets/application.scss
 }
 
 ##
