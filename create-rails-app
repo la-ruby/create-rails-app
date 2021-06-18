@@ -15,6 +15,7 @@ main() {
   setup_turbo
   setup_stimulus
   setup_tailwind
+  setup_bootstrap
   demos
   update_readme
   release
@@ -98,6 +99,15 @@ setup_tailwind() {
   ${DIR}/bin/sed -i "s/^@import/# &/" app/javascript/stylesheets/application.scss
 }
 
+##
+# Install bootstrap
+#
+setup_bootstrap() {
+  cd ~/.create-rails-app/created-rails-app
+  yarn add bootstrap
+  echo '@import "~bootstrap/scss/bootstrap.scss";' >> app/javascript/stylesheets/application.scss
+}
+
 
 ##
 # Setup rspec
@@ -144,6 +154,9 @@ demos() {
   bin/rails generate scaffold post title:string body:text published:boolean  
   cat ${DIR}/demos/append_to_posts_index.html.erb >> app/views/posts/index.html.erb
   cp ${DIR}/demos/hello_controller.js app/javascript/controllers/hello_controller.js
+  cp ${DIR}/demos/_bootstrap_example.html.erb app/views/posts/
+  cp ${DIR}/demos/_stimulus_example.html.erb app/views/posts/
+  cp ${DIR}/demos/_tailwind_example.html.erb app/views/posts/
 }
 
 update_readme() {
