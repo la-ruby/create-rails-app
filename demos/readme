@@ -18,7 +18,7 @@ bundle exec rails db:drop db:create db:migrate
 # open http://localhost:3000/posts to verify
 ```
 
-# Customize name of application
+## Customize name of application
 
 Suppose you want to name your new app "web-app",
 
