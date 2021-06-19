@@ -24,7 +24,7 @@ Suppose you want to name your new app "web-app",
 
 ```
 mv ~/created-rails-app web-app
-git grep -lz CreateRailsApp | xargs -0 sed -i '' -e 's/CreatedRailsApp/WebApp/g'
+git grep -lz CreatedRailsApp | xargs -0 sed -i '' -e 's/CreatedRailsApp/WebApp/g'
 git grep -lz created-rails-app | xargs -0 sed -i '' -e 's/created-rails-app/web-app/g'
 git grep -lz created_rails_app | xargs -0 sed -i '' -e 's/created_rails_app/web_app/g'
 git checkout README.md # no need to change readme
