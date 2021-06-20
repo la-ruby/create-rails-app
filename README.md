@@ -13,3 +13,7 @@ Includes
 - factorybot
 - rspec
 - a demo page if you GET /posts
+
+TODO
+
+- yarn add bootstrap-icons
