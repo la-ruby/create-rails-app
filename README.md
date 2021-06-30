@@ -17,3 +17,5 @@ Includes
 TODO
 
 - yarn add bootstrap-icons
+- yarn add bootswatch, and possibly flatly
+- can react co-exist
