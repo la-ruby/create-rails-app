@@ -168,7 +168,7 @@ demos() {
 update_readme() {
   cd ~/.create-rails-app/created-rails-app
   cp ${DIR}/demos/readme README.md
-  cp ${DIR}/demos/rename ./bin/rename
+  cp ${DIR}/demos/rename_app ./bin/rename_app
 }
 
 release() {
