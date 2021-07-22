@@ -16,6 +16,7 @@ main() {
   setup_stimulus
   setup_tailwind
   setup_bootstrap
+  gitignore_secrets
   demos  
   update_readme
   release
@@ -150,6 +151,14 @@ setup_pundit() {
   echo -e "\ngem 'pundit'" >> Gemfile
   bundle install
   bundle exec rails g pundit:install
+}
+
+##
+# Gitignore secrets file
+#
+gitignore_secrets() {
+  cd ~/.create-rails-app/created-rails-app
+  echo ".envrc" >> .gitignore
 }
 
 ##
