@@ -16,7 +16,7 @@ main() {
   setup_stimulus
   setup_tailwind
   setup_bootstrap
-  demos
+  demos  
   update_readme
   release
 }
@@ -168,6 +168,7 @@ demos() {
 update_readme() {
   cd ~/.create-rails-app/created-rails-app
   cp ${DIR}/demos/readme README.md
+  cp ${DIR}/demos/rename ./bin/rename
 }
 
 release() {
