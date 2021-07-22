@@ -70,8 +70,8 @@ fix_gemfile() {
   bundle install
 
   # these 2 is probably not needed, its there to make nokigiri happy
-  bundle lock --remove-platform x86_64-linux
   bundle lock --add-platform ruby
+  bundle lock --remove-platform x86_64-linux
 }
 
 ##
