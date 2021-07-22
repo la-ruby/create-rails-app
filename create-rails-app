@@ -68,6 +68,10 @@ fix_gemfile() {
   ${DIR}/bin/sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
   rm Gemfile.lock
   bundle install
+
+  # these 2 is probably not needed, its there to make nokigiri happy
+  bundle lock --remove-platform x86_64-linux
+  bundle lock --add-platform ruby
 }
 
 ##
