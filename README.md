@@ -16,6 +16,7 @@ Includes
 
 TODO
 
+- add gem 'rexml' for ruby3
 - yarn add bootstrap-icons
 - yarn add bootswatch, and possibly flatly
 - can react co-exist
