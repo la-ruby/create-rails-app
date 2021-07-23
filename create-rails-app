@@ -12,11 +12,13 @@ main() {
   setup_pundit
   setup_factory_bot
   setup_rspec
+  setup_vcr
   setup_turbo
   setup_stimulus
   setup_tailwind
   setup_bootstrap
   gitignore_secrets
+  rexml_fix
   demos  
   update_readme
   release
@@ -128,6 +130,16 @@ end
 EOF
   bundle install
   ./bin/rails generate rspec:install
+  mkdir spec/support || true # used for e.g. vcr config
+}
+
+##
+# Setup vcr
+#
+setup_vcr() {
+  cd ~/.create-rails-app/created-rails-app
+  bundle add vcr webmock
+  cp ${DIR}/demos/vcr.rb spec/support/
 }
 
 ##
@@ -159,6 +171,15 @@ setup_pundit() {
 gitignore_secrets() {
   cd ~/.create-rails-app/created-rails-app
   echo ".envrc" >> .gitignore
+}
+
+##
+# Fix: ..rexml/document (LoadError)
+#
+rexml_fix() {
+  cd ~/.create-rails-app/created-rails-app
+  echo "gem 'rexml'" >> Gemfile
+  bundle install
 }
 
 ##
