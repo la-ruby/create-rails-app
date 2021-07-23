@@ -16,5 +16,4 @@ Includes
 
 TODO
 
-- add gem 'rexml' for ruby3
-- vcr
+- ?
