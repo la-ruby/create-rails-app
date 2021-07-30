@@ -17,6 +17,6 @@ yarn install && bundle install
 bundle exec rake webpacker:clobber # needed?
 bundle exec rails db:drop db:create db:migrate
 ./bin/rails server # open http://localhost:3000/posts
-# botstrap kitchen sink should render properly at this point.
+# bootstrap kitchen sink should render properly at this point.
 ```
 
