@@ -6,15 +6,17 @@ A super simple rails applicaton created with [create-rails-app](https://github.c
 
 ## Quickstart
 
-supose you're building a new application named my-app
+supose you're building a new application named example-app
 
 ```
 cd ~
 git clone git@github.com:la-ruby/created-rails-app.git
-cd created-rails-app
-./bin/rename_app "my-app"
+mv created-rails-app example-app
+cd example-app
+./bin/rename_app ExampleApp example-app example_app
+git add --all && git commit -m "Customize name"
 yarn install && bundle install
-bundle exec rake webpacker:clobber # needed?
+bundle exec rake webpacker:clobber
 bundle exec rails db:drop db:create db:migrate
 ./bin/rails server # open http://localhost:3000/posts
 # bootstrap kitchen sink should render properly at this point.
