@@ -1,7 +1,6 @@
 #!/bin/bash
-echo "To rename application to e.g. web-app, do this:
-mv ~/created-rails-app web-app
-git grep -lz CreatedRailsApp | xargs -0 sed -i '' -e 's/CreatedRailsApp/WebApp/g'
-git grep -lz created-rails-app | xargs -0 sed -i '' -e 's/created-rails-app/web-app/g'
-git grep -lz created_rails_app | xargs -0 sed -i '' -e 's/created_rails_app/web_app/g'
-git checkout README.md # no need to change readme"
+git grep -lz CreatedRailsApp app/ config/ | xargs -0 sed -i '' -e 's/CreatedRailsApp/WebApp/g'
+git grep -lz created-rails-app package.json | xargs -0 sed -i '' -e 's/created-rails-app/web-app/g'
+git grep -lz created_rails_app config/ | xargs -0 sed -i '' -e 's/created_rails_app/web_app/g'
+git status
+echo "git commit these ^ modifications"
