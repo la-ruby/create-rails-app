@@ -16,6 +16,9 @@ cd example-app
 ./bin/rename_app ExampleApp example-app example_app
 git add --all && git commit -m "Customized name"
 ./bin/setup # covers most of ^
+bundle exec rake webpacker:clobber
+./bin/rails server # In a seperate tab
+./bin/webpack-dev-server # In a seperate tab
 # open http://localhost:3000/posts , bootstrap kitchen sink should render properly at this point.
 ```
 
