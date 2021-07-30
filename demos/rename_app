@@ -1,6 +1,15 @@
 #!/bin/bash
-git grep -lz CreatedRailsApp app/ config/ | xargs -0 sed -i '' -e 's/CreatedRailsApp/WebApp/g'
-git grep -lz created-rails-app package.json | xargs -0 sed -i '' -e 's/created-rails-app/web-app/g'
-git grep -lz created_rails_app config/ | xargs -0 sed -i '' -e 's/created_rails_app/web_app/g'
+
+# https://unix.stackexchange.com/a/25947
+if [ "$*" == "" ]; then
+    echo "error: No arguments provided"
+    echo "To rename CreatedRailsApp to FooApp, do"
+    echo "./bin/rename_app FooApp foo-app foo_app"
+    exit 1
+fi
+
+git grep -lz CreatedRailsApp app/ config/ | xargs -0 sed -i '' -e "s/CreatedRailsApp/$1/g"
+git grep -lz created-rails-app package.json | xargs -0 sed -i '' -e "s/created-rails-app/$2/g"
+git grep -lz created_rails_app config/ | xargs -0 sed -i '' -e "s/created_rails_app/$3/g"
 git status
 echo "git commit these ^ modifications"
