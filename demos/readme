@@ -15,11 +15,7 @@ mv created-rails-app example-app
 cd example-app
 ./bin/rename_app ExampleApp example-app example_app
 git add --all && git commit -m "Customized name"
-# yarn install && bundle install
-# bundle exec rake webpacker:clobber
-# bundle exec rails db:drop db:create db:migrate
 ./bin/setup # covers most of ^
-# ./bin/rails server # open http://localhost:3000/posts
-# bootstrap kitchen sink should render properly at this point.
+# open http://localhost:3000/posts , bootstrap kitchen sink should render properly at this point.
 ```
 
