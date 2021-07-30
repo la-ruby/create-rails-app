@@ -14,7 +14,7 @@ git clone git@github.com:la-ruby/created-rails-app.git
 mv created-rails-app example-app
 cd example-app
 ./bin/rename_app ExampleApp example-app example_app
-git add --all && git commit -m "Customize name"
+git add --all && git commit -m "Customized name"
 yarn install && bundle install
 bundle exec rake webpacker:clobber
 bundle exec rails db:drop db:create db:migrate
