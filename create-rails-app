@@ -17,6 +17,7 @@ main() {
   setup_stimulus
   setup_tailwind
   setup_bootstrap
+  setup_fontawesome
   gitignore_secrets
   rexml_fix
   demos  
@@ -117,6 +118,15 @@ setup_bootstrap() {
   ${DIR}/bin/sed -i '\|</body>|e cat bootstrap_js_tags' ~/.create-rails-app/created-rails-app/app/views/layouts/application.html.erb # https://stackoverflow.com/a/26142235
 }
 
+
+##
+# Setup fontawesome
+#
+setup_fontawesome() {
+  cd ~/.create-rails-app/created-rails-app
+  bundle add font_awesome5_rails
+  ${DIR}/bin/sed -i "/.*require_tree.*/i \ * require font_awesome5_webfont" app/assets/stylesheets/application.css
+}
 
 ##
 # Setup rspec

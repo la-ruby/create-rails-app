@@ -17,4 +17,5 @@ Includes
 
 TODO
 
-- ?
+- check fontawesome renders in /posts
+
