@@ -7,7 +7,8 @@ Includes
 - latest stable rails gem
 - turbo
 - stimulus
-- tailwind - disabled
+- tailwind (initially disabled)
+- fontawesome (initially disabled)
 - bootstrap 
 - pundit
 - factorybot
