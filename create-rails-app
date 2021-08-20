@@ -15,9 +15,9 @@ main() {
   setup_vcr
   setup_turbo
   setup_stimulus
-  setup_tailwind
-  setup_bootstrap
-  setup_fontawesome
+  # setup_tailwind
+  # setup_bootstrap
+  # setup_fontawesome
   gitignore_secrets
   rexml_fix
   demos  
