@@ -1,18 +1,31 @@
 #!/bin/bash
 
-
-##
-# runs rails new ...
-#
-install_rails() {
+download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
+}
+
+generate() {
   cd /tmp/rails
   bundle install
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql
 }
 
+upload() {
+  git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
+  cd /tmp/downloaded-rails-app/
+  find -not -path "./.git/*" -not -name ".git" -delete
+  rsync -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/
+  git config user.email "example@example.com"
+  git config --global user.name "Sam Bot"
+  git add --all
+  git commit -m "Updates for $(date +%D)"
+  git push origin main
+}
+
 main() {
-  install_rails
+  download
+  generate
+  upload
 }
 
 main
