@@ -7,29 +7,12 @@ on:
   push:
     branches:
       - 'main'
+      - 'rails-7'
   schedule:
     - cron: '0 0 * * *'  # every day at midnight
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:11
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 6379:6379
     steps:
       - uses: actions/checkout@v2
       - uses: webfactory/ssh-agent@v0.5.3
@@ -41,7 +24,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: Run
         run: ./create-rails-app
-      - name: 'Tar files'
+      - name: 'upload-artifacts step 1: tar files'
         run: (cd ~/.create-rails-app; tar -cvf created-rails-app.tar --exclude 'node_modules' created-rails-app )
       - uses: actions/upload-artifact@v2
         with:
