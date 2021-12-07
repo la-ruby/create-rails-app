@@ -4,3 +4,4 @@ main() {
   echo "here"
 }
 
+main
