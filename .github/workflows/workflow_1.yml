@@ -15,12 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: webfactory/ssh-agent@v0.5.3
-        with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2 # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: Run
         run: ./create-rails-app
