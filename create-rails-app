@@ -7,6 +7,7 @@
 install_rails() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
   cd /tmp/rails
+  bundle install
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql
 }
 
