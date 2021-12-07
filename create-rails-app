@@ -6,15 +6,15 @@ download() {
 
 generate() {
   cd /tmp/rails
-  bundle install
-  bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql
+  bundle install >/dev/null
+  bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql >/dev/null
 }
 
 upload() {
   git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
   cd /tmp/downloaded-rails-app/
   find -not -path "./.git/*" -not -name ".git" -delete
-  rsync -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/
+  rsync --stats -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/
   git config user.email "example@example.com"
   git config --global user.name "Sam Bot"
   git add --all
