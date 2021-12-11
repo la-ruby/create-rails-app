@@ -10,6 +10,7 @@ After forking created-rails-app, rename it to .e.g blog
 perl -p -i -e 's/CreatedRailsApp/Blog/g' config/application.rb
 perl -p -i -e 's/created_rails_app/blog/g' config/*.yml
 perl -p -i -e 's/CREATED_RAILS_APP/BLOG/g' config/*.yml
+perl -p -i -e 's/created_rails_app/blog/g' config/environments/*.rb
 ```
 
 ### 2. First time setup
