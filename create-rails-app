@@ -19,6 +19,7 @@ repoint() {
   rm Gemfile.lock
   bundle install
   bundle lock --add-platform ruby # this was needed because ci runs in linux
+  ./bin/setup
 }
 
 # adds devise gem
