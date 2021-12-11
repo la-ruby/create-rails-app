@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  DATABASE_URL: "postgres://postgres@127.0.0.1/created_rails_app_development"
+  DATABASE_URL: "postgres://postgres:postgres@127.0.0.1/created_rails_app_development"
 
 on:
   pull_request:
