@@ -10,6 +10,17 @@ generate() {
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql >/dev/null
 }
 
+# repoint gemfile to github rails/rails
+repoint() {
+  cd /tmp/created-rails-app
+  sed -i "/^gem 'rails'/c\REMOVED" Gemfile # remove line
+  replacement="gem 'rails', :github => 'rails/rails', :branch => '7-0-stable'"
+  sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
+  rm Gemfile.lock
+  bundle install
+  bundle lock --add-platform ruby # this was needed because ci runs in linux
+}
+
 upload() {
   git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
   cd /tmp/downloaded-rails-app/
@@ -25,6 +36,7 @@ upload() {
 main() {
   download
   generate
+  repoint
   upload
 }
 
