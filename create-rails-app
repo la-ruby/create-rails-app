@@ -24,7 +24,7 @@ repoint() {
 # adds devise gem
 devise() {
   cd /tmp/created-rails-app
-  bundle add devise
+  bundle add devise --git "https://github.com/heartcombo/devise" --branch "main"
   bundle install
   ./bin/rails generate devise:install
 }
