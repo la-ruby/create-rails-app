@@ -8,6 +8,8 @@ generate() {
   cd /tmp/rails
   bundle install >/dev/null
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql >/dev/null
+  cd /tmp/created-rails-app
+  commit "Did generate()"
 }
 
 # repoint gemfile to github rails/rails
@@ -20,6 +22,7 @@ repoint() {
   bundle install
   bundle lock --add-platform ruby # this was needed because ci runs in linux
   ./bin/setup
+  commit "Did repoint()"
 }
 
 # adds devise gem
@@ -30,9 +33,14 @@ devise() {
   ./bin/rails generate devise:install
   ./bin/rails generate devise User
   ./bin/rails db:migrate
+  commit "Did devise()"
 }
 
 upload() {
+  # Temporary - for troubleshooting
+  git remote add bugDemo git@github.com:la-ruby/bugDemo.git
+  git push bugDemo main
+
   git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
   cd /tmp/downloaded-rails-app/
   find -not -path "./.git/*" -not -name ".git" -delete
@@ -44,6 +52,10 @@ upload() {
   git push origin main
 }
 
+commit() {
+  git add --all
+  git commit -m "$1"
+}
 
 main() {
   download
