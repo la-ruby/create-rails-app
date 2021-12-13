@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# This eliminates a super lengthy warning
-git config --global init.defaultBranch main
-
-
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
 }
@@ -49,8 +45,7 @@ upload() {
   cd /tmp/downloaded-rails-app/
   find -not -path "./.git/*" -not -name ".git" -delete
   rsync --stats -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/
-  git config user.email "example@example.com"
-  git config --global user.name "Sam Bot"
+
   git add --all
   git commit -m "Updates for $(date +%D)"
   git push origin main
@@ -62,6 +57,11 @@ commit() {
 }
 
 main() {
+  # Some Prereqs - git setup
+  git config --global init.defaultBranch main
+  git config user.email "example@example.com"
+  git config --global user.name "Sam Bot"
+
   download
   generate
   repoint
