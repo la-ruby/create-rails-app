@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# This eliminates a super lengthy warning
+git config --global init.defaultBranch main
+
+
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
 }
