@@ -59,7 +59,7 @@ commit() {
 main() {
   # Some Prereqs - git setup
   git config --global init.defaultBranch main
-  git config user.email "example@example.com"
+  git config --global user.email "example@example.com"
   git config --global user.name "Sam Bot"
 
   download
