@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: webfactory/ssh-agent@v0.5.3 # without this, git clone and push fails
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY2 }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.3
