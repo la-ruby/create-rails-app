@@ -40,12 +40,10 @@ devise() {
 
 upload() {
   # Temporary - for troubleshooting
-  # git remote add bugDemo git@github.com:la-ruby/bugDemo.git
-  # git push bugDemo main
   cd /tmp/created-rails-app
   git remote add bugDemo git@github.com:la-ruby/created-rails-app.git
   git checkout -b bugDemo
-  git push bugDemo bugDemo
+  git push -f bugDemo bugDemo
   git checkout main
 
   git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
