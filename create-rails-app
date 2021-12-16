@@ -48,6 +48,7 @@ bootstrap() {
     cat /tmp/index.html
     mkdir -p app/views/devise/sessions
     cp /tmp/index.html app/views/devise/sessions/new.html.erb
+    sed -i 1,9d app/views/devise/sessions/new.html.erb
     commit "Did bootstrap()"
 }
 
