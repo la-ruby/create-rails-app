@@ -1,5 +1,9 @@
 #!/bin/bash
 
+RAILS_VERSION="7-0-stable"
+BOOTSTRAP_VERSION="5.1"
+
+
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
 }
@@ -38,6 +42,13 @@ devise() {
   commit "Did devise()"
 }
 
+bootstrap() {
+    cd /tmp/created-rails-app
+    (cd /tmp/ && curl -O https://github.com/twbs/bootstrap/blob/main/site/content/docs/5.1/examples/sign-in/index.html)
+    cat /tmp/index.html
+    commit "Did bootstrap()"
+}
+
 upload() {
   # Temporary - for troubleshooting
   cd /tmp/created-rails-app
@@ -71,6 +82,7 @@ main() {
   generate
   repoint
   devise
+  bootstrap
   upload
 }
 
