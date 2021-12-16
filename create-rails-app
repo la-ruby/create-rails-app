@@ -46,6 +46,8 @@ bootstrap() {
     cd /tmp/created-rails-app
     (cd /tmp/ && curl -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
     cat /tmp/index.html
+    mkdir -p app/views/devise/sessions
+    cp /tmp/index.html app/views/devise/sessions/new.html.erb
     commit "Did bootstrap()"
 }
 
