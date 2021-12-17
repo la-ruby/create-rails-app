@@ -49,6 +49,16 @@ bootstrap() {
     mkdir -p app/views/devise/sessions
     cp /tmp/index.html app/views/devise/sessions/new.html.erb
     sed -i 1,9d app/views/devise/sessions/new.html.erb
+
+    cd /tmp/
+    git clone git@github.com:la-ruby/bootstrap.git
+    cd /tmp/bootstrap
+    ls -la
+    ls -la dist/
+    npm install
+    npm run dist
+    ls -la
+    ls -la dist/
     commit "Did bootstrap()"
 }
 
