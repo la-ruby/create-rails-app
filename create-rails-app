@@ -43,6 +43,7 @@ devise() {
 }
 
 bootstrap() {
+    return 
     cd /tmp/created-rails-app
     (cd /tmp/ && curl -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
     cat /tmp/index.html
@@ -53,12 +54,18 @@ bootstrap() {
     cd /tmp/
     git clone git@github.com:la-ruby/bootstrap.git
     cd /tmp/bootstrap
-    ls -la
-    ls -la dist/
     npm install
     npm run dist
     ls -la
     ls -la dist/
+
+    mkdir /tmp/created-rails-app/vendor/bootstrap
+    cp dist/js/bootstrap.bundle.min.js.map /tmp/created-rails-app/vendor/bootstrap/
+    cp dist/js/bootstrap.bundle.min.js /tmp/created-rails-app/vendor/bootstrap/
+    cp dist/css/bootstrap.css.map /tmp/created-rails-app/vendor/bootstrap/
+    cp dist/css/bootstrap.min.css /tmp/created-rails-app/vendor/bootstrap/
+
+    cd /tmp/created-rails-app
     commit "Did bootstrap()"
 }
 
