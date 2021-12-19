@@ -58,11 +58,10 @@ bootstrap() {
     ls -la
     ls -la dist/
 
-    mkdir /tmp/created-rails-app/vendor/bootstrap
-    cp dist/js/bootstrap.bundle.min.js.map /tmp/created-rails-app/vendor/bootstrap/
-    cp dist/js/bootstrap.bundle.min.js /tmp/created-rails-app/vendor/bootstrap/
-    cp dist/css/bootstrap.css.map /tmp/created-rails-app/vendor/bootstrap/
-    cp dist/css/bootstrap.min.css /tmp/created-rails-app/vendor/bootstrap/
+    cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/javascrpt/
+    cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/vendor/javascript/
+    cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
+    cp dist/css/bootstrap.css /tmp/created-rails-app/app/assets/stylesheets/
 
     cd /tmp/created-rails-app
     commit "Did bootstrap()"
