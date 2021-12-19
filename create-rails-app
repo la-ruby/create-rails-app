@@ -53,13 +53,11 @@ bootstrap() {
     (cd /tmp/ && curl -s -O https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css)
     sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
     sed -i 's/{{< year >}}/2022/g' /tmp/signin.css
-    sed -i 's=src="=src="https://getbootstrap.com=g' /tmp/signin.css # https://unix.stackexchange.com/a/211838
+    myvar='<img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">'
+    sed -i "s@.*bootstrap-logo.svg.*@$myvar@"
     echo '<style>' >> app/views/devise/sessions/new.html.erb
     cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
     echo '</style>' >> app/views/devise/sessions/new.html.erb
-
-
-
 
     cd /tmp/
     git clone git@github.com:la-ruby/bootstrap.git
