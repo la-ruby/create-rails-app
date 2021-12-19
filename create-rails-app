@@ -32,7 +32,7 @@ repoint() {
 # adds devise gem
 devise() {
   cd /tmp/created-rails-app
-  bundle add devise --git "https://github.com/heartcombo/devise" --branch "main"
+  bundle add devise --git "https://github.com/heartcombo/devise" --branch "main" &>/dev/null
   bundle install &>/dev/null
   ./bin/rails generate devise:install
   ./bin/rails generate devise User
@@ -48,6 +48,8 @@ bootstrap() {
     mkdir -p app/views/devise/sessions
     cp /tmp/index.html app/views/devise/sessions/new.html.erb
     sed -i 1,9d app/views/devise/sessions/new.html.erb
+    sed -i '1s/^/div class  div1 text-center  \n/' app/views/devise/sessions/new.html.erb
+    sed -i -e '$adiv' app/views/devise/sessions/new.html.erb
 
     cd /tmp/
     git clone git@github.com:la-ruby/bootstrap.git
