@@ -51,7 +51,7 @@ bootstrap() {
     sed -i '1s/^/<div class="bootstrap-signin-example-wrapper text-center">\n/' app/views/devise/sessions/new.html.erb
     sed -i -e '$a</div>' app/views/devise/sessions/new.html.erb
     (cd /tmp/ && curl -s -O https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css)
-    sed -i 's/body/bootstrap-signin-example-wrapper/g' /tmp/signin.css
+    sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
     echo '<style>' >> app/views/devise/sessions/new.html.erb
     cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
     echo '</style>' >> app/views/devise/sessions/new.html.erb
