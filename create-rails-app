@@ -44,8 +44,7 @@ devise() {
 
 bootstrap() {
     cd /tmp/created-rails-app
-    (cd /tmp/ && curl -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
-    cat /tmp/index.html
+    (cd /tmp/ && curl -s -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
     mkdir -p app/views/devise/sessions
     cp /tmp/index.html app/views/devise/sessions/new.html.erb
     sed -i 1,9d app/views/devise/sessions/new.html.erb
@@ -58,7 +57,7 @@ bootstrap() {
     ls -la
     ls -la dist/
 
-    cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/javascrpt/
+    cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/javascript/
     cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/vendor/javascript/
     cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
     cp dist/css/bootstrap.css /tmp/created-rails-app/app/assets/stylesheets/
@@ -78,7 +77,7 @@ upload() {
   git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
   cd /tmp/downloaded-rails-app/
   find -not -path "./.git/*" -not -name ".git" -delete
-  rsync --stats -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/
+  rsync --stats -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/ &>/dev/bull
 
   git add --all
   git commit -m "Updates for $(date +%D)"
@@ -86,8 +85,8 @@ upload() {
 }
 
 commit() {
-  git add --all
-  git commit -m "$1"
+  git add --all &>/dev/null
+  git commit -m "$1" &>/dev/null
 }
 
 main() {
