@@ -54,7 +54,7 @@ bootstrap() {
     sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
     sed -i 's/{{< year >}}/2022/g' /tmp/signin.css
 
-    sed -i 's/src="/src="https://getbootstrap.com/g' /tmp/signin.css  
+    # sed -i 's/src="/src="https://getbootstrap.com/g' /tmp/signin.css  
 
     echo '<style>' >> app/views/devise/sessions/new.html.erb
     cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
