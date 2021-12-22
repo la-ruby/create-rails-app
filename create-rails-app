@@ -64,11 +64,15 @@ bootstrap() {
     cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
     echo '</style>' >> app/views/devise/sessions/new.html.erb
 
+    # use rails form
+    str='  <% end %>'
+    sed -i "s@/form@$str@" app/views/devise/sessions/new.html.erb 
+
     cd /tmp/
     git clone git@github.com:la-ruby/bootstrap.git
     cd /tmp/bootstrap
-    npm install
-    npm run dist
+    npm install &>/dev/null
+    npm run dist &>/dev/null
     cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/public/
     cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/public/
     cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
