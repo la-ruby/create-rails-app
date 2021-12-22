@@ -4,8 +4,6 @@ RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
 SCRIPT_DIR=$(dirname "$0")
 
-cat $SCRIPT_DIR/templates/app/views/_flashie.html.erb
-
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
 }
@@ -84,7 +82,10 @@ bootstrap() {
 # Basic setup for rails flash messages
 flash() {
   cd /tmp/created-rails-app
-  # TODO
+  cp $SCRIPT_DIR/templates/app/views/_flashie.html.erb  /tmp/created-rails-app/app/views/_flashie.html.erb
+  str = '   <%= render "/flashie" %>'
+  sed -i '/\/head.*/a\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
+  commit "Did flash()"
 }
 
 
