@@ -58,8 +58,8 @@ bootstrap() {
     sed -i 's/{{< year >}}/2022/g' app/views/devise/sessions/new.html.erb
 
 
-    myvar='<img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">'
-    sed -i "s@.*bootstrap-logo.svg.*@$myvar@" app/views/devise/sessions/new.html.erb
+    str='<img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">'
+    sed -i "s@.*bootstrap-logo.svg.*@$str@" app/views/devise/sessions/new.html.erb
     echo '<style>' >> app/views/devise/sessions/new.html.erb
     cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
     echo '</style>' >> app/views/devise/sessions/new.html.erb
