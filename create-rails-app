@@ -86,7 +86,7 @@ flash() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/_flashie.html.erb app/views/_flashie.html.erb
   str='   <%= render "/flashie" %>'
-  sed -i '/\/head.*/a\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
+  sed -i '/\<body.*/a\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
   commit "Did flash()"
   popd
 }
