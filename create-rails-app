@@ -66,9 +66,9 @@ bootstrap() {
 
     # use rails form
     str='  <% end %>'
-    sed -i "s@/form@$str@" app/views/devise/sessions/new.html.erb
+    sed -i "s@/.*form.*@$str@" app/views/devise/sessions/new.html.erb
     str='  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>'
-    sed -i "s@<form@$str@" app/views/devise/sessions/new.html.erb
+    sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
 
     cd /tmp/
     git clone git@github.com:la-ruby/bootstrap.git
