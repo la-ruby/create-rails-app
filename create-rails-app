@@ -65,8 +65,8 @@ bootstrap() {
     echo '</style>' >> app/views/devise/sessions/new.html.erb
 
     # use rails form
-    str='  <% end %>'
-    sed -i "s@/.*</form>.*@$str@" app/views/devise/sessions/new.html.erb
+    str='<% end %>'
+    sed -i "s@/</form>@$str@" app/views/devise/sessions/new.html.erb
     str='  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>'
     sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
 
