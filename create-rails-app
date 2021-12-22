@@ -2,7 +2,9 @@
 
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
+SCRIPT_DIR=$(dirname "$0")
 
+cat $SCRIPT_DIR/templates/app/views/_flashie.html.erb
 
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
@@ -79,6 +81,14 @@ bootstrap() {
     commit "Did bootstrap()"
 }
 
+# Basic setup for rails flash messages
+flash() {
+  cd /tmp/created-rails-app
+  # TODO
+}
+
+
+
 upload() {
   # Temporary - for troubleshooting
   cd /tmp/created-rails-app
@@ -113,6 +123,7 @@ main() {
   repoint
   devise
   bootstrap
+  flash
   upload
 }
 
