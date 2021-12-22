@@ -2,7 +2,6 @@
 
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
-SCRIPT_DIR=$(dirname "$0")
 
 find $SCRIPT_DIR
 cat $SCRIPT_DIR/templates/app/views/_flashie.html.erb
@@ -12,16 +11,17 @@ download() {
 }
 
 generate() {
-  cd /tmp/rails
+  pushd /tmp/rails
   bundle install &>/dev/null
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql >/dev/null
   cd /tmp/created-rails-app
   commit "Did generate()"
+  popd
 }
 
 # repoint gemfile to github rails/rails
 repoint() {
-  cd /tmp/created-rails-app
+  pushd /tmp/created-rails-app
   sed -i "/^gem \"rails/c\REMOVED" Gemfile # remove line
   replacement="gem 'rails', :github => 'rails/rails', :branch => '7-0-stable'"
   sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
@@ -30,23 +30,24 @@ repoint() {
   bundle lock --add-platform ruby # this was needed because ci runs in linux
   ./bin/setup
   commit "Did repoint()"
+  popd
 }
 
 # adds devise gem
 devise() {
-  cd /tmp/created-rails-app
+  pushd /tmp/created-rails-app
   bundle add devise --git "https://github.com/heartcombo/devise" --branch "main" &>/dev/null
   bundle install &>/dev/null
   ./bin/rails generate devise:install
   ./bin/rails generate devise User
   ./bin/rails db:migrate
   sed -i -e 's/^/# /' test/fixtures/users.yml # stackoverflow/a/51102255
-
   commit "Did devise()"
+  popd
 }
 
 bootstrap() {
-    cd /tmp/created-rails-app
+    pushd /tmp/created-rails-app
 
     (cd /tmp/ && curl -s -O https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css)
     sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
@@ -80,19 +81,16 @@ bootstrap() {
 
     cd /tmp/created-rails-app
     commit "Did bootstrap()"
+    popd
 }
 
 # Basic setup for rails flash messages
 flash() {
-  cd /tmp/created-rails-app
-  ls -la ${SCRIPT_DIR}
-  cp $SCRIPT_DIR/templates/app/views/_flashie.html.erb  /tmp/created-rails-app/app/views/_flashie.html.erb
+  cp templates/app/views/_flashie.html.erb /tmp/created-rails-app/app/views/_flashie.html.erb
   str = '   <%= render "/flashie" %>'
   sed -i '/\/head.*/a\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
   commit "Did flash()"
 }
-
-
 
 upload() {
   # Temporary - for troubleshooting
