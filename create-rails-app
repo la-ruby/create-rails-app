@@ -4,6 +4,7 @@ RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
 SCRIPT_DIR=$(dirname "$0")
 
+find $SCRIPT_DIR
 cat $SCRIPT_DIR/templates/app/views/_flashie.html.erb
 
 download() {
