@@ -73,7 +73,7 @@ bootstrap() {
     cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
     cp dist/css/bootstrap.css /tmp/created-rails-app/app/assets/stylesheets/
     str='   <script src="/public/bootstrap.bundle.js"></script>'
-    sed -i '/\/head.*/i\ '"$str"'' app/views/layouts/application.html.erb
+    sed -i '/\/head.*/i\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
 
     cd /tmp/created-rails-app
     commit "Did bootstrap()"
