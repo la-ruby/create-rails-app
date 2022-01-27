@@ -98,6 +98,18 @@ flash() {
   popd
 }
 
+# should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
+# when you do COVERAGE=1 ./bin/rails test
+simplecov() {
+  pushd /tmp/created-rails-app
+  echo "gem 'simplecov', require: false, group: :test" >> Gemfile
+  bundle install &>/dev/null
+  # prepend one file to another using sed
+  sed -i -e '1rtemplates/test/test_helper.rb.tt' -e '1{h;d}' -e '2{x;G}' test/test_helper.rb
+  commit "Did simplecov()"
+  popd
+}
+
 upload() {
   # Temporary - for troubleshooting
   pushd /tmp/created-rails-app
@@ -134,6 +146,7 @@ main() {
   devise
   bootstrap
   flash
+  simplecov
   upload
 }
 
