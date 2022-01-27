@@ -105,6 +105,9 @@ simplecov() {
   echo "gem 'simplecov', require: false, group: :test" >> Gemfile
   bundle install &>/dev/null
   # prepend one file to another using sed
+  echo "D3BUG"
+  echo $HOME
+  pwd
   sed -i -e '1rtemplates/test/test_helper.rb.tt' -e '1{h;d}' -e '2{x;G}' test/test_helper.rb
   commit "Did simplecov()"
   popd
