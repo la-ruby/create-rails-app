@@ -104,8 +104,7 @@ simplecov() {
   pushd /tmp/created-rails-app
   echo "gem 'simplecov', require: false, group: :test" >> Gemfile
   bundle install &>/dev/null
-  # prepend one file to another using sed
-  sed -i -e '1r/home/runner/work/create-rails-app/templates/test/test_helper.rb.tt' -e '1{h;d}' -e '2{x;G}' test/test_helper.rb
+  cat /home/runner/work/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb | sponge test/test_helper.rb
   commit "Did simplecov()"
   popd
 }
