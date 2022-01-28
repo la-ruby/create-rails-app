@@ -104,7 +104,8 @@ simplecov() {
   pushd /tmp/created-rails-app
   echo "gem 'simplecov', require: false, group: :test" >> Gemfile
   bundle install &>/dev/null
-  cat /home/runner/work/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
+  ls -la ~/work/
+  cat /home/runner/work/create-rails-app/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
   mv /tmp/file3 test/test_helper.rb
   commit "Did simplecov()"
   popd
