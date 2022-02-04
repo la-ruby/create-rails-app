@@ -44,48 +44,48 @@ devise() {
 }
 
 bootstrap() {
-    pushd /tmp/created-rails-app
+  pushd /tmp/created-rails-app
 
-    (cd /tmp/ && curl -s -O https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css)
-    sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
+  (cd /tmp/ && curl -s -O https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css)
+  sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
 
-    (cd /tmp/ && curl -s -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
-    mkdir -p app/views/devise/sessions
-    cp /tmp/index.html app/views/devise/sessions/new.html.erb
-    sed -i 1,9d app/views/devise/sessions/new.html.erb
-    sed -i '1s/^/<div class="bootstrap-signin-example-wrapper text-center">\n/' app/views/devise/sessions/new.html.erb
-    sed -i -e '$a</div>' app/views/devise/sessions/new.html.erb
-    sed -i 's/{{< year >}}/2022/g' app/views/devise/sessions/new.html.erb
+  (cd /tmp/ && curl -s -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
+  mkdir -p app/views/devise/sessions
+  cp /tmp/index.html app/views/devise/sessions/new.html.erb
+  sed -i 1,9d app/views/devise/sessions/new.html.erb
+  sed -i '1s/^/<div class="bootstrap-signin-example-wrapper text-center">\n/' app/views/devise/sessions/new.html.erb
+  sed -i -e '$a</div>' app/views/devise/sessions/new.html.erb
+  sed -i 's/{{< year >}}/2022/g' app/views/devise/sessions/new.html.erb
 
 
-    str='<img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">'
-    sed -i "s@.*bootstrap-logo.svg.*@$str@" app/views/devise/sessions/new.html.erb
-    echo '<style>' >> app/views/devise/sessions/new.html.erb
-    cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
-    echo '</style>' >> app/views/devise/sessions/new.html.erb
+  str='<img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">'
+  sed -i "s@.*bootstrap-logo.svg.*@$str@" app/views/devise/sessions/new.html.erb
+  echo '<style>' >> app/views/devise/sessions/new.html.erb
+  cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
+  echo '</style>' >> app/views/devise/sessions/new.html.erb
 
-    # use rails form
-    # str='<% end %>'
-    perl -pi.bak -e 's/<\/form>/<% end %>/g' app/views/devise/sessions/new.html.erb
-    rm app/views/devise/sessions/new.html.erb.bak
-    str='  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>'
-    sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
+  # use rails form
+  # str='<% end %>'
+  perl -pi.bak -e 's/<\/form>/<% end %>/g' app/views/devise/sessions/new.html.erb
+  rm app/views/devise/sessions/new.html.erb.bak
+  str='  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>'
+  sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
 
-    cd /tmp/
-    git clone git@github.com:la-ruby/bootstrap.git
-    cd /tmp/bootstrap
-    npm install &>/dev/null
-    npm run dist &>/dev/null
-    cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/public/
-    cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/public/
-    cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
-    cp dist/css/bootstrap.css /tmp/created-rails-app/app/assets/stylesheets/
-    str='   <script src="/bootstrap.bundle.js"></script>'
-    sed -i '/\/head.*/i\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
+  cd /tmp/
+  git clone git@github.com:la-ruby/bootstrap.git
+  cd /tmp/bootstrap
+  npm install &>/dev/null
+  npm run dist &>/dev/null
+  cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/public/
+  cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/public/
+  cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
+  cp dist/css/bootstrap.css /tmp/created-rails-app/app/assets/stylesheets/
+  str='   <script src="/bootstrap.bundle.js"></script>'
+  sed -i '/\/head.*/i\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
 
-    cd /tmp/created-rails-app
-    commit "Did bootstrap()"
-    popd
+  cd /tmp/created-rails-app
+  commit "Did bootstrap()"
+  popd
 }
 
 # Basic setup for rails flash messages
