@@ -1,0 +1,96 @@
+name: .github/workflows/verify.yml
+
+on: [push]
+
+jobs:
+  #
+  #
+  #  Unit Tests
+  #
+  #
+  unit_tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Install PostgreSQL client
+      run: |
+        sudo apt-get -yqq install libpq-dev
+
+    - name: Build App
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        RAILS_ENV: test
+      run: |
+        bin/rails db:setup
+
+    - name: Execute unit tests
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        RAILS_ENV: test
+        COVERAGE: 1
+      run: |
+        ./bin/rails test
+    - name: Ensure test coverage
+      run: |
+        (grep -Pzo '    <span class="group_name">All Files</span>\n    \(<span class="covered_percent">\n      <span class="green">\n  100.0%' coverage/index.html) || true
+
+
+  #
+  #
+  #  Rubocop
+  #
+  #
+  rubocop:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: ruby/setup-ruby@v1
+
+    - name: Run rubocop
+      run: |
+        gem install rubocop
+        rubocop
+
+  #
+  #
+  #  Reek
+  #
+  #
+  reek:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: ruby/setup-ruby@v1
+
+    - name: Run reek
+      run: |
+        gem install reek
+        reek
