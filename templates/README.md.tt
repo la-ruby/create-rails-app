@@ -23,6 +23,12 @@ perl -p -i -e 's/created_rails_app/blog/g' config/environments/*.rb
 ./bin/rails test
 ```
 
+4. Start the server
+
+```
+./bin/rails s
+```
+
 ### 4. Upgrade rails (often)
 
 ```
