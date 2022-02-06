@@ -88,6 +88,19 @@ bootstrap() {
   popd
 }
 
+# fontawesome, etc
+icons() {
+  pushd /tmp/created-rails-app
+  (cd /tmp/;
+   curl -O https://codeload.github.com/FortAwesome/Font-Awesome/zip/refs/heads/master;
+   unzip master)
+  cp -r /tmp/Font-Awesome-master vendor/
+  string='\ *= require Font-Awesome-master/css/all'
+  sed "/require_self.*/i $string" app/assets/stylesheets/application.css
+  commit "Installed fontawesome"
+  popd
+}
+
 # Basic setup for rails flash messages
 flash() {
   pushd /tmp/created-rails-app
@@ -164,6 +177,7 @@ main() {
   repoint
   devise
   bootstrap
+  icons
   flash
   simplecov
   ci
