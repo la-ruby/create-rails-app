@@ -1,5 +1,5 @@
 
-### 1. Renaming created-rails-app
+### 1. First time setup
 
 After forking created-rails-app, rename it to .e.g blog
 
@@ -11,18 +11,19 @@ perl -p -i -e 's/CREATED_RAILS_APP/BLOG/g' config/*.yml
 perl -p -i -e 's/created_rails_app/blog/g' config/environments/*.rb
 ```
 
-### 2. First time setup
+### 1.2 Setup gems and database
+
 
 ```
 ./bin/setup
 ```
 
-### 3. Runnin g tests
+### 3. Run unit tests
 ```
 ./bin/rails test
 ```
 
-### 4. Upgrade rails often
+### 4. Upgrade rails (often)
 
 ```
 $ ./bin/rails --version
@@ -37,8 +38,7 @@ Receiving objects: 100% (285/285), 1.38 MiB | 2.43 MiB/s, done.
 Resolving deltas: 100% (151/151), completed with 19 local objects.
 From github.com:la-ruby/created-rails-app
  * [new branch]      main       -> upstream/main
-$ git format-patch -k --stdout main..upstream/main | tee /tmp/updates.patch
-$ git apply /tmp/updates.patch
+$ git merge upstream/latest --allow-unrelated-histories
 $ ./bin/rails --version
 Rails 7.0.1
 ```

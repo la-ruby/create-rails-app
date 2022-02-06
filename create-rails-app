@@ -148,11 +148,10 @@ readme() {
 
 
 upload() {
-  # Temporary - for troubleshooting
   pushd /tmp/created-rails-app
-  git remote add bugDemo git@github.com:la-ruby/created-rails-app.git
-  git checkout -b bugDemo
-  git push -f bugDemo bugDemo
+  git remote add myremote git@github.com:la-ruby/created-rails-app.git
+  git checkout -b latest
+  git push -f myremote latest
   git checkout main
 
   git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
