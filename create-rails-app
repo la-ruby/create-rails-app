@@ -103,7 +103,8 @@ bootstrap() {
   string='\ *= require bootstrap-main/css/bootstrap.css'
   sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
 
-  ln -s vendor/bootstrap-main/js/bootstrap.bundle.js public/bootstrap.bundle.js
+  (cd public;
+   ln -s ../vendor/bootstrap-main/js/bootstrap.bundle.js bootstrap.bundle.js)
   string='   <script src="/bootstrap.bundle.js"></script>'
   sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
 
@@ -127,6 +128,21 @@ icons() {
   string='Rails.application.config.assets.paths << "#{Rails.root}/vendor"'
   echo "$string" >> config/initializers/assets.rb
   commit "Installed fontawesome"
+  popd
+}
+
+# some widgets still expect jquery in the window. namespace
+jquery() {
+  pushd /tmp/created-rails-app
+  mkdir vendor/jquery
+  (cd vendor/jquery;
+     curl -O https://code.jquery.com/jquery-3.6.0.min.js)
+  (cd public;
+   ln -s ../vendor/jquery/jquery-3.6.0.min.js jquery-3.6.0.min.js)
+  string='   <script src="/jquery-3.6.0.min.js"></script>'
+  sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
+
+  commit "Installed jquery"
   popd
 }
 
@@ -208,6 +224,7 @@ main() {
   repoint
   devise
   pundit
+  jquery
   bootstrap
   icons
   flash
