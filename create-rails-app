@@ -121,13 +121,11 @@ simplecov() {
 # sets up automated testing (ci) via github actions
 ci() {
   pushd /tmp/created-rails-app
-  mkdir .github/workflows/
+  mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
   commit "Did ci()"
   popd
 }
-
-
 
 upload() {
   # Temporary - for troubleshooting
