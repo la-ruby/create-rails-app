@@ -46,7 +46,7 @@ devise() {
 # adds pundit for authorization
 pundit() {
   pushd /tmp/created-rails-app
-  bundle add devise --git "https://github.com/varvet/pundit" --branch "main" &>/dev/null  
+  bundle add pundit --git "https://github.com/varvet/pundit" --branch "main" &>/dev/null  
   bundle install &>/dev/null
   # TODO:
   # ...Include Pundit::Authorization in your application controller:
