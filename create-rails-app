@@ -94,7 +94,10 @@ icons() {
   (cd /tmp/;
    curl -O https://codeload.github.com/FortAwesome/Font-Awesome/zip/refs/heads/master;
    unzip master)
-  cp -r /tmp/Font-Awesome-master vendor/
+  mkdir -p vendor/Font-Awesome-master/css
+  mkdir -p vendor/Font-Awesome-master/webfonts
+  cp /tmp/Font-Awesome-master/css/* vendor/Font-Awesome-master/css/
+  cp /tmp/Font-Awesome-master/webfonts/* vendor/Font-Awesome-master/webfonts/
   string='\ *= require Font-Awesome-master/css/all'
   sed "/require_self.*/i $string" app/assets/stylesheets/application.css
   commit "Installed fontawesome"
