@@ -43,6 +43,23 @@ devise() {
   popd
 }
 
+# adds pundit for authorization
+pundit() {
+  pushd /tmp/created-rails-app
+  bundle add devise --git "https://github.com/varvet/pundit" --branch "main" &>/dev/null  
+  bundle install &>/dev/null
+  # TODO:
+  # ...Include Pundit::Authorization in your application controller:
+  #   class ApplicationController < ActionController::Base
+  #     include Pundit::Authorization
+  #   end
+  # ...Optionally, you can run the generator, which will set up an
+  # application policy with some useful defaults for you:
+  #   rails g pundit:install  
+  commit "Did pundit()"
+  popd
+}
+
 bootstrap() {
   pushd /tmp/created-rails-app
 
@@ -180,6 +197,7 @@ main() {
   generate
   repoint
   devise
+  pundit
   bootstrap
   icons
   flash

@@ -27,8 +27,10 @@ perl -p -i -e 's/created_rails_app/blog/g' config/environments/*.rb
 ./bin/rails s
 ```
 
-### 4. Upgrade rails (often)
+### 5. Upgrading
 
+
+### 5.1 Upgrading rails
 ```
 $ ./bin/rails --version
 Rails 7.0.0
@@ -48,3 +50,18 @@ Rails 7.0.1
 ```
 
 Enjoy! 🎉
+
+### 5.2 Customizing bootstrap
+
+Fork twbs/bootstrap to github.com/yourCompany/
+Make changes to that repo, `npm run dist` to generate fresh bundle,
+and replace your `./app/assets/stylesheets/bootstrap.css`
+and `./public/bootstrap.bundle.js`.
+
+### 5.3 Upgrading bootstrap
+
+[Sync your fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-from-the-web-ui),  then `npm run dist` to generate fresh bundle,
+and replace your `./app/assets/stylesheets/bootstrap.css`
+and `./public/bootstrap.bundle.js`
+
+
