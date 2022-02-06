@@ -88,7 +88,7 @@ bootstrap() {
   str='  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>'
   sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
 
-  cd /tmp/
+  (cd /tmp/
   git clone git@github.com:twbs/bootstrap.git
   cd /tmp/bootstrap
   npm install &>/dev/null
@@ -98,12 +98,14 @@ bootstrap() {
   cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/bootstrap-main/js/
   cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/vendor/bootstrap-main/js/
   cp dist/css/bootstrap.css.map /tmp/created-rails-app/vendor/bootstrap-main/css/
-  cp dist/css/bootstrap.css /tmp/created-rails-app/vendor/bootstrap-main/css/
+  cp dist/css/bootstrap.css /tmp/created-rails-app/vendor/bootstrap-main/css/)
 
   string='\ *= require bootstrap-main/css/bootstrap.css'
   sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
-  # str='   <script src="/bootstrap.bundle.js"></script>'
-  # sed -i '/\/head.*/i\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
+
+  ln -s vendor/bootstrap-main/js/bootstrap.bundle.js public/bootstrap.bundle.js
+  string='   <script src="/bootstrap.bundle.js"></script>'
+  sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
 
   cd /tmp/created-rails-app
   commit "Did bootstrap()"
