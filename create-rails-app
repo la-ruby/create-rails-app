@@ -93,8 +93,8 @@ bootstrap() {
   cd /tmp/bootstrap
   npm install &>/dev/null
   npm run dist &>/dev/null
-  mkdir -p /tmp/created-rails-app/vendor/bootstrap/css
-  mkdir -p /tmp/created-rails-app/vendor/bootstrap/js
+  mkdir -p /tmp/created-rails-app/vendor/bootstrap-main/css
+  mkdir -p /tmp/created-rails-app/vendor/bootstrap-main/js
   cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/bootstrap-main/js/
   cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/vendor/bootstrap-main/js/
   cp dist/css/bootstrap.css.map /tmp/created-rails-app/vendor/bootstrap-main/css/
