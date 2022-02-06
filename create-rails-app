@@ -89,16 +89,18 @@ bootstrap() {
   sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
 
   cd /tmp/
-  git clone git@github.com:la-ruby/bootstrap.git
+  git clone git@github.com:twbs/bootstrap.git
   cd /tmp/bootstrap
   npm install &>/dev/null
   npm run dist &>/dev/null
-  cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/public/
-  cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/public/
-  cp dist/css/bootstrap.css.map /tmp/created-rails-app/app/assets/stylesheets/
-  cp dist/css/bootstrap.css /tmp/created-rails-app/app/assets/stylesheets/
-  str='   <script src="/bootstrap.bundle.js"></script>'
-  sed -i '/\/head.*/i\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
+  mkdir -p /tmp/created-rails-app/vendor/bootstrap/css
+  mkdir -p /tmp/created-rails-app/vendor/bootstrap/js
+  cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/bootstrap-main/js/
+  cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/vendor/bootstrap-main/js/
+  cp dist/css/bootstrap.css.map /tmp/created-rails-app/vendor/bootstrap-main/css/
+  cp dist/css/bootstrap.css /tmp/created-rails-app/vendor/bootstrap-main/css/
+  # str='   <script src="/bootstrap.bundle.js"></script>'
+  # sed -i '/\/head.*/i\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
 
   cd /tmp/created-rails-app
   commit "Did bootstrap()"
