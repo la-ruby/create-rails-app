@@ -157,6 +157,15 @@ flash() {
   popd
 }
 
+
+# generates soe scaffolds to serve as examples
+example() {
+  pushd /tmp/created-rails-app
+  ./bin/rails generate scaffold Example title:string body:text
+  commit "Generates some code to serve as examples"
+  popd
+}
+
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
 simplecov() {
@@ -229,6 +238,7 @@ main() {
   icons
   flash
   simplecov
+  example
   ci
   readme
   upload
