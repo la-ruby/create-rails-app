@@ -120,16 +120,10 @@ simplecov() {
   pushd /tmp/created-rails-app
   echo "gem 'simplecov', require: false, group: :test" >> Gemfile
   bundle install &>/dev/null
-  sleep 1
-  echo where am i
-  pwd
-  ls -la ~/work/create-rails-app/
-  sleep 1
+  echo "coverage" >> .gitignore
   cat /home/runner/work/create-rails-app/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
-  sleep 1
   mv /tmp/file3 test/test_helper.rb
   cat test/test_helper.rb
-  sleep 1
   commit "Did simplecov()"
   popd
 }
@@ -144,6 +138,14 @@ ci() {
   commit "Did ci()"
   popd
 }
+
+readme() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/README.md.tt README.md
+  commit "Added README"
+  popd
+}
+
 
 upload() {
   # Temporary - for troubleshooting
@@ -184,6 +186,7 @@ main() {
   flash
   simplecov
   ci
+  readme
   upload
 }
 
