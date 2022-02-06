@@ -123,8 +123,8 @@ ci() {
   pushd /tmp/created-rails-app
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
-  echo "" > .rubocop_todo.yml
-  cp ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt .rubocop.yml
+  rubocop --auto-gen-config
+  reek --todo
   commit "Did ci()"
   popd
 }
