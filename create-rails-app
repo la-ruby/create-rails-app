@@ -134,6 +134,7 @@ icons() {
 flash() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/_flashes.html.erb app/views/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/fade_out_controller.js app/javascript/controllers/
   string='   <%= render "/flashes" %>'
   sed -i '/\.*<body.*/a\ '"$string"'' app/views/layouts/application.html.erb
   commit "Did flash()"
