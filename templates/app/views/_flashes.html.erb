@@ -1,0 +1,16 @@
+<div id="lng-rapid-flashes"
+     class="position-fixed w-100 text-center
+           <%= 'd-none' unless local_assigns[:message].present? || flash.present? %>"
+     style="z-index: 1050; top: 0px"
+     data-controller="fade-out">
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="contents">
+      <% if local_assigns[:message].present? %><%= message %><% end %>
+      <% flash.each do |key, value| %>
+        <%= value.html_safe %>
+      <% end %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+

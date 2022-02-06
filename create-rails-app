@@ -124,9 +124,9 @@ icons() {
 # Basic setup for rails flash messages
 flash() {
   pushd /tmp/created-rails-app
-  cp ~/work/create-rails-app/create-rails-app/templates/app/views/_flashie.html.erb app/views/_flashie.html.erb
-  str='   <%= render "/flashie" %>'
-  sed -i '/\.*<body.*/a\ '"$str"'' /tmp/created-rails-app/app/views/layouts/application.html.erb
+  cp ~/work/create-rails-app/create-rails-app/templates/app/views/_flashes.html.erb app/views/
+  string='   <%= render "/flashes" %>'
+  sed -i '/\.*<body.*/a\ '"$string"'' app/views/layouts/application.html.erb
   commit "Did flash()"
   popd
 }
