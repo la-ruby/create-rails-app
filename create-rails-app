@@ -200,7 +200,13 @@ ci() {
   gem install reek
   reek --version
   reek app/channels/application_cable/channel.rb
+  echo here1
+  reek
+  echo here2
   reek --todo
+  echo here3
+  reek
+  echo here4
   rubocop --auto-gen-config
   commit "Did ci()"
   popd
