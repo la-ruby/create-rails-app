@@ -157,15 +157,15 @@ flash() {
   popd
 }
 
-
-# generates soe scaffolds to serve as examples
-example() {
+# Prefer factories over fixtures
+factory_bot() { 
   pushd /tmp/created-rails-app
-  ./bin/rails generate scaffold Example title:string body:text
-  ./bin/rails db:migrate
-  commit "Generated some code to serve as examples"
+  bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main"
+  mkdir test/factories
+  commit "Did factory_bot()"
   popd
 }
+
 
 # Prevent test suite making outgoing network connections
 # with the message: WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled
@@ -189,6 +189,18 @@ simplecov() {
   mv /tmp/file3 test/test_helper.rb
   cat test/test_helper.rb
   commit "Did simplecov()"
+  popd
+}
+
+# generates soe scaffolds to serve as examples
+example() {
+  pushd /tmp/created-rails-app
+  ./bin/rails generate scaffold Example title:string body:text seed:boolean
+  ./bin/rails db:migrate
+  ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
+  echo 'Example.where(seed: true).destroy_all' >> db/seed.rb
+  echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seed.rb
+  commit "Generated some code to serve as examples"
   popd
 }
 
