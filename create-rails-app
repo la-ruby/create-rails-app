@@ -196,6 +196,7 @@ simplecov() {
 example() {
   pushd /tmp/created-rails-app
   ./bin/rails generate scaffold Example title:string body:text seed:boolean
+  sed -i 's/examples(:one)/FactoryBot.create(:example)/' test/controllers/examples_controller_test.rb
   ./bin/rails db:migrate
   ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
