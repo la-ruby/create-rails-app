@@ -198,6 +198,8 @@ ci() {
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
   gem install reek
+  reek --version
+  reek app/channels/application_cable/channel.rb
   reek --todo
   rubocop --auto-gen-config
   commit "Did ci()"
@@ -210,7 +212,6 @@ readme() {
   commit "Added README"
   popd
 }
-
 
 upload() {
   pushd /tmp/created-rails-app

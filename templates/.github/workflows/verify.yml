@@ -90,7 +90,11 @@ jobs:
 
     - uses: ruby/setup-ruby@v1
 
-    - name: Run reek
+    - name: Install reek
       run: |
         gem install reek
+        reek --version
+
+    - name: Run reek
+      run: |
         reek
