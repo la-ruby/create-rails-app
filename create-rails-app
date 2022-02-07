@@ -167,6 +167,17 @@ example() {
   popd
 }
 
+# Prevent test suite making outgoing network connections
+# with the message: WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled
+webmock() {
+  pushd /tmp/created-rails-app
+  bundle add webmock --git "https://github.com/bblimke/webmock" --group "test" --branch "master" &>/dev/null
+  string="require 'webmock/minitest'"
+  sed -i "/OUR STUFF ENDS.*/i $string" test/test_helper.rb
+  commit "Use webmock for http requests"
+  popd
+}
+
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
 simplecov() {
@@ -238,6 +249,7 @@ main() {
   bootstrap
   icons
   flash
+  webmock
   simplecov
   example
   ci
