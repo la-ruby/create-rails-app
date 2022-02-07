@@ -162,7 +162,8 @@ flash() {
 example() {
   pushd /tmp/created-rails-app
   ./bin/rails generate scaffold Example title:string body:text
-  commit "Generates some code to serve as examples"
+  ./bin/rails db:migrate
+  commit "Generated some code to serve as examples"
   popd
 }
 
