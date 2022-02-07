@@ -12,6 +12,7 @@ if ENV['COVERAGE']
     add_filter 'app/jobs/application_job.rb'
     add_filter 'app/helpers/application_helper.rb'
     add_filter 'app/controllers/application_controller.rb'
+    add_filter 'app/controllers/examples_controller.rb'
   end
 end
 

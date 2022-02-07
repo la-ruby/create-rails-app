@@ -198,7 +198,7 @@ ci() {
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
   rubocop --auto-gen-config || true
-  reek --todo || true
+  reek --todo
   commit "Did ci()"
   popd
 }
