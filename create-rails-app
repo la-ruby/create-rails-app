@@ -193,6 +193,18 @@ simplecov() {
   popd
 }
 
+# thin components for rails
+tcr() {
+  pushd /tmp/created-rails-app
+  mkdir app/views/tcr
+  cp ~/work/create-rails-app/create-rails-app/templates/app/views/tcr/_reaction.turbo_stream.erb app/views/tcr/_reaction.turbo_stream.erb
+  cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr.rb app/lib
+  cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr app/lib/
+  sed -i '/^module ApplicationHelper/a\  include Tcr::Helpers' app/helpers/application_helper.rb
+  commit "Did tcr()"
+  popd
+}
+
 # generates soe scaffolds to serve as examples
 example() {
   pushd /tmp/created-rails-app
@@ -274,6 +286,7 @@ main() {
   factory_bot
   webmock
   simplecov
+  tcr
   example
   ci
   readme

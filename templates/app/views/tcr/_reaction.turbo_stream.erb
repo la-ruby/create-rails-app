@@ -1,0 +1,5 @@
+<% @reaction.restreamables.each do |component| %>
+  <%= turbo_stream.replace component.id do %>
+    <%= render component %>
+  <% end %>
+<% end %>
