@@ -197,6 +197,7 @@ simplecov() {
 tcr() {
   pushd /tmp/created-rails-app
   mkdir app/views/tcr
+  mkdir app/lib
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/tcr/_reaction.turbo_stream.erb app/views/tcr/_reaction.turbo_stream.erb
   cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr.rb app/lib
   cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr app/lib/
