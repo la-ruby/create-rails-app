@@ -161,6 +161,7 @@ flash() {
 factory_bot() { 
   pushd /tmp/created-rails-app
   bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main"
+  bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master"
   mkdir test/factories
   commit "Did factory_bot()"
   popd
