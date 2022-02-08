@@ -200,7 +200,7 @@ tcr() {
   mkdir app/lib
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/tcr/_reaction.turbo_stream.erb app/views/tcr/_reaction.turbo_stream.erb
   cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr.rb app/lib
-  cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr app/lib/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr app/lib/
   sed -i '/^module ApplicationHelper/a\  include Tcr::Helpers' app/helpers/application_helper.rb
   commit "Did tcr()"
   popd
