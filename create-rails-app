@@ -239,6 +239,15 @@ ci() {
   popd
 }
 
+# some additional gitignores
+gitignore() {
+  pushd /tmp/created-rails-app
+  echo ".envrc" >> .gitignore
+  echo "**/.DS_Store" >> .gitignore
+  commit "Did gitignore()"
+  popd
+}
+
 readme() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/README.md.tt README.md
@@ -291,6 +300,7 @@ main() {
   example
   ci
   readme
+  gitignore
   upload
 }
 
