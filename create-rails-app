@@ -235,6 +235,7 @@ ci() {
   reek
   echo here4
   rubocop --auto-gen-config
+  cat ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt >> .rubocop.yml 
   commit "Did ci()"
   popd
 }
