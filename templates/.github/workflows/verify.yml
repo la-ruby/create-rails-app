@@ -86,15 +86,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-    - uses: ruby/setup-ruby@v1
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
 
-    - name: Install reek
-      run: |
-        gem install reek
-        reek --version
-
-    - name: Run reek
-      run: |
-        reek
+      - name: Install Reek
+        run: |
+          gem install reek
+      - name: Run Reek
+        run: |
+          reek *
