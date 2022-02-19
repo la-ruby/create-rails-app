@@ -225,15 +225,9 @@ ci() {
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
   gem install reek
-  reek --version
-  reek app/channels/application_cable/channel.rb || true
-  echo here1
-  reek
-  echo here2
   reek --todo
-  echo here3
-  reek
-  echo here4
+  cat ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt >> .reek.yml
+  # ^ some "sensible" reek ignores for rails
   rubocop --auto-gen-config
   cat ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt >> .rubocop.yml 
   commit "Did ci()"
