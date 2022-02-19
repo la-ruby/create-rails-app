@@ -224,12 +224,16 @@ ci() {
   pushd /tmp/created-rails-app
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
+  # RUBOCOP
+  cp ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt >> .rubocop.yml
+  cp ~/work/create-rails-app/create-rails-app/templates/.rubocop_todo.yml.tt >> .rubocop_todo.yml
+  # rubocop --auto-gen-config
+  rubocop --regenerate-todo
+  # REEK
   gem install reek
   reek --todo
   cat ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt >> .reek.yml
   # ^ some "sensible" reek ignores for rails
-  rubocop --auto-gen-config
-  cat ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt >> .rubocop.yml 
   commit "Did ci()"
   popd
 }
