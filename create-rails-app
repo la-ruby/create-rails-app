@@ -231,7 +231,7 @@ ci() {
   rubocop --regenerate-todo
   # REEK
   gem install reek
-  reek --todo
+  reek --todo *
   cat ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt >> .reek.yml
   # ^ some "sensible" reek ignores for rails
   commit "Did ci()"
