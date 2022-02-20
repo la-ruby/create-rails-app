@@ -173,8 +173,7 @@ factory_bot() {
 webmock() {
   pushd /tmp/created-rails-app
   bundle add webmock --git "https://github.com/bblimke/webmock" --group "test" --branch "master" &>/dev/null
-  string="require 'webmock/minitest'"
-  sed -i "/OUR STUFF ENDS.*/i $string" test/test_helper.rb
+  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/webmock.rb test/support/
   commit "Use webmock for http requests"
   popd
 }
@@ -188,7 +187,11 @@ simplecov() {
   echo "coverage" >> .gitignore
   cat /home/runner/work/create-rails-app/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
   mv /tmp/file3 test/test_helper.rb
-  cat test/test_helper.rb
+  mkdir test/support || true
+  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
+  # wipwip
+  string='Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |rb| require(rb) }'
+  sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
   commit "Did simplecov()"
   popd
 }
@@ -293,8 +296,8 @@ main() {
   icons
   flash
   factory_bot
-  webmock
   simplecov
+  webmock
   tcr
   example
   ci
