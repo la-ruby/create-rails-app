@@ -174,10 +174,6 @@ webmock() {
   pushd /tmp/created-rails-app
   bundle add webmock --git "https://github.com/bblimke/webmock" --group "test" --branch "master" &>/dev/null
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/webmock.rb test/support/
-
-  # tracing
-  cat test/test_helper.rb  
-
   commit "Use webmock for http requests"
   popd
 }
@@ -197,8 +193,13 @@ simplecov() {
   string='Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |rb| require(rb) }'
   sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
 
+  sleep 5
+  echo TRACESTART
   # tracing
   cat test/test_helper.rb  
+  echo TRACEEND
+  sleep 5
+  ruby -c test/test_helper.rb
 
   commit "Did simplecov()"
   popd
