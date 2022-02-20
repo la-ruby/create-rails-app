@@ -213,6 +213,11 @@ simplecov() {
   string='Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |rb| require(rb) }
 '$'\n'
   sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
+
+  # adding minitest-test_profile gem
+  bundle add minitest-test_profile --git "https://github.com/y-yagi/minitest-test_profile" --group "test" --branch "master" &>/dev/null
+  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/minitest-test_profile.rb test/support/
+
   commit "Did simplecov()"
   popd
 }
