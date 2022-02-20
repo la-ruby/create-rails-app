@@ -30,6 +30,19 @@ repoint() {
   popd
 }
 
+# using newer version of turbo-rails
+hotwired() {
+  pushd /tmp/created-rails-app
+  sed -i "/^gem \"turbo-rails/c\REMOVED" Gemfile # remove line
+  replacement="gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'"
+  sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
+  bundle install
+  commit "Did hotwired()"
+  popd
+}
+
+
+
 # adds devise gem
 devise() {
   pushd /tmp/created-rails-app
@@ -289,6 +302,7 @@ main() {
   download
   generate
   repoint
+  hotwired
   devise
   pundit
   jquery
