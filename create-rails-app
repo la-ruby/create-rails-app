@@ -218,6 +218,7 @@ vcr() {
 clockwork() {
   pushd /tmp/created-rails-app
   bundle add clockwork --git "https://github.com/Rykian/clockwork" --branch "master" &>/dev/null
+  cp /home/runner/work/create-rails-app/create-rails-app/templates/clock.rb clock.rb
   commit "Installed clockwork"
   popd
 }
