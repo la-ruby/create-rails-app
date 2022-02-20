@@ -159,6 +159,14 @@ jquery() {
   popd
 }
 
+nice_partials() {
+  pushd /tmp/created-rails-app
+  # wipwip
+  bundle add nice_partials --git "https://github.com/bullet-train-co/nice_partials" --branch "main" &>/dev/null
+  commit "Installed nice_partials"
+  popd
+}
+
 # Basic setup for rails flash messages
 flash() {
   pushd /tmp/created-rails-app
@@ -321,6 +329,7 @@ main() {
   jquery
   bootstrap
   icons
+  nice_partials
   flash
   factory_bot
   simplecov
