@@ -17,7 +17,19 @@ perl -p -i -e 's/created_rails_app/blog/g' config/environments/*.rb
 #### First time setup
 
 ```
-./bin/setup
+$ ./bin/setup
+$ ./bin/rails s
+=> Booting Puma
+=> Run `bin/rails server --help` for more startup options
+Puma starting in single mode...
+*  Min threads: 5
+*  Max threads: 5
+*  Environment: development
+*          PID: 84816
+* Listening on http://127.0.0.1:3000
+* Listening on http://[::1]:3000
+Use Ctrl-C to stop
+$
 ```
 
 
