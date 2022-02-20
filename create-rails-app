@@ -161,9 +161,16 @@ jquery() {
 
 nice_partials() {
   pushd /tmp/created-rails-app
-  # wipwip
   bundle add nice_partials --git "https://github.com/bullet-train-co/nice_partials" --branch "main" &>/dev/null
   commit "Installed nice_partials"
+  popd
+}
+
+# a pagination gem
+kaminari() {
+  pushd /tmp/created-rails-app
+  bundle add kaminari --git "https://github.com/kaminari/kaminari" --branch "master" &>/dev/null
+  commit "Installed kaminari"
   popd
 }
 
@@ -207,6 +214,14 @@ vcr() {
   popd
 }
 
+# cron like scheduling
+clockwork() {
+  pushd /tmp/created-rails-app
+  bundle add clockwork --git "https://github.com/Rykian/clockwork" --branch "master" &>/dev/null
+  commit "Installed clockwork"
+  popd
+}
+
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
 simplecov() {
@@ -230,18 +245,6 @@ simplecov() {
   popd
 }
 
-# thin components for rails
-tcr() {
-  pushd /tmp/created-rails-app
-  mkdir app/views/tcr
-  mkdir app/lib
-  cp ~/work/create-rails-app/create-rails-app/templates/app/views/tcr/_reaction.turbo_stream.erb app/views/tcr/_reaction.turbo_stream.erb
-  cp ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr.rb app/lib
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/lib/tcr app/lib/
-  sed -i '/^module ApplicationHelper/a\  include Tcr::Helpers' app/helpers/application_helper.rb
-  commit "Did tcr()"
-  popd
-}
 
 # generates soe scaffolds to serve as examples
 example() {
@@ -330,11 +333,13 @@ main() {
   bootstrap
   icons
   nice_partials
+  kaminari
   flash
   factory_bot
   simplecov
   webmock
   vcr
+  clockwork
   example
   ci
   readme
