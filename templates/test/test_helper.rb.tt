@@ -1,1 +1,2 @@
-Dir[File.expand_path('support/**/*.rb', __dir__)].sort.each { |rb| require(rb) }
+require_relative "support/00_simplecov"
+
