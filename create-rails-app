@@ -223,6 +223,16 @@ clockwork() {
   popd
 }
 
+# Adds a procfile - heroku uses this
+procfile() {
+  pushd /tmp/created-rails-app
+  cp /home/runner/work/create-rails-app/create-rails-app/templates/Procfile.tt Procfile
+  commit "Added procfile"
+  popd
+}
+
+
+
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
 simplecov() {
@@ -341,6 +351,7 @@ main() {
   webmock
   vcr
   clockwork
+  procfile
   example
   ci
   readme
