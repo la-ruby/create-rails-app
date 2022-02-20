@@ -180,7 +180,6 @@ factory_bot() {
   popd
 }
 
-
 # Prevent test suite making outgoing network connections
 # with the message: WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled
 webmock() {
@@ -192,15 +191,13 @@ webmock() {
 }
 
 # sometimes you want to vcr instead of webmock
-() {
+vcr() {
   pushd /tmp/created-rails-app
   bundle add vcr --git "https://github.com/vcr/vcr" --group "test" --branch "master" &>/dev/null
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/vcr.rb test/support/
   commit "Installed vcr"
   popd
 }
-
-
 
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
@@ -324,7 +321,6 @@ main() {
   simplecov
   webmock
   vcr
-  tcr
   example
   ci
   readme
