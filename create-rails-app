@@ -117,8 +117,8 @@ bootstrap() {
 icons() {
   pushd /tmp/created-rails-app
   (cd /tmp/;
-   curl -O https://codeload.github.com/FortAwesome/Font-Awesome/zip/refs/heads/master;
-   unzip master)
+   curl -s -O https://codeload.github.com/FortAwesome/Font-Awesome/zip/refs/heads/master;
+   unzip master) &>/dev/null
   mkdir -p vendor/Font-Awesome-master/css
   mkdir -p vendor/Font-Awesome-master/webfonts
   cp /tmp/Font-Awesome-master/css/all.css vendor/Font-Awesome-master/css/
@@ -136,7 +136,7 @@ jquery() {
   pushd /tmp/created-rails-app
   mkdir vendor/jquery
   (cd vendor/jquery;
-     curl -O https://code.jquery.com/jquery-3.6.0.min.js)
+     curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
   (cd public;
    ln -s ../vendor/jquery/jquery-3.6.0.min.js jquery-3.6.0.min.js)
   string='   <script src="/jquery-3.6.0.min.js"></script>'
@@ -160,8 +160,8 @@ flash() {
 # Prefer factories over fixtures
 factory_bot() { 
   pushd /tmp/created-rails-app
-  bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main"
-  bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master"
+  bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
+  bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master" &>/dev/null
   mkdir test/factories
   commit "Did factory_bot()"
   popd
@@ -191,7 +191,7 @@ simplecov() {
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
   # wipwip
   string='Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |rb| require(rb) }
-'
+'$'\n'
   sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
 
   sleep 5
