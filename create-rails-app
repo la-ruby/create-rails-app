@@ -36,7 +36,7 @@ hotwired() {
   sed -i "/^gem \"turbo-rails/c\REMOVED" Gemfile # remove line
   replacement="gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'"
   sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
-  bundle install
+  bundle install &>/dev/null
   commit "Did hotwired()"
   popd
 }
@@ -112,7 +112,7 @@ bootstrap() {
 bootstrap_icons() {
   pushd /tmp/created-rails-app
   (cd /tmp/
-   curl -s -O https://github.com/twbs/icons/archive/refs/heads/main.zip
+   curl -s -L -O https://github.com/twbs/icons/archive/refs/heads/main.zip
    unzip main.zip)
   cp /tmp/main/font/bootstrap-icons.css public/
   mkdir public/fonts
