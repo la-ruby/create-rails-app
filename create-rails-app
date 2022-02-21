@@ -12,7 +12,7 @@ generate() {
   bundle install &>/dev/null
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql >/dev/null
   cd /tmp/created-rails-app
-  commit "Did generate()"
+  commit "Generated new rails application"
   popd
 }
 
@@ -26,7 +26,7 @@ repoint() {
   bundle install &>/dev/null
   bundle lock --add-platform ruby # this was needed because ci runs in linux
   ./bin/setup
-  commit "Did repoint()"
+  commit "Using rails branch at github"
   popd
 }
 
@@ -37,11 +37,9 @@ hotwired() {
   replacement="gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'"
   sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
   bundle install &>/dev/null
-  commit "Did hotwired()"
+  commit "Hotwire setup"
   popd
 }
-
-
 
 # adds devise gem
 devise() {
@@ -52,7 +50,7 @@ devise() {
   ./bin/rails generate devise User
   ./bin/rails db:migrate
   sed -i -e 's/^/# /' test/fixtures/users.yml # stackoverflow/a/51102255
-  commit "Did devise()"
+  commit "Installed devise"
   popd
 }
 
@@ -69,7 +67,7 @@ pundit() {
   # ...Optionally, you can run the generator, which will set up an
   # application policy with some useful defaults for you:
   #   rails g pundit:install  
-  commit "Did pundit()"
+  commit "Install pundit"
   popd
 }
 
@@ -105,7 +103,7 @@ bootstrap() {
   echo '<link rel="stylesheet" href="/bootstrap.css">' >> app/views/_stylesheets.html.erb
   cp /tmp/bootstrap/dist/js/bootstrap.bundle.js* public/
   echo '   <script src="/bootstrap.bundle.js"></script>' >> app/views/_javascripts.html.erb
-  commit "Did bootstrap()"
+  commit "Installed bootstrap"
   popd
 }
 
@@ -118,7 +116,7 @@ bootstrap_icons() {
   mkdir public/fonts
   cp /tmp/icons-main/font/fonts/* public/fonts/
   echo '<link rel="stylesheet" href="/bootstrap-icons.css">' >> app/views/_stylesheets.html.erb
-  commit "Did bootstrap_icons()"
+  commit "Installed bootstrap icons"
   popd
 }
 
@@ -132,9 +130,22 @@ fontawesome() {
   cp /tmp/Font-Awesome-6.x/css/all.css public/Font-Awesome/css/
   cp /tmp/Font-Awesome-6.x/webfonts/* public/Font-Awesome/webfonts/
   echo '<link rel="stylesheet" href="/Font-Awesome/css/all.css">' >> app/views/_stylesheets.html.erb
-  commit "Did bootstrap_icons()"
+  commit "Installed fontawesome"
   popd
 }
+
+# install flatpickr - lightweight and powerful datetime picker.
+flatpickr() {
+  pushd /tmp/created-rails-app
+  (cd public
+     curl -L -O https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css
+     curl -L -O https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js)
+  echo '<link rel="stylesheet" href="/flatpickr.min.css">' >> app/views/_stylesheets.html.erb
+  echo '<script src="/flatpickr.min.js"></script>' >> app/views/_javascripts.html.erb
+  commit "Installed flatpickr"
+  popd
+}
+
 
 nice_partials() {
   pushd /tmp/created-rails-app
@@ -158,7 +169,7 @@ flash() {
   cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/fade_out_controller.js app/javascript/controllers/
   string='\   <%= render "/flashes" %>'
   sed -i '/\.*<body.*/a\ '"$string"'' app/views/layouts/application.html.erb
-  commit "Did flash()"
+  commit "Setup flash messages"
   popd
 }
 
@@ -168,7 +179,7 @@ factory_bot() {
   bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
   bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master" &>/dev/null
   mkdir test/factories
-  commit "Did factory_bot()"
+  commit "Installed factory_bot"
   popd
 }
 
@@ -204,7 +215,7 @@ clockwork() {
 procfile() {
   pushd /tmp/created-rails-app
   cp /home/runner/work/create-rails-app/create-rails-app/templates/Procfile.tt Procfile
-  commit "Added procfile"
+  commit "Added Procfile"
   popd
 }
 
@@ -227,7 +238,7 @@ simplecov() {
   bundle add minitest-test_profile --git "https://github.com/y-yagi/minitest-test_profile" --group "test" --branch "master" &>/dev/null
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/minitest-test_profile.rb test/support/
 
-  commit "Did simplecov()"
+  commit "Installed simplecov"
   popd
 }
 
@@ -260,7 +271,7 @@ ci() {
   reek --todo *
   cat ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt >> .reek.yml
   # ^ some "sensible" reek ignores for rails
-  commit "Did ci()"
+  commit "Set up ci"
   popd
 }
 
@@ -269,7 +280,7 @@ gitignore() {
   pushd /tmp/created-rails-app
   echo ".envrc" >> .gitignore
   echo "**/.DS_Store" >> .gitignore
-  commit "Did gitignore()"
+  commit "Updated .gitignore"
   popd
 }
 
@@ -319,6 +330,7 @@ main() {
   bootstrap
   bootstrap_icons
   fontawesome
+  flatpickr
   nice_partials
   kaminari
   flash
