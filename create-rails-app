@@ -114,32 +114,26 @@ bootstrap_icons() {
   (cd /tmp/
    curl -s -L -O https://github.com/twbs/icons/archive/refs/heads/main.zip
    unzip main.zip)
-  cp /tmp/main/font/bootstrap-icons.css public/
+  cp /tmp/icons-main/font/bootstrap-icons.css public/
   mkdir public/fonts
-  cp /tmp/main/font/fonts/* public/fonts/
+  cp /tmp/icons-main/font/fonts/* public/fonts/
   echo '<link rel="stylesheet" href="/bootstrap-icons.css">' >> app/views/_stylesheets.html.erb
   commit "Did bootstrap_icons()"
   popd
 }
 
-# fontawesome, etc
-icons() {
+fontawesome() {
   pushd /tmp/created-rails-app
-  (cd /tmp/;
-   curl -s -O https://codeload.github.com/FortAwesome/Font-Awesome/zip/refs/heads/master;
-   unzip master) &>/dev/null
-  mkdir -p vendor/Font-Awesome-master/css
-  mkdir -p vendor/Font-Awesome-master/webfonts
-  cp /tmp/Font-Awesome-master/css/all.css vendor/Font-Awesome-master/css/
-  cp /tmp/Font-Awesome-master/webfonts/* vendor/Font-Awesome-master/webfonts/
-  string='\ *= require Font-Awesome-master/css/all'
-  sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
-  string='Rails.application.config.assets.paths << "#{Rails.root}/vendor"'
-  echo "$string" >> config/initializers/assets.rb
-  commit "Installed fontawesome"
+  (cd /tmp/
+   curl -s -L -O https://github.com/FortAwesome/Font-Awesome/archive/refs/heads/6.x.zip
+   unzip 6.x.zip)
+  mkdir -p public/Font-Awesome/css
+  cp /tmp/Font-Awesome-6.x/css/all.css public/Font-Awesome/css/
+  cp /tmp/Font-Awesome-6.x/webfonts/* public/Font-Awesome/webfonts/
+  echo '<link rel="stylesheet" href="/Font-Awesome/css/all.css">' >> app/views/_stylesheets.html.erb
+  commit "Did bootstrap_icons()"
   popd
 }
-
 
 nice_partials() {
   pushd /tmp/created-rails-app
@@ -323,7 +317,7 @@ main() {
   jquery
   bootstrap
   bootstrap_icons
-  icons
+  fontawesome
   nice_partials
   kaminari
   flash
