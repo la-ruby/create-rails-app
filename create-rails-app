@@ -73,6 +73,20 @@ pundit() {
   popd
 }
 
+# some widgets still expect jquery in the window. namespace
+jquery() {
+  pushd /tmp/created-rails-app
+  mkdir vendor/jquery
+  (cd vendor/jquery;
+     curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
+  (cd public;
+   ln -s ../vendor/jquery/jquery-3.6.0.min.js jquery-3.6.0.min.js)
+  string='   <script src="/jquery-3.6.0.min.js"></script>'
+  sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
+
+  commit "Installed jquery"
+  popd
+}
 
 bootstrap() {
   pushd /tmp/created-rails-app
@@ -119,20 +133,6 @@ icons() {
   popd
 }
 
-# some widgets still expect jquery in the window. namespace
-jquery() {
-  pushd /tmp/created-rails-app
-  mkdir vendor/jquery
-  (cd vendor/jquery;
-     curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
-  (cd public;
-   ln -s ../vendor/jquery/jquery-3.6.0.min.js jquery-3.6.0.min.js)
-  string='   <script src="/jquery-3.6.0.min.js"></script>'
-  sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
-
-  commit "Installed jquery"
-  popd
-}
 
 nice_partials() {
   pushd /tmp/created-rails-app
@@ -154,7 +154,7 @@ flash() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/_flashes.html.erb app/views/
   cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/fade_out_controller.js app/javascript/controllers/
-  string='   <%= render "/flashes" %>'
+  string='\   <%= render "/flashes" %>'
   sed -i '/\.*<body.*/a\ '"$string"'' app/views/layouts/application.html.erb
   commit "Did flash()"
   popd
