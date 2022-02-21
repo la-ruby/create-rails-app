@@ -80,6 +80,14 @@ jquery() {
   (cd /tmp;
      curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
   cp /tmp/jquery-3.6.0.min.js public/
+
+  string='   <%= render "/javascripts" %>'
+  sed -i '/\.*importmap_tags.*/a\ '"$string"'' app/views/layouts/application.html.erb
+  touch app/views/_javascripts.html.erb
+  string='   <%= render "/stylesheets" %>'
+  sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
+  touch app/views/_stylesheets.html.erb
+
   echo'   <script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
   commit "Installed jquery"
   popd
@@ -87,27 +95,14 @@ jquery() {
 
 bootstrap() {
   pushd /tmp/created-rails-app
+  # Download and compile bootstrap
   (cd /tmp/
-    # Download bootstrap
     git clone git@github.com:twbs/bootstrap.git
     cd /tmp/bootstrap
-
-    # Compile bootstrap
     npm install &>/dev/null
-    npm run dist &>/dev/null
-
-    # Copy styles
-    cp dist/css/bootstrap.css* /tmp/created-rails-app/public/
-
-    # Copy js
-    cp dist/js/bootstrap.bundle.js* /tmp/created-rails-app/public/)
-
-  string='   <%= render "/javascripts" %>'
-  sed -i '/\.*importmap_tags.*/a\ '"$string"'' app/views/layouts/application.html.erb
-
-  string='   <%= render "/stylesheets" %>'
-  sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
-
+    npm run dist &>/dev/null)
+  cp /tmp/bootstrap/dist/css/bootstrap.css* public/
+  cp /tmp/bootstrap/dist/js/bootstrap.bundle.js* public/
   commit "Did bootstrap()"
   popd
 }
