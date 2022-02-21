@@ -73,6 +73,7 @@ pundit() {
   popd
 }
 
+
 bootstrap() {
   pushd /tmp/created-rails-app
 
@@ -218,7 +219,7 @@ vcr() {
 clockwork() {
   pushd /tmp/created-rails-app
   bundle add clockwork --git "https://github.com/Rykian/clockwork" --branch "master" &>/dev/null
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/clock.rb clock.rb
+  cp /home/runner/work/create-rails-app/create-rails-app/templates/clock.rb.tt clock.rb
   commit "Installed clockwork"
   popd
 }
@@ -230,8 +231,6 @@ procfile() {
   commit "Added procfile"
   popd
 }
-
-
 
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
