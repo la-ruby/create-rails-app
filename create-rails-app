@@ -76,14 +76,11 @@ pundit() {
 # some widgets still expect jquery in the window. namespace
 jquery() {
   pushd /tmp/created-rails-app
-  mkdir vendor/jquery
-  (cd vendor/jquery;
-     curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
-  (cd public;
-   ln -s ../vendor/jquery/jquery-3.6.0.min.js jquery-3.6.0.min.js)
-  string='   <script src="/jquery-3.6.0.min.js"></script>'
-  sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
 
+  (cd /tmp;
+     curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
+  cp /tmp/jquery-3.6.0.min.js public/
+  echo'   <script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
   commit "Installed jquery"
   popd
 }
