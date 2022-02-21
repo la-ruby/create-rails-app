@@ -86,7 +86,7 @@ jquery() {
   sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
   touch app/views/_stylesheets.html.erb
 
-  echo '   <script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
+  echo '<script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
   commit "Installed jquery"
   popd
 }
@@ -102,7 +102,7 @@ bootstrap() {
   cp /tmp/bootstrap/dist/css/bootstrap.css* public/
   echo '<link rel="stylesheet" href="/bootstrap.css">' >> app/views/_stylesheets.html.erb
   cp /tmp/bootstrap/dist/js/bootstrap.bundle.js* public/
-  echo '   <script src="/bootstrap.bundle.js"></script>' >> app/views/_javascripts.html.erb
+  echo '<script src="/bootstrap.bundle.js"></script>' >> app/views/_javascripts.html.erb
   commit "Installed bootstrap"
   popd
 }
