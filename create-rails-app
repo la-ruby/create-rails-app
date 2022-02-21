@@ -76,53 +76,27 @@ pundit() {
 
 bootstrap() {
   pushd /tmp/created-rails-app
-
-  (cd /tmp/ && curl -s -O https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css)
-  sed -i 's/body/.bootstrap-signin-example-wrapper/g' /tmp/signin.css
-
-  (cd /tmp/ && curl -s -O https://raw.githubusercontent.com/twbs/bootstrap/main/site/content/docs/5.1/examples/sign-in/index.html)
-  mkdir -p app/views/devise/sessions
-  cp /tmp/index.html app/views/devise/sessions/new.html.erb
-  sed -i 1,9d app/views/devise/sessions/new.html.erb
-  sed -i '1s/^/<div class="bootstrap-signin-example-wrapper text-center">\n/' app/views/devise/sessions/new.html.erb
-  sed -i -e '$a</div>' app/views/devise/sessions/new.html.erb
-  sed -i 's/{{< year >}}/2022/g' app/views/devise/sessions/new.html.erb
-
-
-  str='<img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">'
-  sed -i "s@.*bootstrap-logo.svg.*@$str@" app/views/devise/sessions/new.html.erb
-  echo '<style>' >> app/views/devise/sessions/new.html.erb
-  cat /tmp/signin.css >> app/views/devise/sessions/new.html.erb
-  echo '</style>' >> app/views/devise/sessions/new.html.erb
-
-  # use rails form
-  # str='<% end %>'
-  perl -pi.bak -e 's/<\/form>/<% end %>/g' app/views/devise/sessions/new.html.erb
-  rm app/views/devise/sessions/new.html.erb.bak
-  str='  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>'
-  sed -i "s@.*<form.*@$str@" app/views/devise/sessions/new.html.erb
-
   (cd /tmp/
-  git clone git@github.com:twbs/bootstrap.git
-  cd /tmp/bootstrap
-  npm install &>/dev/null
-  npm run dist &>/dev/null
-  mkdir -p /tmp/created-rails-app/vendor/bootstrap-main/css
-  mkdir -p /tmp/created-rails-app/vendor/bootstrap-main/js
-  cp dist/js/bootstrap.bundle.js.map /tmp/created-rails-app/vendor/bootstrap-main/js/
-  cp dist/js/bootstrap.bundle.js /tmp/created-rails-app/vendor/bootstrap-main/js/
-  cp dist/css/bootstrap.css.map /tmp/created-rails-app/vendor/bootstrap-main/css/
-  cp dist/css/bootstrap.css /tmp/created-rails-app/vendor/bootstrap-main/css/)
+    # Download bootstrap
+    git clone git@github.com:twbs/bootstrap.git
+    cd /tmp/bootstrap
 
-  string='\ *= require bootstrap-main/css/bootstrap.css'
-  sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
+    # Compile bootstrap
+    npm install &>/dev/null
+    npm run dist &>/dev/null
 
-  (cd public;
-   ln -s ../vendor/bootstrap-main/js/bootstrap.bundle.js bootstrap.bundle.js)
-  string='   <script src="/bootstrap.bundle.js"></script>'
-  sed -i '/\/head.*/i\ '"$string"'' app/views/layouts/application.html.erb
+    # Copy styles
+    cp dist/css/bootstrap.css* /tmp/created-rails-app/public/
 
-  cd /tmp/created-rails-app
+    # Copy js
+    cp dist/js/bootstrap.bundle.js* /tmp/created-rails-app/public/)
+
+  string='   <%= render "/javascripts" %>'
+  sed -i '/\.*importmap_tags.*/a\ '"$string"'' app/views/layouts/application.html.erb
+
+  string='   <%= render "/stylesheets" %>'
+  sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
+
   commit "Did bootstrap()"
   popd
 }
