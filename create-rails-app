@@ -128,6 +128,7 @@ fontawesome() {
    curl -s -L -O https://github.com/FortAwesome/Font-Awesome/archive/refs/heads/6.x.zip
    unzip 6.x.zip)
   mkdir -p public/Font-Awesome/css
+  mkdir -p public/Font-Awesome/webfonts
   cp /tmp/Font-Awesome-6.x/css/all.css public/Font-Awesome/css/
   cp /tmp/Font-Awesome-6.x/webfonts/* public/Font-Awesome/webfonts/
   echo '<link rel="stylesheet" href="/Font-Awesome/css/all.css">' >> app/views/_stylesheets.html.erb
