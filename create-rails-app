@@ -112,11 +112,11 @@ bootstrap() {
 bootstrap_icons() {
   pushd /tmp/created-rails-app
   (cd /tmp/
-   curl -O https://github.com/twbs/icons/archive/refs/heads/main.zip
-   unzip icons-main.zip)
-  cp /tmp/icons-main/font/bootstrap-icons.css public/
+   curl -s -O https://github.com/twbs/icons/archive/refs/heads/main.zip
+   unzip main.zip)
+  cp /tmp/main/font/bootstrap-icons.css public/
   mkdir public/fonts
-  cp /tmp/icons-main/font/fonts/* public/fonts/
+  cp /tmp/main/font/fonts/* public/fonts/
   echo '<link rel="stylesheet" href="/bootstrap-icons.css">' >> app/views/_stylesheets.html.erb
   commit "Did bootstrap_icons()"
   popd
