@@ -102,7 +102,7 @@ bootstrap() {
     npm install &>/dev/null
     npm run dist &>/dev/null)
   cp /tmp/bootstrap/dist/css/bootstrap.css* public/
-  echo '   <link rel="stylesheet" href="/bootstrap.css">' >> app/views/_stylesheets.html.erb
+  echo '<link rel="stylesheet" href="/bootstrap.css">' >> app/views/_stylesheets.html.erb
   cp /tmp/bootstrap/dist/js/bootstrap.bundle.js* public/
   echo '   <script src="/bootstrap.bundle.js"></script>' >> app/views/_javascripts.html.erb
   commit "Did bootstrap()"
