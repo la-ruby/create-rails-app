@@ -88,7 +88,7 @@ jquery() {
   sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
   touch app/views/_stylesheets.html.erb
 
-  echo'   <script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
+  echo '   <script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
   commit "Installed jquery"
   popd
 }
