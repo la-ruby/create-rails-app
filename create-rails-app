@@ -367,6 +367,7 @@ main() {
   download
   generate
   repoint
+  randomize_name
   hotwired
   devise
   pundit
@@ -389,7 +390,6 @@ main() {
   procfile
   example
   ci
-  randomize_name
   readme
   gitignore
   upload
