@@ -6,8 +6,6 @@
 ![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg)
 
 
-
-
 [TOC]
 
 
@@ -68,6 +66,22 @@ Use Ctrl-C to stop
 
 
 
+```
+
+
+### Edit master key
+
+```
+$ EDITOR=vim rails credentials:edit
+Adding config/master.key to store the encryption key: example3afed74ffffff6ad3d6ffffffe
+
+Save this in a password manager your team can access.
+
+If you lose the key, no one, including you, can access anything encrypted with it.
+
+      create  config/master.key
+...
+$
 ```
 
 
