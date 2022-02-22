@@ -1,12 +1,7 @@
 
 # created-rails-app
 
-![](http://sam-we.com/cra3.png)
-
 ![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg)
-
-
-[TOC]
 
 
 ### First Time Setup
