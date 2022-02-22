@@ -304,15 +304,19 @@ ci() {
 }
 
 randomize_name() {
+  pushd /tmp/created-rails-app
   npm install --global haikunator-cli
   name=$(haikunator | cut -f 2 -d '-')
   name2=$(echo $name | perl -nle 'print uc')
   name3=$(echo $name | perl -nle 'print ucfirst lc')
-  echo "Tracing"
-  echo name was $name
-  echo name2 was $name2
-  echo name3 was $name3
-  exit 1
+  echo "Names: $name $name2 $name2"
+  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' config/application.rb
+  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' app/views/layouts/application.html.erb
+  perl -p -i -e 's/created_rails_app/'$name'/g' config/*.yml
+  perl -p -i -e 's/CREATED_RAILS_APP/'$name2'/g' config/*.yml
+  perl -p -i -e 's/created_rails_app/'$name'/g' config/environments/*.rb
+  commit "Unique name for rails application"
+  popd
 }
 
 readme() {
@@ -355,7 +359,6 @@ commit() {
 }
 
 main() {
-  randomize_name
   # Some Prereqs - git setup
   git config --global init.defaultBranch main
   git config --global user.email "example@example.com"
