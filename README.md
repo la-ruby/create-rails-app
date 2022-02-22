@@ -1,5 +1,5 @@
 
-![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg) 
+[![CI](https://github.com/la-ruby/create-rails-app/actions/workflows/workflow_1.yml/badge.svg)](https://github.com/la-ruby/create-rails-app/actions/workflows/workflow_1.yml) ![](https://img.shields.io/github/stars/la-ruby/create-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/create-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/create-rails-app.svg)
 
 
 ![](http://sam-we.com/cra3.png)
@@ -7,7 +7,6 @@
 
 The bash script that generates [created-rails-app](https://github.com/la-ruby/created-rails-app) daily.
 
-[![CI](https://github.com/la-ruby/create-rails-app/actions/workflows/workflow_1.yml/badge.svg)](https://github.com/la-ruby/create-rails-app/actions/workflows/workflow_1.yml) ![](https://img.shields.io/github/stars/la-ruby/create-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/create-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/create-rails-app.svg)
 
 
 #### See also
