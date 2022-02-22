@@ -232,6 +232,7 @@ sendgrid() {
 rollbar() {
   pushd /tmp/created-rails-app
   bundle add rollbar --optimistic &>/dev/null
+  ./bin/rails generate rollbar EXAMPLE_POST_SERVER_ITEM_ACCESS_TOKEN
   commit "Install rollbar"
   popd
 }
