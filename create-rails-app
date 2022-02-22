@@ -71,6 +71,15 @@ pundit() {
   popd
 }
 
+# Some extra setup useful for production running of activestorage
+activestorage() {
+  pushd /tmp/created-rails-app
+  echo 'gem "aws-sdk-s3", require: false' >> Gemfile
+  bundle install &>/dev/null
+  commit "Setup activestorage"
+  popd
+}
+
 # some widgets still expect jquery in the window. namespace
 jquery() {
   pushd /tmp/created-rails-app
@@ -211,6 +220,14 @@ clockwork() {
   popd
 }
 
+# using sengrid for email
+sendgrid() {
+  pushd /tmp/created-rails-app
+  bundle add sendgrid-ruby --optimistic &>/dev/null
+  commit "Install sendgrid"
+  popd
+}
+
 # Adds a procfile - heroku uses this
 procfile() {
   pushd /tmp/created-rails-app
@@ -326,6 +343,7 @@ main() {
   hotwired
   devise
   pundit
+  activestorage
   jquery
   bootstrap
   bootstrap_icons
@@ -339,6 +357,7 @@ main() {
   webmock
   vcr
   clockwork
+  sendgrid
   procfile
   example
   ci
