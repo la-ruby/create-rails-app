@@ -3,6 +3,11 @@
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
 
+experiment() {
+  cargo install names
+  echo $(names | cut -d '-' -f2)
+}
+
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
 }
@@ -301,6 +306,7 @@ ci() {
   popd
 }
 
+
 # some additional gitignores
 gitignore() {
   pushd /tmp/created-rails-app
@@ -341,6 +347,7 @@ commit() {
 }
 
 main() {
+  experiment
   # Some Prereqs - git setup
   git config --global init.defaultBranch main
   git config --global user.email "example@example.com"
