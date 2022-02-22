@@ -3,11 +3,7 @@
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
 
-experiment() {
-  npm install --global haikunator-cli
-  echo $(haikunator | cut -f 2 -d '-')
-  exit 1
-}
+
 
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
@@ -307,6 +303,24 @@ ci() {
   popd
 }
 
+randomize_name() {
+  npm install --global haikunator-cli
+  name=$(haikunator | cut -f 2 -d '-')
+  name2 = $(echo $name | perl -nle 'print uc')
+  name3 = $(echo $name | perl -nle 'print ucfirst lc')
+  echo "Tracing"
+  echo name was $name
+  echo name2 was $name2
+  echo name3 was $name3
+  exit 1
+}
+
+readme() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/README.md.tt README.md
+  commit "Added README"
+  popd
+}
 
 # some additional gitignores
 gitignore() {
@@ -314,13 +328,6 @@ gitignore() {
   echo ".envrc" >> .gitignore
   echo "**/.DS_Store" >> .gitignore
   commit "Updated .gitignore"
-  popd
-}
-
-readme() {
-  pushd /tmp/created-rails-app
-  cp ~/work/create-rails-app/create-rails-app/templates/README.md.tt README.md
-  commit "Added README"
   popd
 }
 
@@ -348,7 +355,7 @@ commit() {
 }
 
 main() {
-  experiment
+  randomize_name
   # Some Prereqs - git setup
   git config --global init.defaultBranch main
   git config --global user.email "example@example.com"
@@ -379,6 +386,7 @@ main() {
   procfile
   example
   ci
+  randomize_name
   readme
   gitignore
   upload
