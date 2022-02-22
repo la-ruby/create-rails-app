@@ -306,8 +306,8 @@ ci() {
 randomize_name() {
   npm install --global haikunator-cli
   name=$(haikunator | cut -f 2 -d '-')
-  name2 = $(echo $name | perl -nle 'print uc')
-  name3 = $(echo $name | perl -nle 'print ucfirst lc')
+  name2=$(echo $name | perl -nle 'print uc')
+  name3=$(echo $name | perl -nle 'print ucfirst lc')
   echo "Tracing"
   echo name was $name
   echo name2 was $name2
