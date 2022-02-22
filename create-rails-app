@@ -6,6 +6,7 @@ BOOTSTRAP_VERSION="5.1"
 experiment() {
   npm install --global haikunator-cli
   echo $(haikunator | cut -f 2 -d '-')
+  exit 1
 }
 
 download() {
