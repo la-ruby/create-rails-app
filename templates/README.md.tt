@@ -1,39 +1,80 @@
 
-### 1. After forking created-rails-app, rename it to .e.g blog
+# created-rails-app
+
+![](http://sam-we.com/cra3.png)
+
+![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg)
+
+
+
+
+[TOC]
+
+
+### First Time Setup
 
 ```
-perl -p -i -e 's/CreatedRailsApp/Blog/g' config/application.rb
-perl -p -i -e 's/CreatedRailsApp/Blog/g' app/views/layouts/application.html.erb
-perl -p -i -e 's/created_rails_app/blog/g' config/*.yml
-perl -p -i -e 's/CREATED_RAILS_APP/BLOG/g' config/*.yml
-perl -p -i -e 's/created_rails_app/blog/g' config/environments/*.rb
+ 
+$ cd ~/
+ 
+$ git clone git@github.com:la-ruby/created-rails-app.git
+Cloning into 'created-rails-app'...
+remote: Enumerating objects: 3377, done.
+remote: Counting objects: 100% (342/342), done.
+remote: Compressing objects: 100% (212/212), done.
+remote: Total 3377 (delta 194), reused 258 (delta 123), pack-reused 3035
+Receiving objects: 100% (3377/3377), 3.59 MiB | 1.76 MiB/s, done.
+Resolving deltas: 100% (1767/1767), done.
+
+$ cd created-rails-app/
+
+$ ./bin/setup
+== Installing dependencies ==
+The Gemfile's dependencies are satisfied
+
+== Preparing database ==
+Created database 'wood_development'
+Created database 'wood_test'
+
+== Removing old logs and tempfiles ==
+
+== Restarting application server ==
+
+$ ./bin/rails test
+Running 7 tests in a single process (parallelization threshold is 50)
+Run options: --seed 34377
+
+# Running:
+
+.......
+
+Finished in 0.905505s, 7.7305 runs/s, 9.9392 assertions/s.
+7 runs, 9 assertions, 0 failures, 0 errors, 0 skips
+
+$ ./bin/rails server
+=> Booting Puma
+=> Rails 7.0.2.2 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Puma starting in single mode...
+* Puma version: 5.6.2 (ruby 3.0.3-p157) ("Birdie's Version")
+*  Min threads: 5
+*  Max threads: 5
+*  Environment: development
+*          PID: 93154
+* Listening on http://127.0.0.1:3000
+* Listening on http://[::1]:3000
+Use Ctrl-C to stop
+
+
+
+
 ```
 
-### 2. Setup gems and database
 
-
-```
-./bin/setup
-./bin/rails db:reset
-```
-
-### 3. Run unit tests
-```
-./bin/rails test
-```
-
-### 4. Start the server
+### Upgrading rails
 
 ```
-./bin/rails s
-```
-
-### 5. Upgrading
-
-
-### 5.1 Upgrading rails
-```
-$ ./bin/rails --version
+$ ./bin/rails --version  # check current version
 Rails 7.0.0
 $ git remote add upstream git@github.com:la-ruby/created-rails-app.git
 $ git fetch upstream
@@ -50,19 +91,12 @@ $ ./bin/rails --version
 Rails 7.0.1
 ```
 
-Enjoy! 🎉
+### Upgrading bootstrap
 
-### 5.2 Customizing bootstrap
+Copy over `bootstrap.css` and `bootstrap.bundle.js` after running `npm run dist` on your fork of twbs/bootstrap
 
-Fork twbs/bootstrap to github.com/yourCompany/
-Make changes to that repo, `npm run dist` to generate fresh bundle,
-and replace your `./app/assets/stylesheets/bootstrap.css`
-and `./public/bootstrap.bundle.js`.
 
-### 5.3 Upgrading bootstrap
 
-[Sync your fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-from-the-web-ui),  then `npm run dist` to generate fresh bundle,
-and replace your `./app/assets/stylesheets/bootstrap.css`
-and `./public/bootstrap.bundle.js`
+
 
 
