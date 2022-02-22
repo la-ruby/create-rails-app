@@ -228,6 +228,14 @@ sendgrid() {
   popd
 }
 
+# ruby gem for error monitoring
+rollbar() {
+  pushd /tmp/created-rails-app
+  bundle add rollbar --optimistic &>/dev/null
+  commit "Install rollbar"
+  popd
+}
+
 # Adds a procfile - heroku uses this
 procfile() {
   pushd /tmp/created-rails-app
@@ -358,6 +366,7 @@ main() {
   vcr
   clockwork
   sendgrid
+  rollbar
   procfile
   example
   ci
