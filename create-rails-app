@@ -187,7 +187,7 @@ flash() {
 # some extra styles
 stylesheets() {
   pushd /tmp/created-rails-app
-  cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/debug.scss app/assets/stylesheets/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/debug.css app/assets/stylesheets/
   string='  zrequire debug'
   sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
   commit "Added some extra css"
