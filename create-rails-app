@@ -184,6 +184,14 @@ flash() {
   popd
 }
 
+# some extra styles
+stylesheets() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/debug.scss app/assets/stylesheets/
+  commit "Added some extra css"
+  popd
+}
+
 # Prefer factories over fixtures
 factory_bot() { 
   pushd /tmp/created-rails-app
@@ -380,6 +388,7 @@ main() {
   nice_partials
   kaminari
   flash
+  stylesheets
   factory_bot
   simplecov
   webmock
