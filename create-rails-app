@@ -218,8 +218,6 @@ factory_bot() {
   string='include FactoryBot::Syntax::Methods'
   sed -i '/class ActiveSupport/a\  '"$string" test/test_helper.rb
   # ^ add line after matched line
-  sed -i -r 's/(Syntax::Methods)/\1\n/g' test/test_helper.rb # adds a newline
-
 
   commit "Installed factory_bot"
   popd
