@@ -1,2 +1,2 @@
-require_relative "support/00_simplecov"
+require_relative 'support/00_simplecov'
 
