@@ -268,7 +268,7 @@ simplecov() {
   mv /tmp/file3 test/test_helper.rb
   mkdir test/support || true
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
-  string='Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |rb| require(rb) }
+  string='Dir[File.expand_path('\''support/**/*.rb'\'', __dir__)].sort.each { |rb| require(rb) }
 '$'\n'
   sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
 
