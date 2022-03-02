@@ -1,9 +1,14 @@
 #!/bin/bash
+# TODO:
+# Need wrapper functions for:
+#   replaces matched line with given string
+#   prepend string to all lines
+#   add line after matched line
+#   add line before matched line
+#   simple replacement with sed
 
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
-
-
 
 download() {
   git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
@@ -21,9 +26,9 @@ generate() {
 # repoint gemfile to github rails/rails
 repoint() {
   pushd /tmp/created-rails-app
-  sed -i "/^gem \"rails/c\REMOVED" Gemfile # remove line
+  sed -i "/^gem \"rails/c\REMOVED" Gemfile # replaces matched line with given string
   replacement="gem 'rails', :github => 'rails/rails', :branch => '7-0-stable'"
-  sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
+  sed -i "/^REMOVED/c\\$replacement" Gemfile # replaces matched line with given string
   rm Gemfile.lock
   bundle install &>/dev/null
   bundle lock --add-platform ruby # this was needed because ci runs in linux
@@ -35,9 +40,9 @@ repoint() {
 # using newer version of turbo-rails
 hotwired() {
   pushd /tmp/created-rails-app
-  sed -i "/^gem \"turbo-rails/c\REMOVED" Gemfile # remove line
+  sed -i "/^gem \"turbo-rails/c\REMOVED" Gemfile # replaces matched line with given string
   replacement="gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'"
-  sed -i "/^REMOVED/c\\$replacement" Gemfile # add back line
+  sed -i "/^REMOVED/c\\$replacement" Gemfile # replaces matched line with given string
   bundle install &>/dev/null
   commit "Hotwire setup"
   popd
@@ -51,7 +56,7 @@ devise() {
   ./bin/rails generate devise:install
   ./bin/rails generate devise User
   ./bin/rails db:migrate
-  sed -i -e 's/^/# /' test/fixtures/users.yml # stackoverflow/a/51102255
+  sed -i -e 's/^/# /' test/fixtures/users.yml # prepend string to all lines
   commit "Installed devise"
   popd
 }
@@ -92,9 +97,11 @@ jquery() {
 
   string='   <%= render "/javascripts" %>'
   sed -i '/\.*importmap_tags.*/a\ '"$string"'' app/views/layouts/application.html.erb
+  # ^ add line after matched line
   touch app/views/_javascripts.html.erb
   string='   <%= render "/stylesheets" %>'
   sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
+  # ^ add line after matched line
   touch app/views/_stylesheets.html.erb
 
   echo '<script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
@@ -180,6 +187,7 @@ flash() {
   cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/fade_out_controller.js app/javascript/controllers/
   string='\   <%= render "/flashes" %>'
   sed -i '/\.*<body.*/a\ '"$string"'' app/views/layouts/application.html.erb
+  # ^ add line after matched line
   commit "Setup flash messages"
   popd
 }
@@ -190,6 +198,7 @@ stylesheets() {
   cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/debug.css app/assets/stylesheets/
   string='\ *= dontrequire debug'
   sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
+  # ^ add line before matched line
   commit "Added some extra css"
   popd
 }
@@ -268,12 +277,11 @@ simplecov() {
   mv /tmp/file3 test/test_helper.rb
   mkdir test/support || true
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
-  string='Dir[File.expand_path('\''support/**/*.rb'\'', __dir__)].sort.each { |rb| require(rb) }
-
-'$'\n'
-  # im not sure if the two $'\n' above has an effect
+  string='Dir[File.expand_path('\''support/**/*.rb'\'', __dir__)].sort.each { |rb| require(rb) }'
   sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
-
+  # ^ add line before matched line
+  sed -i -r 's/(class ActiveSupport::TestCase)/\n\1/g' test/test_helper.rb
+  # ^ adds a newline before matched line
   # adding minitest-test_profile gem
   bundle add minitest-test_profile --git "https://github.com/y-yagi/minitest-test_profile" --group "test" --branch "master" &>/dev/null
   cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/minitest-test_profile.rb test/support/
@@ -288,6 +296,7 @@ example() {
   pushd /tmp/created-rails-app
   ./bin/rails generate scaffold Example title:string body:text seed:boolean
   sed -i 's/examples(:one)/FactoryBot.create(:example)/' test/controllers/examples_controller_test.rb
+  # ^ simple replacement with sed
   ./bin/rails db:migrate
   ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
