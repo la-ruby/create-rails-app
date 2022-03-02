@@ -5,12 +5,12 @@ require 'simplecov'
 if ENV['COVERAGE']
   SimpleCov.start 'rails' do
     command_name 'tests'
-    add_filter 'app/channels'
-    add_filter 'app/controllers/applicatin_controller.rb'
+
+    # Ignoring rails base classes
+    add_filter 'app/channels/application_cable'
     add_filter 'app/mailers/application_mailer.rb'
     add_filter 'app/jobs/application_job.rb'
-    add_filter 'app/helpers/application_helper.rb'
-    add_filter 'app/controllers/application_controller.rb'
+    # Ignoring examples
     add_filter 'app/controllers/examples_controller.rb'
   end
 end
