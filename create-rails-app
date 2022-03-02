@@ -209,6 +209,9 @@ factory_bot() {
   bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
   bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master" &>/dev/null
   mkdir test/factories
+  string='include FactoryBot::Syntax::Methods'
+  sed '/class ActiveSupport/a\  '"$string" test/test_helper.rb
+  # add line after matched line
   commit "Installed factory_bot"
   popd
 }
