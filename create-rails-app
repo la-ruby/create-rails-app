@@ -57,6 +57,12 @@ devise() {
   ./bin/rails generate devise User
   ./bin/rails db:migrate
   sed -i -e 's/^/# /' test/fixtures/users.yml # prepend string to all lines
+
+  string='include Devise::Test::IntegrationHelpers'
+  sed -i '/class ActiveSupport/a\  '"$string" test/test_helper.rb
+  # ^ add line after matched line
+  sed -i -r 's/(IntegrationHelpers)/\1\n/g' test/test_helper.rb # adds a newline
+
   commit "Installed devise"
   popd
 }
@@ -213,6 +219,8 @@ factory_bot() {
   sed -i '/class ActiveSupport/a\  '"$string" test/test_helper.rb
   # ^ add line after matched line
   sed -i -r 's/(Syntax::Methods)/\1\n/g' test/test_helper.rb # adds a newline
+
+
   commit "Installed factory_bot"
   popd
 }
