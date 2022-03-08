@@ -47,3 +47,4 @@ jobs:
           ruby-version: 3.0.3
       - name: Run
         run: bash -ex ./create-rails-app
+

@@ -52,6 +52,7 @@ jobs:
         PGPASSWORD: postgres
         RAILS_ENV: test
         COVERAGE: 1
+        PARALLEL_WORKERS: 1
       run: |
         ./bin/rails test
     - name: Ensure test coverage
