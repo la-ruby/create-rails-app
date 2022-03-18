@@ -13,4 +13,6 @@ if ENV['COVERAGE']
     # Ignoring examples
     add_filter 'app/controllers/examples_controller.rb'
   end
+
+  SimpleCov.minimum_coverage 100
 end
