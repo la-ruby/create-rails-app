@@ -10,15 +10,22 @@
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
 
+
+
 download() {
-  git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails
+  (git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails) || true
 }
 
 generate() {
   pushd /tmp/rails
-  bundle install &>/dev/null
-  bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql >/dev/null
+  bundle install
+  bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql --javascript=esbuild --css=bootstrap
   cd /tmp/created-rails-app
+
+  # this is a one time thing
+  git config init.defaultBranch main
+  git config user.email "example@example.com"
+  git config user.name "Sam Bot"
   commit "Generated new rails application"
   popd
 }
@@ -26,24 +33,37 @@ generate() {
 # repoint gemfile to github rails/rails
 repoint() {
   pushd /tmp/created-rails-app
-  sed -i "/^gem \"rails/c\REMOVED" Gemfile # replaces matched line with given string
-  replacement="gem 'rails', :github => 'rails/rails', :branch => '7-0-stable'"
-  sed -i "/^REMOVED/c\\$replacement" Gemfile # replaces matched line with given string
+  replace_line 'gem "rails' "gem 'rails', :github => 'rails/rails', :branch => '"$RAILS_VERSION"'" Gemfile
   rm Gemfile.lock
-  bundle install &>/dev/null
-  bundle lock --add-platform ruby # this was needed because ci runs in linux
+  bundle install
+  bundle lock --add-platform ruby # is this needed nowadays?
   ./bin/setup
   commit "Using rails branch at github"
+  popd
+}
+
+randomize_name() {
+  pushd /tmp/created-rails-app
+  npm install --global haikunator-cli
+  name=$(haikunator | cut -f 2 -d '-')
+  name2=$(echo $name | perl -nle 'print uc')
+  name3=$(echo $name | perl -nle 'print ucfirst lc')
+  echo "Names: $name $name2 $name2"
+  # replace_string 'CreatedRailsApp' $name3 config/application.rb
+  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' config/application.rb
+  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' app/views/layouts/application.html.erb
+  perl -p -i -e 's/created_rails_app/'$name'/g' config/*.yml
+  perl -p -i -e 's/CREATED_RAILS_APP/'$name2'/g' config/*.yml
+  perl -p -i -e 's/created_rails_app/'$name'/g' config/environments/*.rb
+  commit "Using unique name for rails application"
   popd
 }
 
 # using newer version of turbo-rails
 hotwired() {
   pushd /tmp/created-rails-app
-  sed -i "/^gem \"turbo-rails/c\REMOVED" Gemfile # replaces matched line with given string
-  replacement="gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'"
-  sed -i "/^REMOVED/c\\$replacement" Gemfile # replaces matched line with given string
-  bundle install &>/dev/null
+  replace_line 'gem "turbo-rails' "gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'" Gemfile
+  bundle install
   commit "Hotwire setup"
   popd
 }
@@ -56,13 +76,8 @@ devise() {
   ./bin/rails generate devise:install
   ./bin/rails generate devise User
   ./bin/rails db:migrate
-  sed -i -e 's/^/# /' test/fixtures/users.yml # prepend string to all lines
-
-  string='include Devise::Test::IntegrationHelpers'
-  sed -i '/class ActiveSupport/a\  '"$string" test/test_helper.rb
-  # ^ add line after matched line
-  sed -i -r 's/(IntegrationHelpers)/\1\n/g' test/test_helper.rb # adds a newline
-
+  prepend_all_lines '# ' test/fixtures/users.yml
+  insert_line_after 'class ActiveSupport' '  include Devise::Test::IntegrationHelpers' test/test_helper.rb
   commit "Installed devise"
   popd
 }
@@ -77,9 +92,10 @@ pundit() {
   #   class ApplicationController < ActionController::Base
   #     include Pundit::Authorization
   #   end
-  # ...Optionally, you can run the generator, which will set up an
-  # application policy with some useful defaults for you:
-  #   rails g pundit:install  
+
+  ./bin/rails g pundit:install
+  insert_line_after 'class ApplicationController' '  include Pundit::Authorization' app/controllers/application_controller.rb
+  insert_line_after 'include Pundit::Authorization' '  # after_action :verify_authorized' app/controllers/application_controller.rb
   commit "Install pundit"
   popd
 }
@@ -93,24 +109,20 @@ activestorage() {
   popd
 }
 
+#
+#
+#
+#
+#
+# stopped audit here
 # some widgets still expect jquery in the window. namespace
 jquery() {
   pushd /tmp/created-rails-app
-
-  (cd /tmp;
-     curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
-  cp /tmp/jquery-3.6.0.min.js public/
-
-  string='   <%= render "/javascripts" %>'
-  sed -i '/\.*importmap_tags.*/a\ '"$string"'' app/views/layouts/application.html.erb
-  # ^ add line after matched line
-  touch app/views/_javascripts.html.erb
-  string='   <%= render "/stylesheets" %>'
-  sed -i '/\.*stylesheet_link_tag.*/a\ '"$string"'' app/views/layouts/application.html.erb
-  # ^ add line after matched line
-  touch app/views/_stylesheets.html.erb
-
+  download_file "https://code.jquery.com/jquery-3.6.0.min.js" "public/"
   echo '<script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
+  insert_line_after 'javascript_include_tag' '   <%= render "/javascripts" %>' app/views/layouts/application.html.erb
+  insert_line_after 'stylesheet_link_tag' "    <%= render '/stylesheets' %>" app/views/layouts/application.html.erb
+  touch app/views/_stylesheets.html.erb
   commit "Installed jquery"
   popd
 }
@@ -119,7 +131,7 @@ bootstrap() {
   pushd /tmp/created-rails-app
   # Download and compile bootstrap
   (cd /tmp/
-    git clone git@github.com:twbs/bootstrap.git
+    (git clone git@github.com:twbs/bootstrap.git || true)
     cd /tmp/bootstrap
     npm install &>/dev/null
     npm run dist &>/dev/null)
@@ -127,6 +139,9 @@ bootstrap() {
   echo '<link rel="stylesheet" href="/bootstrap.css">' >> app/views/_stylesheets.html.erb
   cp /tmp/bootstrap/dist/js/bootstrap.bundle.js* public/
   echo '<script src="/bootstrap.bundle.js"></script>' >> app/views/_javascripts.html.erb
+  prepend_all_lines '\/\/ ' app/assets/stylesheets/application.bootstrap.scss
+  echo "// instead using bootstrap at app/views/_javascripts" >> app/assets/stylesheets/application.bootstrap.scss
+  replace_line 'import \* as bootstrap' '// import * as bootstrap from "bootstrap"' app/javascript/application.js
   commit "Installed bootstrap"
   popd
 }
@@ -135,7 +150,7 @@ bootstrap_icons() {
   pushd /tmp/created-rails-app
   (cd /tmp/
    curl -s -L -O https://github.com/twbs/icons/archive/refs/heads/main.zip
-   unzip main.zip &>/dev/null)
+   myunzip main.zip &>/dev/null)
   cp /tmp/icons-main/font/bootstrap-icons.css public/
   mkdir public/fonts
   cp /tmp/icons-main/font/fonts/* public/fonts/
@@ -148,7 +163,7 @@ fontawesome() {
   pushd /tmp/created-rails-app
   (cd /tmp/
    curl -s -L -O https://github.com/FortAwesome/Font-Awesome/archive/refs/heads/6.x.zip
-   unzip 6.x.zip &>/dev/null)
+   myunzip 6.x.zip &>/dev/null)
   mkdir -p public/Font-Awesome/css
   mkdir -p public/Font-Awesome/webfonts
   cp /tmp/Font-Awesome-6.x/css/all.css public/Font-Awesome/css/
@@ -191,9 +206,7 @@ flash() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/_flashes.html.erb app/views/
   cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/fade_out_controller.js app/javascript/controllers/
-  string='\   <%= render "/flashes" %>'
-  sed -i '/\.*<body.*/a\ '"$string"'' app/views/layouts/application.html.erb
-  # ^ add line after matched line
+  insert_line_after '<body' '    <%= render "/flashes" %>' app/views/layouts/application.html.erb
   commit "Setup flash messages"
   popd
 }
@@ -202,12 +215,22 @@ flash() {
 stylesheets() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/debug.css app/assets/stylesheets/
-  string='\ *= dontrequire debug'
-  sed -i "/require_self.*/i $string" app/assets/stylesheets/application.css
-  # ^ add line before matched line
+  echo "@import 'debug';" >> app/assets/stylesheets/application.bootstrap.scss
   commit "Added some extra css"
   popd
 }
+
+# react/jsx/tsx via esbuild
+react() {
+  pushd /tmp/created-rails-app
+  yarn add react react-dom
+  mkdir app/javascript/components
+  cp ~/work/create-rails-app/create-rails-app/templates/hello.tsx app/javascript/components/
+  echo 'import "./components/hello"' >> app/javascript/application.js
+  commit "React setup"
+  popd
+}
+
 
 # Prefer factories over fixtures
 factory_bot() { 
@@ -215,11 +238,32 @@ factory_bot() {
   bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
   bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master" &>/dev/null
   mkdir test/factories
-  string='include FactoryBot::Syntax::Methods'
-  sed -i '/class ActiveSupport/a\  '"$string" test/test_helper.rb
-  # ^ add line after matched line
-
+  insert_line_after 'class ActiveSupport' '  include FactoryBot::Syntax::Methods' test/test_helper.rb
   commit "Installed factory_bot"
+  popd
+}
+
+# should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
+# when you do COVERAGE=1 ./bin/rails test
+simplecov() {
+  pushd /tmp/created-rails-app
+  echo "gem 'simplecov', require: false, group: :test" >> Gemfile
+  bundle install &>/dev/null
+  echo "coverage" >> .gitignore
+  cat ~/work/create-rails-app/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
+  mv /tmp/file3 test/test_helper.rb
+  mkdir test/support || true
+  cp ~/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
+  string='Dir[File.expand_path('\''support/**/*.rb'\'', __dir__)].sort.each { |rb| require(rb) }'
+  mysed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
+  # ^ add line before matched line
+  mysed -i -r 's/(class ActiveSupport::TestCase)/\n\1/g' test/test_helper.rb
+  # ^ adds a newline before matched line
+  # adding minitest-test_profile gem
+  bundle add minitest-test_profile --git "https://github.com/y-yagi/minitest-test_profile" --group "test" --branch "master" &>/dev/null
+  cp ~/work/create-rails-app/create-rails-app/templates/test/support/minitest-test_profile.rb test/support/
+
+  commit "Installed simplecov"
   popd
 }
 
@@ -228,7 +272,7 @@ factory_bot() {
 webmock() {
   pushd /tmp/created-rails-app
   bundle add webmock --git "https://github.com/bblimke/webmock" --group "test" --branch "master" &>/dev/null
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/webmock.rb test/support/
+  cp ~/work/create-rails-app/create-rails-app/templates/test/support/webmock.rb test/support/
   commit "Use webmock for http requests"
   popd
 }
@@ -237,7 +281,7 @@ webmock() {
 vcr() {
   pushd /tmp/created-rails-app
   bundle add vcr --git "https://github.com/vcr/vcr" --group "test" --branch "master" &>/dev/null
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/vcr.rb test/support/
+  cp ~/work/create-rails-app/create-rails-app/templates/test/support/vcr.rb test/support/
   commit "Installed vcr"
   popd
 }
@@ -246,7 +290,7 @@ vcr() {
 clockwork() {
   pushd /tmp/created-rails-app
   bundle add clockwork --git "https://github.com/Rykian/clockwork" --branch "master" &>/dev/null
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/clock.rb.tt clock.rb
+  cp ~/work/create-rails-app/create-rails-app/templates/clock.rb.tt clock.rb
   commit "Installed clockwork"
   popd
 }
@@ -271,41 +315,16 @@ rollbar() {
 # Adds a procfile - heroku uses this
 procfile() {
   pushd /tmp/created-rails-app
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/Procfile.tt Procfile
+  cp ~/work/create-rails-app/create-rails-app/templates/Procfile.tt Procfile
   commit "Added Procfile"
   popd
 }
-
-# should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
-# when you do COVERAGE=1 ./bin/rails test
-simplecov() {
-  pushd /tmp/created-rails-app
-  echo "gem 'simplecov', require: false, group: :test" >> Gemfile
-  bundle install &>/dev/null
-  echo "coverage" >> .gitignore
-  cat /home/runner/work/create-rails-app/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
-  mv /tmp/file3 test/test_helper.rb
-  mkdir test/support || true
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
-  string='Dir[File.expand_path('\''support/**/*.rb'\'', __dir__)].sort.each { |rb| require(rb) }'
-  sed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
-  # ^ add line before matched line
-  sed -i -r 's/(class ActiveSupport::TestCase)/\n\1/g' test/test_helper.rb
-  # ^ adds a newline before matched line
-  # adding minitest-test_profile gem
-  bundle add minitest-test_profile --git "https://github.com/y-yagi/minitest-test_profile" --group "test" --branch "master" &>/dev/null
-  cp /home/runner/work/create-rails-app/create-rails-app/templates/test/support/minitest-test_profile.rb test/support/
-
-  commit "Installed simplecov"
-  popd
-}
-
 
 # generates soe scaffolds to serve as examples
 example() {
   pushd /tmp/created-rails-app
   ./bin/rails generate scaffold Example title:string body:text seed:boolean
-  sed -i 's/examples(:one)/FactoryBot.create(:example)/' test/controllers/examples_controller_test.rb
+  mysed -i 's/examples(:one)/FactoryBot.create(:example)/' test/controllers/examples_controller_test.rb
   # ^ simple replacement with sed
   ./bin/rails db:migrate
   ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
@@ -334,21 +353,6 @@ ci() {
   popd
 }
 
-randomize_name() {
-  pushd /tmp/created-rails-app
-  npm install --global haikunator-cli
-  name=$(haikunator | cut -f 2 -d '-')
-  name2=$(echo $name | perl -nle 'print uc')
-  name3=$(echo $name | perl -nle 'print ucfirst lc')
-  echo "Names: $name $name2 $name2"
-  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' config/application.rb
-  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' app/views/layouts/application.html.erb
-  perl -p -i -e 's/created_rails_app/'$name'/g' config/*.yml
-  perl -p -i -e 's/CREATED_RAILS_APP/'$name2'/g' config/*.yml
-  perl -p -i -e 's/created_rails_app/'$name'/g' config/environments/*.rb
-  commit "Unique name for rails application"
-  popd
-}
 
 readme() {
   pushd /tmp/created-rails-app
@@ -368,19 +372,23 @@ gitignore() {
 
 upload() {
   pushd /tmp/created-rails-app
-  git remote add myremote git@github.com:la-ruby/created-rails-app.git
-  git checkout -b latest
-  git push -f myremote latest
-  git checkout main
+  if [ "$(uname)" == "Darwin" ]; then
+    echo "not uploading on Darwin"
+  else
+    git remote add myremote git@github.com:la-ruby/created-rails-app.git
+    git checkout -b latest
+    git push -f myremote latest
+    git checkout main
 
-  git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
-  cd /tmp/downloaded-rails-app/
-  find -not -path "./.git/*" -not -name ".git" -delete
-  rsync --stats -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/ &>/dev/null
+    git clone git@github.com:la-ruby/created-rails-app.git /tmp/downloaded-rails-app
+    cd /tmp/downloaded-rails-app/
+    find -not -path "./.git/*" -not -name ".git" -delete
+    rsync --stats -aP --exclude='.git/' --exclude='node_modules/*' /tmp/created-rails-app/ /tmp/downloaded-rails-app/ &>/dev/null
 
-  git add --all
-  git commit -m "Updates for $(date +%D)"
-  git push origin main
+    git add --all
+    git commit -m "Updates for $(date +%D)"
+    git push origin main
+  fi
   popd
 }
 
@@ -389,16 +397,48 @@ commit() {
   git commit -m "$1" &>/dev/null
 }
 
-main() {
-  # Some Prereqs - git setup
-  git config --global init.defaultBranch main
-  git config --global user.email "example@example.com"
-  git config --global user.name "Sam Bot"
+mysed () {
+  case $(uname -s) in
+    *[Dd]arwin* | *BSD* ) gsed "$@";;
+    *) sed -i "$@";;
+  esac
+}
 
+# TODO: is this needed?
+myunzip () {
+  case $(uname -s) in
+    *[Dd]arwin* | *BSD* ) unzip "$@";;
+    *) unzip "$@";;
+  esac
+}
+
+replace_line() {
+  mysed -i "/^$1/c\REMOVED" $3 # replaces matched line with given string
+  mysed -i "/^REMOVED/c\\$2" $3 # replaces matched line with given string
+}
+
+replace_string() {
+  perl -p -i -e 's/'$1'/'$2'/g' $3
+}
+
+prepend_all_lines() {
+  mysed -i -e "s/^/$1/" $2 # prepend string to all lines
+}
+
+# add line after matched line
+insert_line_after() {
+  perl -s -p -i -e '$_.="$bbb\n" if /$aaa/' -- -aaa="$1" -bbb="$2" $3
+}
+
+download_file() {
+  curl --create-dirs -O --output-dir "$2" "$1"
+}
+
+main() {
   download
   generate
-  repoint
   randomize_name
+  repoint
   hotwired
   devise
   pundit
@@ -412,6 +452,7 @@ main() {
   kaminari
   flash
   stylesheets
+  react
   factory_bot
   simplecov
   webmock

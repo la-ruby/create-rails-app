@@ -1,0 +1,12 @@
+#!/bin/bash -x
+
+(cd /tmp/created-rails-app && ./bin/rails db:drop)
+trash /tmp/created-rails-app/
+trash /tmp/icons-main/
+trash /tmp/6.x.zip
+trash /tmp/Font-Awesome-6.x
+(cd /tmp/rails/; git pull origin 7-0-stable)
+
+cd ~/work/create-rails-app/create-rails-app
+bash -ex ./create-rails-app
+(cd /tmp/created-rails-app; git log --oneline)
