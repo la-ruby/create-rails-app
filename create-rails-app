@@ -23,9 +23,14 @@ generate() {
   cd /tmp/created-rails-app
 
   # this is a one time thing
-  git config init.defaultBranch main
-  git config user.email "example@example.com"
-  git config user.name "Sam Bot"
+  if [ "$(uname)" == "Darwin" ]; then
+    true # dp nothing on macos
+  else
+    git config --global init.defaultBranch main
+    git config --global user.email "example@example.com"
+    git config --global user.name "Sam Bot"
+  fi
+
   commit "Generated new rails application"
   popd
 }
