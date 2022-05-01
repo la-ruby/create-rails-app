@@ -118,7 +118,9 @@ activestorage() {
 # some widgets still expect jquery in the window. namespace
 jquery() {
   pushd /tmp/created-rails-app
-  download_file "https://code.jquery.com/jquery-3.6.0.min.js" "public/"
+  (cd /tmp;
+    curl -s -O https://code.jquery.com/jquery-3.6.0.min.js)
+  cp /tmp/jquery-3.6.0.min.js public/
   echo '<script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
   insert_line_after 'javascript_include_tag' '   <%= render "/javascripts" %>' app/views/layouts/application.html.erb
   insert_line_after 'stylesheet_link_tag' "    <%= render '/stylesheets' %>" app/views/layouts/application.html.erb
@@ -428,10 +430,6 @@ prepend_all_lines() {
 # add line after matched line
 insert_line_after() {
   perl -s -p -i -e '$_.="$bbb\n" if /$aaa/' -- -aaa="$1" -bbb="$2" $3
-}
-
-download_file() {
-  curl --create-dirs -O --output-dir "$2" "$1"
 }
 
 main() {
