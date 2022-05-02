@@ -228,27 +228,6 @@ stylesheets() {
   popd
 }
 
-# react/jsx/tsx via esbuild
-react() {
-  pushd /tmp/created-rails-app
-  yarn add react react-dom
-  mkdir app/javascript/components
-  cp ~/work/create-rails-app/create-rails-app/templates/hello.tsx app/javascript/components/
-  echo 'import "./components/hello"' >> app/javascript/application.js
-  commit "React setup"
-  popd
-}
-
-# Setup a vue component
-vue() {
-  pushd /tmp/created-rails-app
-  yarn add vue
-  cp ~/work/create-rails-app/create-rails-app/templates/hellovue.js app/javascript/components/
-  echo 'import "./components/hellovue"' >> app/javascript/application.js
-  echo '<div id="hello-vue-mount-point"></div>' app/views/examples/index.html.erb
-  commit "Setup a vue component"
-  popd
-}
 
 # Prefer factories over fixtures
 factory_bot() { 
@@ -349,6 +328,28 @@ example() {
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
   echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seeds.rb
   commit "Generated some code to serve as examples"
+  popd
+}
+
+# react/jsx/tsx via esbuild
+react() {
+  pushd /tmp/created-rails-app
+  yarn add react react-dom
+  mkdir app/javascript/components
+  cp ~/work/create-rails-app/create-rails-app/templates/hello.tsx app/javascript/components/
+  echo 'import "./components/hello"' >> app/javascript/application.js
+  commit "React setup"
+  popd
+}
+
+# Setup a vue component
+vue() {
+  pushd /tmp/created-rails-app
+  yarn add vue
+  cp ~/work/create-rails-app/create-rails-app/templates/hellovue.js app/javascript/components/
+  echo 'import "./components/hellovue"' >> app/javascript/application.js
+  echo '<div id="hello-vue-mount-point"></div>' >> app/views/examples/index.html.erb
+  commit "Setup a vue component"
   popd
 }
 
@@ -466,8 +467,7 @@ main() {
   kaminari
   flash
   stylesheets
-  react
-  vue
+
   factory_bot
   simplecov
   webmock
@@ -477,6 +477,8 @@ main() {
   rollbar
   procfile
   example
+  react
+  vue
   ci
   readme
   gitignore
