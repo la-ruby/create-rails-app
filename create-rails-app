@@ -101,6 +101,9 @@ pundit() {
   ./bin/rails g pundit:install
   insert_line_after 'class ApplicationController' '  include Pundit::Authorization' app/controllers/application_controller.rb
   insert_line_after 'include Pundit::Authorization' '  # after_action :verify_authorized' app/controllers/application_controller.rb
+  # so coverage metric is not affected
+  # wipwip
+  prepend_all_lines '# ' app/policies/application_policy.rb
   commit "Install pundit"
   popd
 }
