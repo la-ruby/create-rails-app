@@ -45,6 +45,15 @@ jobs:
       run: |
         bin/rails db:setup
 
+    - name: Prep assets
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        RAILS_ENV: test
+      run: |
+        bundle install && yarn install && yarn build:css && yarn build
+
     - name: Execute unit tests
       env:
         PGHOST: localhost
