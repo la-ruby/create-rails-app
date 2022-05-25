@@ -4,22 +4,18 @@
 ![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg)
 
 
-## If you're reading this, it's possible I've already left the project. Please,
+### If you're reading this
 
-### Keep up with updates
+It's possible I've already left the project. Please,
 
-Things like rails, bootstrap and gems should be somewhere close to their edge versions.
-
-### Maintain unit test coverage
-
-If you inehrited the project at 100% unit test coverage, try to maintain that level.
-
-### General upkeep
-
-Reek, rebocop and refactor often!
+- [ ] Keep up with updates<br>
+      Things like rails, bootstrap and gems should be somewhere close to their edge versions.
+- [ ] Maintain unit test coverage<br>
+      You probably inherited this with simplecov reporting 100%
+- [ ] Reek, rubocop and refactor often!
 
 
-## First Time Setup
+### First Time Setup
 
 ```
  
@@ -95,8 +91,6 @@ $
 ```
 
 
-## Maintenance
-
 ### Upgrading rails
 
 ```
@@ -132,7 +126,7 @@ $ cp dist/js/bootstrap.bundle.js ~/silica/public/
 ```
 
 
-## Coding guidelines
+### Coding guidelines
 
 * Start PR with "WIP" in the title (and remove it when ready for review)
 * Name your branch `nickname/task-id-task-title`
