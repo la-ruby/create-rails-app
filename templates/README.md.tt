@@ -117,12 +117,12 @@ Copy over `bootstrap.css` and `bootstrap.bundle.js` after running `npm run dist`
 
 ```
 $ cd ~/
-$ git clone https://github.com/la-ruby/silica-bootstrap
-$ cd ~/silica-bootstrap
+$ git clone https://github.com/la-ruby/your-bootstrap-fork
+$ cd ~/your-bootstrap-fork
 $ npm install
 $ npm run dist
-$ cp dist/css/bootstrap.css ~/silica/public/
-$ cp dist/js/bootstrap.bundle.js ~/silica/public/
+$ cp dist/css/bootstrap.css ~/created-rails-app/public/
+$ cp dist/js/bootstrap.bundle.js ~/created-rails-app/public/
 ```
 
 
