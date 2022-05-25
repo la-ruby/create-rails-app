@@ -4,7 +4,22 @@
 ![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg)
 
 
-### First Time Setup
+## If you're reading this, it's possible I've already left the project. Please,
+
+### Keep up with updates
+
+Things like rails, bootstrap and gems should be somewhere close to their edge versions.
+
+### Maintain unit test coverage
+
+If you inehrited the project at 100% unit test coverage, try to maintain that level.
+
+### General upkeep
+
+Reek, rebocop and refactor often!
+
+
+## First Time Setup
 
 ```
  
@@ -80,6 +95,8 @@ $
 ```
 
 
+## Maintenance
+
 ### Upgrading rails
 
 ```
@@ -104,8 +121,18 @@ Rails 7.0.1
 
 Copy over `bootstrap.css` and `bootstrap.bundle.js` after running `npm run dist` on your fork of twbs/bootstrap
 
+```
+$ cd ~/
+$ git clone https://github.com/la-ruby/silica-bootstrap
+$ cd ~/silica-bootstrap
+$ npm install
+$ npm run dist
+$ cp dist/css/bootstrap.css ~/silica/public/
+$ cp dist/js/bootstrap.bundle.js ~/silica/public/
+```
 
 
+## Coding guidelines
 
-
-
+* Start PR with "WIP" in the title (and remove it when ready for review)
+* Name your branch `nickname/task-id-task-title`
