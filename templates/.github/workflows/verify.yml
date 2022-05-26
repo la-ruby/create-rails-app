@@ -62,10 +62,6 @@ jobs:
         RAILS_ENV: test
       run: |
         ./bin/rails test
-    - name: Ensure test coverage
-      run: |
-        (grep -Pzo '    <span class="group_name">All Files</span>\n    \(<span class="covered_percent">\n      <span class="green">\n  100.0%' coverage/index.html) || true
-
 
   #
   #
@@ -73,10 +69,17 @@ jobs:
   #
   #
   rubocop:
-    - name: Run rubocop
-      run: |
-        gem install rubocop
-        rubocop
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: ruby/setup-ruby@v1
+      
+      - name: Run rubocop
+        run: |
+          gem install rubocop
+          rubocop
 
   #
   #
@@ -87,15 +90,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+  
+      - uses: ruby/setup-ruby@v1
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-
-      - name: Install Reek
-        run: |
-          gem install reek
       - name: Run Reek
         run: |
+          gem install reek
           reek *
