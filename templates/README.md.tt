@@ -18,9 +18,9 @@ It's possible I've already left the project. Please,
 ### First Time Setup
 
 ```
- 
 $ cd ~/
- 
+
+
 $ git clone git@github.com:la-ruby/created-rails-app.git
 Cloning into 'created-rails-app'...
 remote: Enumerating objects: 3377, done.
@@ -30,7 +30,9 @@ remote: Total 3377 (delta 194), reused 258 (delta 123), pack-reused 3035
 Receiving objects: 100% (3377/3377), 3.59 MiB | 1.76 MiB/s, done.
 Resolving deltas: 100% (1767/1767), done.
 
+
 $ cd created-rails-app/
+
 
 $ ./bin/setup
 == Installing dependencies ==
@@ -44,6 +46,16 @@ Created database 'wood_test'
 
 == Restarting application server ==
 
+
+$ yarn install
+yarn install v1.22.17
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+[4/4] 🔨  Building fresh packages...
+✨  Done in 8.69s.
+
+
 $ ./bin/rails test
 Running 7 tests in a single process (parallelization threshold is 50)
 Run options: --seed 34377
@@ -54,14 +66,6 @@ Run options: --seed 34377
 
 Finished in 0.905505s, 7.7305 runs/s, 9.9392 assertions/s.
 7 runs, 9 assertions, 0 failures, 0 errors, 0 skips
-
-$ yarn install
-yarn install v1.22.17
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 🔨  Building fresh packages...
-✨  Done in 8.69s.
 
 
 $ ./bin/dev
