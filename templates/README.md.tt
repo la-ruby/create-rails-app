@@ -128,7 +128,7 @@ Finished in 1.113936s, 7.1817 runs/s, 8.0795 assertions/s.
 Coverage report generated for tests to /Users/administrator/spiffy/coverage. 12 / 12 LOC (100.0%) covered.
 ```
 
-The test suite gets triggerd when your text editor saves to app/** or test/**
+The test suite gets triggerd when your text editor saves to app/** or test/** <br>
 [Guard](https://github.com/guard/guard) and [seattlerb/autotest](https://github.com/seattlerb/autotest) can do this too.
 
 
