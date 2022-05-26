@@ -55,23 +55,39 @@ Run options: --seed 34377
 Finished in 0.905505s, 7.7305 runs/s, 9.9392 assertions/s.
 7 runs, 9 assertions, 0 failures, 0 errors, 0 skips
 
-$ ./bin/rails server
-=> Booting Puma
-=> Rails 7.0.2.2 application starting in development 
-=> Run `bin/rails server --help` for more startup options
-Puma starting in single mode...
-* Puma version: 5.6.2 (ruby 3.0.3-p157) ("Birdie's Version")
-*  Min threads: 5
-*  Max threads: 5
-*  Environment: development
-*          PID: 93154
-* Listening on http://127.0.0.1:3000
-* Listening on http://[::1]:3000
-Use Ctrl-C to stop
+$ yarn install
+yarn install v1.22.17
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+[4/4] 🔨  Building fresh packages...
+✨  Done in 8.69s.
 
 
-
-
+$ ./bin/dev
+03:03:43 web.1  | started with pid 60064
+03:03:43 js.1   | started with pid 60065
+03:03:43 css.1  | started with pid 60066
+03:03:43 js.1   | yarn run v1.22.17
+03:03:43 css.1  | yarn run v1.22.17
+03:03:43 js.1   | $ esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --watch
+03:03:43 css.1  | $ sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch
+03:03:43 js.1   | [watch] build finished, watching for changes...
+03:03:44 css.1  | Compiled app/assets/stylesheets/application.bootstrap.scss to app/assets/builds/application.css.
+03:03:44 css.1  | Sass is watching for changes. Press Ctrl-C to stop.
+03:03:44 css.1  | 
+03:03:44 web.1  | => Booting Puma
+03:03:44 web.1  | => Rails 7.0.3 application starting in development 
+03:03:44 web.1  | => Run `bin/rails server --help` for more startup options
+03:03:44 web.1  | Puma starting in single mode...
+03:03:44 web.1  | * Puma version: 5.6.4 (ruby 3.0.3-p157) ("Birdie's Version")
+03:03:44 web.1  | *  Min threads: 5
+03:03:44 web.1  | *  Max threads: 5
+03:03:44 web.1  | *  Environment: development
+03:03:44 web.1  | *          PID: 60064
+03:03:44 web.1  | * Listening on http://127.0.0.1:3000
+03:03:44 web.1  | * Listening on http://[::1]:3000
+03:03:44 web.1  | Use Ctrl-C to stop
 ```
 
 
