@@ -8,9 +8,9 @@
 
 If you're reading this after I have left, please
 
-- [ ] Keep versions up to date.
+- [ ] Keep versions up to date.<br>
       I would normally keep rails and bootstrap close to main branches at github.
-- [ ] If you inherited it at 100% test coverage
+- [ ] If you inherited it at 100% test coverage<br>
       try to maintain that level.
 - [ ] Reek, rubocop and refactor often.
 
