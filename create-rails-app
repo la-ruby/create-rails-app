@@ -240,6 +240,14 @@ factory_bot() {
   popd
 }
 
+# tweaks related to test framework
+testing() {
+  pushd /tmp/created-rails-app
+  replace_string 'parallelize' "\x23\x20parallelize" test/test_helper.rb # using escapes to avoid 'not terminated' error
+  commit "Setup test framework"
+  popd
+}
+
 # should output: Coverage report generated ... 1328 / 1328 LOC (100.0%) covered.
 # when you do COVERAGE=1 ./bin/rails test
 simplecov() {
@@ -467,8 +475,8 @@ main() {
   kaminari
   flash
   stylesheets
-
   factory_bot
+  testing
   simplecov
   webmock
   vcr
