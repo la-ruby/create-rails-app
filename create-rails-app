@@ -243,6 +243,10 @@ factory_bot() {
 # tweaks related to test framework
 testing() {
   pushd /tmp/created-rails-app
+  # a custom script for autotesting
+  cp ~/work/create-rails-app/create-rails-app/templates/bin/autotest bin/
+  chmod +x ./bin/autotest
+  # parallelize not used atm
   replace_string 'parallelize' "\x23\x20parallelize" test/test_helper.rb # using escapes to avoid 'not terminated' error
   commit "Setup test framework"
   popd
