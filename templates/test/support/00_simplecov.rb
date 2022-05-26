@@ -2,7 +2,7 @@
 # (or spec_helper.rb, rails_helper, cucumber env.rb, or whatever your
 # preferred test framework uses)
 require 'simplecov'
-if ENV['COVERAGE']
+unless ENV['SKIP_COVERAGE']
   SimpleCov.start 'rails' do
     command_name 'tests'
 
