@@ -6,13 +6,28 @@
 
 ### If you're reading this
 
-It's possible I've already left the project. Please,
+If you're reading this after I have left, please
 
-- [ ] Keep up with updates<br>
-      Things like rails, bootstrap and gems should be somewhere close to their edge versions.
-- [ ] Maintain unit test coverage<br>
-      You probably inherited this with simplecov reporting 100%
-- [ ] Reek, rubocop and refactor often!
+- [ ] Keep versions up to date.
+      I would normally keep rails and bootstrap close to main branches at github.
+- [ ] If you inherited it at 100% test coverage
+      try to maintain that level.
+- [ ] Reek, rubocop and refactor often.
+
+
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 orderedList:0 -->
+
+- [First time setup](#first-time-setup)
+- [Edit master key](#edit-master-key)
+- Testing
+	- [Running tests](#running-tests)
+	- [Auto runner](#auto-runner)
+- Upgrades
+	- [Upgrading rails](#upgrading-rails)
+	- [Upgrading bootstrap](#upgrading-bootstrap)
+- [Coding guidelines](#coding-guidelines)
+
+<!-- /TOC -->
 
 
 ### First Time Setup
