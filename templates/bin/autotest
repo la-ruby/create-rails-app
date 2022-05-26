@@ -33,7 +33,7 @@ function run_tests() {
    stable_exec audible_exec ./bin/rails test
 }
 
-MY_LATENCY=2
+MY_LATENCY=1
 run_tests
 while fswatch --one-event --latency $MY_LATENCY ./app ./test &>/dev/null; do
   horizontal_rule
