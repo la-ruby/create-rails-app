@@ -111,6 +111,27 @@ $
 ```
 
 
+### Test runner
+
+Try this when refactoring code
+
+```
+$ ./bin/autotest
+Run options: --seed 12345
+
+# Running:
+
+........
+
+Finished in 1.113936s, 7.1817 runs/s, 8.0795 assertions/s.
+8 runs, 9 assertions, 0 failures, 0 errors, 0 skips
+Coverage report generated for tests to /Users/administrator/spiffy/coverage. 12 / 12 LOC (100.0%) covered.
+```
+
+The test suite gets triggerd when your text editor saves to app/** or test/**
+[Guard](https://github.com/guard/guard) and [seattlerb/autotest](https://github.com/seattlerb/autotest) can do this too.
+
+
 ### Upgrading rails
 
 ```
