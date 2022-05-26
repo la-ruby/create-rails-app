@@ -20,7 +20,7 @@ If you're reading this after I have left, please
 - [First time setup](#first-time-setup)
 - [Edit master key](#edit-master-key)
 - Testing
-	- [Running tests](#running-tests)
+	- [Running the tests](#running-the-tests)
 	- [Auto runner](#auto-runner)
 - Upgrades
 	- [Upgrading rails](#upgrading-rails)
@@ -126,7 +126,25 @@ $
 ```
 
 
-### Test runner
+### Running the tests
+
+```
+$ ./bin/rails test
+Running 7 tests in a single process (parallelization threshold is 50)
+Run options: --seed 34377
+
+# Running:
+
+.......
+
+Finished in 0.905505s, 7.7305 runs/s, 9.9392 assertions/s.
+7 runs, 9 assertions, 0 failures, 0 errors, 0 skips
+```
+
+The capybara/selenium tests are run if you append `:all` to `./bin/rails test`
+
+
+### Auto runner
 
 Try this when refactoring code
 
