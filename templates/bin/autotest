@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+function audible_exec() {
+  initiating_sound=/System/Library/Sounds/Hero.aiff
+  warning_sound=/System/Library/Sounds/Sosumi.aiff
+  afplay "$initiating_sound" -v 1
+  eval "$@"
+  result=$?
+  if [ "$result" != 0 ]; then
+    afplay "$warning_sound" -v 1
+  fi
+}
+
+function horizontal_rule() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
+# avoids execution during git rebase phases
+function stable_exec() {
+  # How to know if there is a git rebase in progress? stackoverflow/3921409
+  if (test -d "$(git rev-parse --git-path rebase-merge)" ||  test -d "$(git rev-parse --git-path rebase-apply)" ); then
+    sleep $MY_LATENCY
+  else
+    eval "$@"
+  fi
+}
+
+function kill_tests() {
+  pkill -SIGINT -f './bin/rails test';
+}
+
+function run_tests() {
+   stable_exec audible_exec ./bin/rails test
+}
+
+MY_LATENCY=2
+run_tests
+while fswatch --one-event --latency $MY_LATENCY ./app ./test &>/dev/null; do
+  horizontal_rule
+  kill_tests
+  run_tests &
+done
