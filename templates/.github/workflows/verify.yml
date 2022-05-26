@@ -60,8 +60,6 @@ jobs:
         PGUSER: postgres
         PGPASSWORD: postgres
         RAILS_ENV: test
-        COVERAGE: 1
-        PARALLEL_WORKERS: 1
       run: |
         ./bin/rails test
     - name: Ensure test coverage
@@ -80,7 +78,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: ruby/setup-ruby@v1
+
+- uses: ruby/setup-ruby@v1
 
     - name: Run rubocop
       run: |
