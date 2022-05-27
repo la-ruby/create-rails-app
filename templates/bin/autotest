@@ -35,7 +35,7 @@ function run_tests() {
 
 MY_LATENCY=1
 run_tests
-while fswatch --one-event ./app ./test &>/dev/null; do
+while fswatch --recursive --exclude ".*" --include "\\.rb$" --one-event .; do
   horizontal_rule
   kill_tests
   run_tests &
