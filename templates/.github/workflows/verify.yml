@@ -79,7 +79,7 @@ jobs:
       - name: Run rubocop
         run: |
           gem install rubocop
-          rubocop
+          rubocop app/
 
   #
   #
@@ -97,4 +97,4 @@ jobs:
       - name: Run Reek
         run: |
           gem install reek
-          reek *
+          reek app/
