@@ -296,11 +296,11 @@ vcr() {
 }
 
 # cron like scheduling
-clockwork() {
+scheduler() {
   pushd /tmp/created-rails-app
-  bundle add clockwork --git "https://github.com/Rykian/clockwork" --branch "master" &>/dev/null
-  cp ~/work/create-rails-app/create-rails-app/templates/clock.rb.tt clock.rb
-  commit "Installed clockwork"
+  bundle add rufus-scheduler --git "https://github.com/jmettraux/rufus-scheduler" --branch "master" &>/dev/null
+  cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/rufus-scheduler.rb config/initializers/
+  commit "Installed rufus-scheduler"
   popd
 }
 
@@ -484,7 +484,7 @@ main() {
   simplecov
   webmock
   vcr
-  clockwork
+  scheduler
   sendgrid
   rollbar
   procfile
