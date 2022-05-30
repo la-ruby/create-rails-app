@@ -114,6 +114,14 @@ pundit() {
   popd
 }
 
+
+activejob() {
+  pushd /tmp/created-rails-app
+  bundle add resque --github "resque/resque" --branch "master"
+  commit "Setup activejob"
+  popd
+}
+
 # Some extra setup useful for production running of activestorage
 activestorage() {
   pushd /tmp/created-rails-app
@@ -478,6 +486,7 @@ main() {
   hotwired
   devise
   pundit
+  activejob
   activestorage
   jquery
   bootstrap
