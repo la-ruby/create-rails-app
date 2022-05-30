@@ -118,6 +118,10 @@ pundit() {
 activejob() {
   pushd /tmp/created-rails-app
   bundle add resque --github "resque/resque" --branch "master"
+  echo "jobs: QUEUE=default COUNT=1 bundle exec rake resque:workers" >> Procfile.dev
+  echo "require 'resque'" >> Rakefile
+  echo "require 'resque/tasks'" >> Rakefile
+
   commit "Setup activejob"
   popd
 }
