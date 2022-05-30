@@ -73,9 +73,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - uses: ruby/setup-ruby@v1
-      
+
       - name: Run rubocop
         run: |
           gem install rubocop
@@ -91,7 +91,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-  
+
       - uses: ruby/setup-ruby@v1
 
       - name: Run Reek
