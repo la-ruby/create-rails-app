@@ -64,6 +64,14 @@ randomize_name() {
   popd
 }
 
+# using newer redis eliminates a warning
+redis() {
+  pushd /tmp/created-rails-app
+  bundle add redis --github "redis/redis-rb"
+  commit "Updated redis"
+  popd
+}
+
 # using newer version of turbo-rails
 hotwired() {
   pushd /tmp/created-rails-app
