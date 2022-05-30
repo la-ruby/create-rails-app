@@ -474,6 +474,7 @@ main() {
   generate
   randomize_name
   repoint
+  redis
   hotwired
   devise
   pundit
