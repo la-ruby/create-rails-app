@@ -121,6 +121,7 @@ activejob() {
   bundle add resque --github "resque/resque" --branch "master"
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/resque.rb config/initializers/
   echo "jobs: QUEUE=default COUNT=1 bundle exec rake resque:workers" >> Procfile.dev
+  echo "" >> Rakefile
   echo "require 'resque'" >> Rakefile
   echo "require 'resque/tasks'" >> Rakefile
   insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/development.rb
