@@ -122,12 +122,8 @@ activejob() {
   echo "jobs: QUEUE=default COUNT=1 bundle exec rake resque:workers" >> Procfile.dev
   echo "require 'resque'" >> Rakefile
   echo "require 'resque/tasks'" >> Rakefile
-
-  mysed -i '$i\
-  config.active_job.queue_adapter     = :resque' config/environments/development.rb
-  mysed -i '$i\
-  config.active_job.queue_adapter     = :resque' config/environments/production.rb  
-
+  insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/development.rb
+  insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/production.rb
   commit "Setup activejob"
   popd
 }
@@ -501,6 +497,12 @@ prepend_all_lines() {
 # add line after matched line
 insert_line_after() {
   perl -s -p -i -e '$_.="$bbb\n" if /$aaa/' -- -aaa="$1" -bbb="$2" $3
+}
+
+# TODO: make two spaces optional
+insert_before_last_line() {
+  mysed -i '$i\
+  '"$1" $2
 }
 
 main() {
