@@ -349,6 +349,15 @@ procfile() {
   popd
 }
 
+# new code often comes to the experiment class first
+experiment() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/test/models/experiment_test.rb test/models/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/models/experiment.rb app/models/
+  commit "Added experiment class"
+  popd
+}
+
 # generates soe scaffolds to serve as examples
 example() {
   pushd /tmp/created-rails-app
@@ -510,6 +519,7 @@ main() {
   sendgrid
   airbrake
   procfile
+  experiment
   example
   react
   vue
