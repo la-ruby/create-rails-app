@@ -64,11 +64,12 @@ randomize_name() {
   popd
 }
 
-# using newer redis eliminates a warning
+# setup redis
 redis() {
   pushd /tmp/created-rails-app
   bundle add redis --github "redis/redis-rb"
-  commit "Updated redis"
+  insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
+  commit "Setup redis"
   popd
 }
 
