@@ -123,6 +123,11 @@ activejob() {
   echo "require 'resque'" >> Rakefile
   echo "require 'resque/tasks'" >> Rakefile
 
+  mysed -i '$i\
+  config.active_job.queue_adapter     = :resque' config/environments/development.rb
+  mysed -i '$i\
+  config.active_job.queue_adapter     = :resque' config/environments/production.rb  
+
   commit "Setup activejob"
   popd
 }
