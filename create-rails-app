@@ -248,6 +248,13 @@ stylesheets() {
   popd
 }
 
+constants() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/config/constants.rb config/
+  echo 'require Rails.root.join("config/constants")' >> config/application.rb
+  commit "Simple constant overriding mechanism"
+  popd
+}
 
 # Prefer factories over fixtures
 factory_bot() { 
@@ -510,6 +517,7 @@ main() {
   kaminari
   flash
   stylesheets
+  constants
   factory_bot
   testing
   simplecov
