@@ -126,6 +126,7 @@ activejob() {
   echo "require 'resque/tasks'" >> Rakefile
   insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/development.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/production.rb
+  insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/config/routes_resque.rb config/routes.rb
   commit "Setup activejob"
   popd
 }
@@ -505,6 +506,12 @@ insert_line_after() {
 insert_before_last_line() {
   mysed -i '$i\
   '"$1" $2
+}
+
+insert_file_before_last_line() {
+  mysed -i '$ d' $2 # remove last line from file
+  cat $1 >> $2
+  echo "end" >> $2
 }
 
 main() {
