@@ -418,8 +418,7 @@ ci() {
   rubocop --regenerate-todo
   # REEK
   gem install reek
-  reek --todo *
-  cat ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt >> .reek.yml
+  cp ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt .reek.yml
   # ^ some "sensible" reek ignores for rails
   commit "Set up ci"
   popd
