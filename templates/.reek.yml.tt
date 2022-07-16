@@ -1,4 +1,13 @@
-# https://github.com/troessner/reek#working-with-rails
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  DuplicateMethodCall:
+    enabled: false
+
+exclude_paths:
+  - ./**/example*
+
+# from https://github.com/troessner/reek#working-with-rails
 directories:
   "app/controllers":
     IrresponsibleModule:
@@ -20,5 +29,4 @@ directories:
   "app/models":
     InstanceVariableAssumption:
       enabled: false
-exclude_paths:
-  - ./**/example*
+# from https://github.com/troessner/reek#working-with-rails
