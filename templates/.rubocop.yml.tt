@@ -6,4 +6,5 @@ AllCops:
     - '**/experiment*'
     - '**/*application**'
     - '**/*application*/**'
+    - '**/*.jbuilder'
   NewCops: enable
