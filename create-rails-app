@@ -89,6 +89,7 @@ devise() {
   bundle install &>/dev/null
   ./bin/rails generate devise:install
   ./bin/rails generate devise User
+  insert_as_first_line '# frozen_string_literal: true\n' app/models/user.rb
   ./bin/rails db:migrate
   prepend_all_lines '# ' test/fixtures/users.yml
   insert_line_after 'class ActiveSupport' '  include Devise::Test::IntegrationHelpers' test/test_helper.rb
@@ -511,6 +512,10 @@ insert_file_before_last_line() {
   mysed -i '$ d' $2 # remove last line from file
   cat $1 >> $2
   echo "end" >> $2
+}
+
+insert_as_first_line() {
+  awk -v TEXT="$1" 'BEGIN {print TEXT};1' $2
 }
 
 main() {
