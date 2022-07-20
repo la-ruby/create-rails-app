@@ -333,8 +333,8 @@ vcr() {
 scheduler() {
   pushd /tmp/created-rails-app
   bundle add sidekiq-cron --git "https://github.com/ondrejbartas/sidekiq-cron" --branch "master" &>/dev/null
-  cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/rufus-scheduler.rb config/initializers/
-  commit "Installed rufus-scheduler"
+  cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq.rb config/initializers/
+  commit "Installed sidekiq-cron"
   popd
 }
 
