@@ -42,6 +42,7 @@ repoint() {
   rm Gemfile.lock
   bundle install
   bundle lock --add-platform ruby # is this needed nowadays?
+  remove_line_containing_word "Use local checkout of Rails" Gemfile
   ./bin/setup
   commit "Using rails branch at github"
   popd
@@ -517,6 +518,11 @@ insert_file_before_last_line() {
 insert_as_first_line() {
   awk -v TEXT="$1" 'BEGIN {print TEXT};1' $2
 }
+
+remove_line_containing_word() {
+  gawk -i inplace '!'"/$1/" $2
+}
+
 
 main() {
   download
