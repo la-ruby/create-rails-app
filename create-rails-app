@@ -332,7 +332,7 @@ vcr() {
 # cron like scheduling
 scheduler() {
   pushd /tmp/created-rails-app
-  bundle add rufus-scheduler --git "https://github.com/jmettraux/rufus-scheduler" --branch "master" &>/dev/null
+  bundle add sidekiq-cron --git "https://github.com/ondrejbartas/sidekiq-cron" --branch "master" &>/dev/null
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/rufus-scheduler.rb config/initializers/
   commit "Installed rufus-scheduler"
   popd
