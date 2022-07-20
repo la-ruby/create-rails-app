@@ -122,13 +122,9 @@ activejob() {
   pushd /tmp/created-rails-app
   bundle add sidekiq --github "mperham/sidekiq" --branch "main"
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq.rb config/initializers/
-  echo "jobs: QUEUE=default COUNT=1 bundle exec rake resque:workers" >> Procfile.dev
-  echo "" >> Rakefile
-  echo "require 'resque'" >> Rakefile
-  echo "require 'resque/tasks'" >> Rakefile
-  insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/development.rb
-  insert_before_last_line 'config.active_job.queue_adapter     = :resque' config/environments/production.rb
-  insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/config/routes_resque.rb config/routes.rb
+  insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/development.rb
+  insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/production.rb
+  insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/config/routes_sidekiq.rb config/routes.rb
   commit "Setup activejob"
   popd
 }
