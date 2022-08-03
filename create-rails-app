@@ -68,7 +68,7 @@ randomize_name() {
 # setup redis
 redis() {
   pushd /tmp/created-rails-app
-  bundle add redis --github "redis/redis-rb"
+  bundle add redis --git "https://github.com/redis/redis-rb" --branch "master" &>/dev/null
   insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
   commit "Setup redis"
   popd
@@ -120,7 +120,7 @@ pundit() {
 
 activejob() {
   pushd /tmp/created-rails-app
-  bundle add sidekiq --github "mperham/sidekiq" --branch "main"
+  bundle add redis --git "https://github.com/mperham/sidekiq" --branch "main" &>/dev/null
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq.rb config/initializers/
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/development.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/production.rb
@@ -345,7 +345,7 @@ sendgrid() {
 # ruby gem for error monitoring
 airbrake() {
   pushd /tmp/created-rails-app
-  bundle add airbrake --github "airbrake/airbrake" --optimistic &>/dev/null
+  bundle add airbrake --git "https://github.com/airbrake/airbrake" --branch "master" &>/dev/null
   ./bin/rails g airbrake
   commit "Install airbrake"
   popd
