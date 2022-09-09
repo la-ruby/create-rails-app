@@ -120,7 +120,7 @@ pundit() {
 
 activejob() {
   pushd /tmp/created-rails-app
-  bundle add sidekiq --git "https://github.com/mperham/sidekiq" --branch "main" &>/dev/null
+  bundle add sidekiq --git "https://github.com/mperham/sidekiq" --branch "main"
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq.rb config/initializers/
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/development.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/production.rb
