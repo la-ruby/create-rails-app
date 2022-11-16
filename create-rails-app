@@ -263,7 +263,7 @@ constants() {
 factory_bot() { 
   pushd /tmp/created-rails-app
   bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
-  bundle add faker --git "https://github.com/faker-ruby/faker" --branch "master" &>/dev/null
+  bundle add faker --git "https://github.com/faker-ruby/faker" --branch "main" &>/dev/null
   mkdir test/factories
   insert_line_after 'class ActiveSupport' '  include FactoryBot::Syntax::Methods' test/test_helper.rb
   commit "Installed factory_bot"
