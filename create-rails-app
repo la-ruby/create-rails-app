@@ -462,6 +462,13 @@ upload() {
   popd
 }
 
+lame1674001972() {
+  pushd /tmp/created-rails-app
+  replace_string "class User < ApplicationRecord" "class User < ApplicationRecord #nodoc" app/models/user.rb
+  commit "lame1674001972"
+  popd
+}
+
 commit() {
   git add --all &>/dev/null
   git commit -m "$1" &>/dev/null
