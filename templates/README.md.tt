@@ -3,15 +3,6 @@
 
 ![](https://img.shields.io/github/stars/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/forks/la-ruby/created-rails-app.svg) ![](https://img.shields.io/github/issues/la-ruby/created-rails-app.svg)
 
-
-### If you've maintaining this repo
-
-- [ ] Keep versions up to date.<br>
-- [ ] If you inherited it at 100% test coverage<br>
-      try to maintain that level.
-- [ ] Reek, rubocop and refactor often.
-
-
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 orderedList:0 -->
 
 - [First time setup](#first-time-setup)

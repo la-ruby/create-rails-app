@@ -65,15 +65,6 @@ randomize_name() {
   popd
 }
 
-# setup redis because sidekiq looks for it
-redis() {
-  pushd /tmp/created-rails-app
-  # REVISIT bundle add redis --git "https://github.com/redis/redis-rb" --branch "master" &>/dev/null
-  insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
-  # REVISIT commit "Setup redis"
-  popd
-}
-
 # using newer version of turbo-rails
 hotwired() {
   pushd /tmp/created-rails-app
@@ -122,9 +113,11 @@ activejob() {
   pushd /tmp/created-rails-app
   bundle add sidekiq
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq.rb config/initializers/
+  # insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/development.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/production.rb
   insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/config/routes_sidekiq.rb config/routes.rb
+
   commit "Setup activejob"
   popd
 }
@@ -319,9 +312,11 @@ webmock() {
 # cron like scheduling
 scheduler() {
   pushd /tmp/created-rails-app
-  bundle add sidekiq-cron --git "https://github.com/ondrejbartas/sidekiq-cron" --branch "master" &>/dev/null
-  cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq_cron.rb config/initializers/
-  commit "Installed sidekiq-cron"
+	# REVISIT: was getting  pid=4 tid=jz0 ERROR: undefined method `merge' for ["name", "example_job", "klass", "Examp
+	# on heroki
+  # bundle add sidekiq-cron --git "https://github.com/ondrejbartas/sidekiq-cron" --branch "master" &>/dev/null
+  # cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq_cron.rb config/initializers/
+  # commit "Installed sidekiq-cron"
   popd
 }
 
@@ -523,7 +518,6 @@ main() {
   generate
   randomize_name
   repoint
-  redis
   hotwired
   devise
   pundit
