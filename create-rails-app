@@ -334,10 +334,10 @@ sendgrid() {
 }
 
 # ruby gem for error monitoring
-airbrake() {
+rollbar() {
   pushd /tmp/created-rails-app
-  bundle add airbrake --git "https://github.com/airbrake/airbrake" --branch "master" &>/dev/null
-  ./bin/rails g airbrake
+  bundle add rollbar &>/dev/null
+  ./bin/rails generate rollbar EXAMPLE_POST_SERVER_ITEM_ACCESS_TOKEN
   commit "Install airbrake"
   popd
 }
@@ -546,7 +546,7 @@ main() {
   webmock
   scheduler
   sendgrid
-  airbrake
+  rollbar
   procfile
   experiment
   example
