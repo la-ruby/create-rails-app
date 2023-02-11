@@ -92,7 +92,7 @@ devise() {
 # adds pundit for authorization
 pundit() {
   pushd /tmp/created-rails-app
-  bundle add pundit --git "https://github.com/varvet/pundit" --branch "main" &>/dev/null  
+  bundle add pundit &>/dev/null  
   bundle install &>/dev/null
   # TODO:
   # ...Include Pundit::Authorization in your application controller:
@@ -221,7 +221,7 @@ nice_partials() {
 # a pagination gem
 kaminari() {
   pushd /tmp/created-rails-app
-  bundle add kaminari --git "https://github.com/kaminari/kaminari" --branch "master" &>/dev/null
+  bundle add kaminari &>/dev/null
   commit "Installed kaminari"
   popd
 }
@@ -256,7 +256,7 @@ constants() {
 # Prefer factories over fixtures
 factory_bot() { 
   pushd /tmp/created-rails-app
-  bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
+  bundle add factory_bot_rails --group "test,development" &>/dev/null
   bundle add faker &>/dev/null
   mkdir test/factories
   insert_line_after 'class ActiveSupport' '  include FactoryBot::Syntax::Methods' test/test_helper.rb
@@ -293,7 +293,7 @@ simplecov() {
   mysed -i -r 's/(class ActiveSupport::TestCase)/\n\1/g' test/test_helper.rb
   # ^ adds a newline before matched line
   # adding minitest-test_profile gem
-  bundle add minitest-test_profile --git "https://github.com/y-yagi/minitest-test_profile" --group "test" --branch "master" &>/dev/null
+  bundle add minitest-test_profile --group "test"&>/dev/null
   cp ~/work/create-rails-app/create-rails-app/templates/test/support/minitest-test_profile.rb test/support/
 
   commit "Installed simplecov"
