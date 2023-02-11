@@ -384,17 +384,6 @@ react() {
   popd
 }
 
-# Setup a vue component
-vue() {
-  pushd /tmp/created-rails-app
-  yarn add vue
-  cp ~/work/create-rails-app/create-rails-app/templates/hellovue.js app/javascript/components/
-  echo 'import "./components/hellovue"' >> app/javascript/application.js
-  echo '<div id="hello-vue-mount-point"></div>' >> app/views/examples/index.html.erb
-  commit "Setup a vue component"
-  popd
-}
-
 # sets up automated testing (ci) via github actions
 ci() {
   pushd /tmp/created-rails-app
@@ -551,7 +540,6 @@ main() {
   experiment
   example
   react
-  vue
   ci
   readme
   gitignore
