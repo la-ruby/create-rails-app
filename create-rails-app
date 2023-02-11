@@ -65,11 +65,11 @@ randomize_name() {
   popd
 }
 
-# setup redis
+# setup redis because sidekiq looks for it
 redis() {
   pushd /tmp/created-rails-app
   # REVISIT bundle add redis --git "https://github.com/redis/redis-rb" --branch "master" &>/dev/null
-  # REVISIT insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
+  insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
   # REVISIT commit "Setup redis"
   popd
 }
