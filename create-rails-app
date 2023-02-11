@@ -316,15 +316,6 @@ webmock() {
   popd
 }
 
-# sometimes you want to vcr instead of webmock
-vcr() {
-  pushd /tmp/created-rails-app
-  bundle add vcr --git "https://github.com/vcr/vcr" --group "test" --branch "master" &>/dev/null
-  cp ~/work/create-rails-app/create-rails-app/templates/test/support/vcr.rb test/support/
-  commit "Installed vcr"
-  popd
-}
-
 # cron like scheduling
 scheduler() {
   pushd /tmp/created-rails-app
@@ -553,7 +544,6 @@ main() {
   testing
   simplecov
   webmock
-  vcr
   scheduler
   sendgrid
   airbrake
