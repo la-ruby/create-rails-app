@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 # TODO:
 # Need wrapper functions for:
 #   replaces matched line with given string
@@ -68,9 +68,9 @@ randomize_name() {
 # setup redis
 redis() {
   pushd /tmp/created-rails-app
-  bundle add redis --git "https://github.com/redis/redis-rb" --branch "master" &>/dev/null
-  insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
-  commit "Setup redis"
+  # REVISIT bundle add redis --git "https://github.com/redis/redis-rb" --branch "master" &>/dev/null
+  # REVISIT insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
+  # REVISIT commit "Setup redis"
   popd
 }
 

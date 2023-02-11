@@ -1,3 +1,6 @@
-
 - flipper
 - rollbar not airbrake
+- frontend warnings to rollbar
+- vcr
+- bm redis
+- vue less
