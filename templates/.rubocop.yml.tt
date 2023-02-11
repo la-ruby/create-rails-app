@@ -8,3 +8,6 @@ AllCops:
     - '**/*application*/**'
     - '**/*.jbuilder'
   NewCops: enable
+
+Style/Documentation:
+  Enabled: false
