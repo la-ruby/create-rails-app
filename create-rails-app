@@ -181,7 +181,7 @@ bootstrap_icons() {
   pushd /tmp/created-rails-app
   (cd /tmp/
    curl -s -L -O https://github.com/twbs/icons/archive/refs/heads/main.zip
-   myunzip main.zip &>/dev/null)
+   myunzip -f main.zip &>/dev/null)
   cp /tmp/icons-main/font/bootstrap-icons.css public/
   mkdir public/fonts
   cp /tmp/icons-main/font/fonts/* public/fonts/
@@ -194,7 +194,7 @@ fontawesome() {
   pushd /tmp/created-rails-app
   (cd /tmp/
    curl -s -L -O https://github.com/FortAwesome/Font-Awesome/archive/refs/heads/6.x.zip
-   myunzip 6.x.zip &>/dev/null)
+   myunzip -f 6.x.zip &>/dev/null)
   mkdir -p public/Font-Awesome/css
   mkdir -p public/Font-Awesome/webfonts
   cp /tmp/Font-Awesome-6.x/css/all.css public/Font-Awesome/css/
