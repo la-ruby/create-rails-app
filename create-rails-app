@@ -338,7 +338,17 @@ rollbar() {
   pushd /tmp/created-rails-app
   bundle add rollbar &>/dev/null
   ./bin/rails generate rollbar EXAMPLE_POST_SERVER_ITEM_ACCESS_TOKEN
-  commit "Install airbrake"
+  commit "Install rollbar"
+  popd
+}
+
+# flipper for feature flagging
+flipper() {
+  pushd /tmp/created-rails-app
+  bundle add flipper &>/dev/null
+  bundle add flipper-active_record &>/dev/null
+  ./bin/rails g flipper:active_record
+  commit "Install flipper"
   popd
 }
 
@@ -536,6 +546,7 @@ main() {
   scheduler
   sendgrid
   rollbar
+  flipper
   procfile
   experiment
   example
