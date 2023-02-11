@@ -1,12 +1,12 @@
-require 'sidekiq-cron'
-require 'sidekiq/cron/web'
-
-if ENV['DYNO'] =~ /\Aweb/ # runs only when heroku web dyno context detected
-  Sidekiq::Cron::Job.load_from_array([
-    {
-      'name'  => 'example_job',
-      'class' => 'ExampleJob',
-      'cron'  => '* * * * *'
-    }
-  ])
-end
+# REVISIT require 'sidekiq-cron'
+# REVISIT require 'sidekiq/cron/web'
+# REVISIT 
+# REVISIT if ENV['DYNO'] =~ /\Aweb/ # runs only when heroku web dyno context detected
+# REVISIT   Sidekiq::Cron::Job.load_from_array([
+# REVISIT     {
+# REVISIT       'name'  => 'example_job',
+# REVISIT       'class' => 'ExampleJob',
+# REVISIT       'cron'  => '* * * * *'
+# REVISIT     }
+# REVISIT   ])
+# REVISIT end

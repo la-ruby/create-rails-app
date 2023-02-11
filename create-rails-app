@@ -113,6 +113,7 @@ activejob() {
   pushd /tmp/created-rails-app
   bundle add sidekiq
   cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq.rb config/initializers/
+  # is this needed? i guess without it rails uses the memory cache store
   # insert_before_last_line 'config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }' config/environments/production.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/development.rb
   insert_before_last_line 'config.active_job.queue_adapter     = :sidekiq' config/environments/production.rb
@@ -212,7 +213,7 @@ flatpickr() {
 
 nice_partials() {
   pushd /tmp/created-rails-app
-  bundle add nice_partials --git "https://github.com/bullet-train-co/nice_partials" --branch "main" &>/dev/null
+  bundle add nice_partials &>/dev/null
   commit "Installed nice_partials"
   popd
 }
@@ -256,7 +257,7 @@ constants() {
 factory_bot() { 
   pushd /tmp/created-rails-app
   bundle add factory_bot_rails --git "https://github.com/thoughtbot/factory_bot_rails" --group "test,development" --branch "main" &>/dev/null
-  bundle add faker --git "https://github.com/faker-ruby/faker" --branch "main" &>/dev/null
+  bundle add faker &>/dev/null
   mkdir test/factories
   insert_line_after 'class ActiveSupport' '  include FactoryBot::Syntax::Methods' test/test_helper.rb
   commit "Installed factory_bot"
@@ -303,7 +304,7 @@ simplecov() {
 # with the message: WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled
 webmock() {
   pushd /tmp/created-rails-app
-  bundle add webmock --git "https://github.com/bblimke/webmock" --group "test" --branch "master" &>/dev/null
+  bundle add webmock --group "test" &>/dev/null
   cp ~/work/create-rails-app/create-rails-app/templates/test/support/webmock.rb test/support/
   commit "Use webmock for http requests"
   popd
@@ -312,8 +313,8 @@ webmock() {
 # cron like scheduling
 scheduler() {
   pushd /tmp/created-rails-app
-	# REVISIT: was getting  pid=4 tid=jz0 ERROR: undefined method `merge' for ["name", "example_job", "klass", "Examp
-	# on heroki
+  # REVISIT: was getting  pid=4 tid=jz0 ERROR: undefined method `merge' for ["name", "example_job", "klass", "Examp
+  # on heroki
   # bundle add sidekiq-cron --git "https://github.com/ondrejbartas/sidekiq-cron" --branch "master" &>/dev/null
   # cp ~/work/create-rails-app/create-rails-app/templates/config/initializers/sidekiq_cron.rb config/initializers/
   # commit "Installed sidekiq-cron"
@@ -332,7 +333,10 @@ sendgrid() {
 rollbar() {
   pushd /tmp/created-rails-app
   bundle add rollbar &>/dev/null
-  ./bin/rails generate rollbar EXAMPLE_POST_SERVER_ITEM_ACCESS_TOKEN
+  ./bin/rails generate rollbar '<%= ENV["ROLLBAR_POST_SERVER_ITEM_ACCESS_TOKEN"] %>'
+	# ^ this ends up needing some manual editing
+  echo '<%= render "/rollbar" %>' >> app/views/_javascripts.html.erb
+  cp ~/work/create-rails-app/create-rails-app/templates/app/views/_rollbar.html.erb app/views/
   commit "Install rollbar"
   popd
 }

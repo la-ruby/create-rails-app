@@ -3,16 +3,19 @@
 function audible_exec() {
   initiating_sound=/System/Library/Sounds/Hero.aiff
   warning_sound=/System/Library/Sounds/Sosumi.aiff
-  afplay "$initiating_sound" -v 1
+  echo "---"
+  # echo 'afplay "$initiating_sound" -v 1'
   eval "$@"
   result=$?
   if [ "$result" != 0 ]; then
-    afplay "$warning_sound" -v 1
+    echo "---"
+    # echo 'afplay "$warning_sound" -v 1'
   fi
 }
 
 function horizontal_rule() {
-  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  # printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  echo "---"
 }
 
 # avoids execution during git rebase phases
