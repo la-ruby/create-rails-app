@@ -401,11 +401,8 @@ ci() {
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
   # RUBOCOP
-  cp ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt .rubocop.yml
-  cp ~/work/create-rails-app/create-rails-app/templates/.rubocop_todo.yml.tt .rubocop_todo.yml
-  # rubocop --auto-gen-config
-  rubocop -A app/models/user.rb # TODO: remove me
-  rubocop --regenerate-todo app/
+  rubocop --auto-gen-config
+  insert_file_after_last_line ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt .rubocop.yml
   # REEK
   gem install reek
   cp ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt .reek.yml
@@ -508,6 +505,10 @@ insert_file_before_last_line() {
   mysed -i '$ d' $2 # remove last line from file
   cat $1 >> $2
   echo "end" >> $2
+}
+
+insert_file_after_last_line() {
+  cat $1 >> $2
 }
 
 insert_as_first_line() {

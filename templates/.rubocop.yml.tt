@@ -1,13 +1,2 @@
-inherit_from: .rubocop_todo.yml
-
-AllCops:
-  Exclude:
-    - '**/example*'
-    - '**/experiment*'
-    - '**/*application**'
-    - '**/*application*/**'
-    - '**/*.jbuilder'
-  NewCops: enable
-
 Style/Documentation:
   Enabled: false
