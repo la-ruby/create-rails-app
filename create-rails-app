@@ -18,11 +18,8 @@ download() {
 
 generate() {
   pushd /tmp/rails
-	# gem install irb -v 1.6.2  # Temporary
-	# gem install reline -v 0.3.1  # Temporary
-  # bundle update --bundler # Temporary
-  gem install bundler --pre
-	rm Gemfile.lock
+  gem install bundler --pre # Temporary
+	rm Gemfile.lock           # Temporary
   bundle install
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql --javascript=esbuild --css=bootstrap
   cd /tmp/created-rails-app
@@ -180,7 +177,7 @@ bootstrap_icons() {
   pushd /tmp/created-rails-app
   (cd /tmp/
    curl -s -L -O https://github.com/twbs/icons/archive/refs/heads/main.zip
-   myunzip -f main.zip &>/dev/null)
+   myunzip main.zip &>/dev/null)
   cp /tmp/icons-main/font/bootstrap-icons.css public/
   mkdir public/fonts
   cp /tmp/icons-main/font/fonts/* public/fonts/
@@ -193,7 +190,7 @@ fontawesome() {
   pushd /tmp/created-rails-app
   (cd /tmp/
    curl -s -L -O https://github.com/FortAwesome/Font-Awesome/archive/refs/heads/6.x.zip
-   myunzip -f 6.x.zip &>/dev/null)
+   myunzip 6.x.zip &>/dev/null)
   mkdir -p public/Font-Awesome/css
   mkdir -p public/Font-Awesome/webfonts
   cp /tmp/Font-Awesome-6.x/css/all.css public/Font-Awesome/css/
