@@ -22,6 +22,7 @@ generate() {
 	# gem install reline -v 0.3.1  # Temporary
   # bundle update --bundler # Temporary
 	rm Gemfile.lock
+  bundle update --bundler # Temporary
   bundle install
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql --javascript=esbuild --css=bootstrap
   cd /tmp/created-rails-app
