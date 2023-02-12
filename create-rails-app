@@ -18,8 +18,8 @@ download() {
 
 generate() {
   pushd /tmp/rails
-  bundle update debugger --bundler # Temporary
-  # bundle install
+  bundle update --bundler # Temporary
+  bundle install
   bundle exec railties/exe/rails new /tmp/created-rails-app --dev --database=postgresql --javascript=esbuild --css=bootstrap
   cd /tmp/created-rails-app
 
