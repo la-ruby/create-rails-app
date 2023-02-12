@@ -1,12 +1,5 @@
 #!/bin/bash -ex
-# TODO:
-# Need wrapper functions for:
-#   replaces matched line with given string
-#   prepend string to all lines
-#   add line after matched line
-#   add line before matched line
-#   simple replacement with sed
-
+#
 RAILS_VERSION="7-0-stable"
 BOOTSTRAP_VERSION="5.1"
 
