@@ -401,7 +401,7 @@ ci() {
   mkdir -p .github/workflows/
   cp ~/work/create-rails-app/create-rails-app/templates/.github/workflows/verify.yml .github/workflows/
   # RUBOCOP
-  rubocop --auto-gen-config
+  rubocop --auto-gen-config app/ lib/
   insert_file_after_last_line ~/work/create-rails-app/create-rails-app/templates/.rubocop.yml.tt .rubocop.yml
   # REEK
   gem install reek
