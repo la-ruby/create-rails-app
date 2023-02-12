@@ -26,7 +26,7 @@ generate() {
     git config --global user.name "Sam Bot"
   fi
 
-  commit "Generated new rails application"
+  commit "Initial commit - did rails new --database=postgresql ..."
   popd
 }
 
@@ -373,7 +373,7 @@ example() {
   ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
   echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seeds.rb
-  commit "Generated some code to serve as examples"
+  commit "Added example model, controller, etc"
   popd
 }
 
@@ -384,7 +384,7 @@ react() {
   mkdir app/javascript/components
   cp ~/work/create-rails-app/create-rails-app/templates/hello.tsx app/javascript/components/
   echo 'import "./components/hello"' >> app/javascript/application.js
-  commit "React setup"
+  commit "React is available if needed"
   popd
 }
 
@@ -400,7 +400,7 @@ ci() {
   gem install reek
   cp ~/work/create-rails-app/create-rails-app/templates/.reek.yml.tt .reek.yml
   # ^ some "sensible" reek ignores for rails
-  commit "Set up ci"
+  commit "Set up CI"
   popd
 }
 
