@@ -52,6 +52,20 @@ yarn install v1.22.17
 ✨  Done in 8.69s.
 
 
+$ yarn build
+yarn run v1.22.19
+$ esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets
+  app/assets/builds/application.js      1.2mb ⚠️
+  app/assets/builds/application.js.map  1.9mb
+✨  Done in 0.37s.
+
+
+$ yarn build:css
+yarn run v1.22.19
+$ sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules
+✨  Done in 0.91s.
+
+
 $ ./bin/rails test
 Running 7 tests in a single process (parallelization threshold is 50)
 Run options: --seed 34377
