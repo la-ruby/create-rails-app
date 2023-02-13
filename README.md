@@ -5,7 +5,7 @@
 ![](http://sam-we.com/cra3.png)
 
 
-The bash script that generates [created-rails-app](https://github.com/la-ruby/created-rails-app) daily.
+Bash script that generates [created-rails-app](https://github.com/la-ruby/created-rails-app) daily.
 
 
 
@@ -15,6 +15,6 @@ The bash script that generates [created-rails-app](https://github.com/la-ruby/cr
   - https://github.com/bigbinary/wheel
   - https://github.com/heyogrady/jumpstart
   - https://gist.github.com/dhh/782fb925b57450da28c1e15656779556
-  - https://jumpstartrails.com (not free)
-  - https://bullettrain.co (not free)
+  - https://jumpstartrails.com
+  - https://bullettrain.co
   - https://www.bootrails.com
