@@ -141,7 +141,7 @@ jquery() {
   cp /tmp/jquery-3.6.0.min.js public/
   echo '<script src="/jquery-3.6.0.min.js"></script>' >> app/views/_javascripts.html.erb
   insert_line_after 'javascript_include_tag' '    <%= render "/javascripts" %>' app/views/layouts/application.html.erb
-  insert_line_after 'csp_meta_tag' "    <%= render '/stylesheets' %>" app/views/layouts/application.html.erb
+  insert_line_before "stylesheet_link_tag" "    <%= render '/stylesheets' %>" app/views/layouts/application.html.erb
   touch app/views/_stylesheets.html.erb
   commit "Installed jquery"
   popd
@@ -486,6 +486,11 @@ prepend_all_lines() {
 # add line after matched line
 insert_line_after() {
   perl -s -p -i -e '$_.="$bbb\n" if /$aaa/' -- -aaa="$1" -bbb="$2" $3
+}
+
+# add line before matched line
+insert_line_before() {
+  perl -s -p -i -e '$_ = "$bbb\n$_" if /$aaa/' -- -aaa="$1" -bbb="$2" $3
 }
 
 # TODO: make two spaces optional
