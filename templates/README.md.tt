@@ -116,7 +116,7 @@ $ # now try http://yourapp.herokuapp.com/examples on your browser
 ### Service account
 
 
-    Username: CreatedRailsApp.developer@gmail.com
+    Username: yourcompanyname.developer@gmail.com
     Password: *******
 
 We use this when signing up for third party services e.g. sendgrid for email.
