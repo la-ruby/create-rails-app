@@ -7,6 +7,7 @@
 
 - [First time setup](#first-time-setup)
 - [Deploy to heroku](#deploy-to-heroku)
+- [Service account](#service-account)
 
 <!-- /TOC -->
 
@@ -111,4 +112,13 @@ $ git push heroku main
 $ heroku run rails db:migrate
 $ # now try http://yourapp.herokuapp.com/examples on your browser
 ```
+
+### Service account
+
+
+    Username: CreatedRailsApp.developer@gmail.com
+    Password: *******
+
+We use this when signing up for third party services e.g. sendgrid for email.
+
 

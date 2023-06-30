@@ -408,6 +408,7 @@ ci() {
 readme() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/README.md.tt README.md
+  perl -p -i -e 's/CreatedRailsApp/'$name3'/g' README.md
   commit "Added README"
   popd
 }
