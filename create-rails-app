@@ -206,10 +206,10 @@ flatpickr() {
 }
 
 
-nice_partials() {
+administrate() {
   pushd /tmp/created-rails-app
-  bundle add nice_partials &>/dev/null
-  commit "Installed nice_partials"
+  bundle add administrate &>/dev/null
+  commit "Installed administrate"
   popd
 }
 
@@ -533,7 +533,7 @@ main() {
   bootstrap_icons
   fontawesome
   flatpickr
-  nice_partials
+  administrate
   kaminari
   flash
   stylesheets
