@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 #
 RAILS_VERSION="7-1-stable"
-BOOTSTRAP_VERSION="5.1"
+BOOTSTRAP_VERSION="5.3"
 
 
 
