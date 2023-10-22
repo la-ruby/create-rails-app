@@ -1,12 +1,12 @@
 #!/bin/bash -ex
 #
-RAILS_VERSION="7-0-stable"
+RAILS_VERSION="7-1-stable"
 BOOTSTRAP_VERSION="5.1"
 
 
 
 download() {
-  (git clone -b 7-0-stable --single-branch https://github.com/rails/rails /tmp/rails) || true
+  (git clone -b 7-1-stable --single-branch https://github.com/rails/rails /tmp/rails) || true
 }
 
 generate() {
