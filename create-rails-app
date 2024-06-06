@@ -137,7 +137,7 @@ activestorage() {
 view_component() {
   pushd /tmp/created-rails-app
   bundle add view_component &>/dev/null
-  commit "Install  view_component"
+  commit "Install view_component"
   popd
 }
 
@@ -149,6 +149,8 @@ view_component() {
 #
 stimulus_reflex() {
   pushd /tmp/created-rails-app
+  bundle add stimulus_reflex
+  rails stimulus_reflex:install esbuild
   popd
 }
 
