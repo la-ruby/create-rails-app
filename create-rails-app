@@ -127,12 +127,26 @@ activestorage() {
   popd
 }
 
+
+
 #
 #
 #
 #
 #
-# stopped audit here
+view_component() {
+  pushd /tmp/created-rails-app
+  bundle add view_component &>/dev/null
+  commit "Install  view_component"
+  popd
+}
+
+
+#
+#
+#
+#
+#
 # some widgets still expect jquery in the window. namespace
 jquery() {
   pushd /tmp/created-rails-app
@@ -337,14 +351,14 @@ rollbar() {
 }
 
 # flipper for feature flagging
-flipper() {
-  pushd /tmp/created-rails-app
-  bundle add flipper &>/dev/null
-  bundle add flipper-active_record &>/dev/null
-  ./bin/rails g flipper:active_record
-  commit "Install flipper"
-  popd
-}
+# flipper() {
+#   pushd /tmp/created-rails-app
+#   bundle add flipper &>/dev/null
+#   bundle add flipper-active_record &>/dev/null
+#   ./bin/rails g flipper:active_record
+#   commit "Install flipper"
+#   popd
+# }
 
 # Adds a procfile - heroku uses this
 procfile() {
@@ -528,6 +542,8 @@ main() {
   pundit
   activejob
   activestorage
+  view_component
+  stimulus_reflex
   jquery
   bootstrap
   bootstrap_icons
@@ -545,7 +561,7 @@ main() {
   scheduler
   sendgrid
   rollbar
-  flipper
+  # flipper
   procfile
   experiment
   example
