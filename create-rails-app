@@ -150,7 +150,8 @@ view_component() {
 stimulus_reflex() {
   pushd /tmp/created-rails-app
   bundle add stimulus_reflex
-  rails stimulus_reflex:install esbuild
+  ./bin/rails stimulus_reflex:install esbuild
+  commit "Install stimulus reflex"
   popd
 }
 
