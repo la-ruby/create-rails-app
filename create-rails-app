@@ -141,6 +141,17 @@ view_component() {
   popd
 }
 
+
+#
+#
+#
+#
+#
+stimulus_reflex() {
+  pushd /tmp/created-rails-app
+  popd
+}
+
 #
 #
 #
