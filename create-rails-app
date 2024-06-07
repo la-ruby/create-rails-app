@@ -129,31 +129,6 @@ activestorage() {
 
 
 
-#
-#
-#
-#
-#
-view_component() {
-  pushd /tmp/created-rails-app
-  bundle add view_component &>/dev/null
-  commit "Install view_component"
-  popd
-}
-
-
-#
-#
-#
-#
-#
-stimulus_reflex() {
-  pushd /tmp/created-rails-app
-  bundle add stimulus_reflex
-  ./bin/rails stimulus_reflex:install esbuild
-  commit "Install stimulus reflex"
-  popd
-}
 
 #
 #
@@ -381,6 +356,8 @@ procfile() {
   popd
 }
 
+
+
 # new code often comes to the experiment class first
 experiment() {
   pushd /tmp/created-rails-app
@@ -389,6 +366,33 @@ experiment() {
   commit "Added experiment class"
   popd
 }
+
+#
+#
+#
+#
+#
+view_component() {
+  pushd /tmp/created-rails-app
+  bundle add view_component &>/dev/null
+  commit "Install view_component"
+  popd
+}
+
+
+#
+#
+#
+#
+#
+stimulus_reflex() {
+  pushd /tmp/created-rails-app
+  bundle add stimulus_reflex
+  ./bin/rails stimulus_reflex:install esbuild
+  commit "Install stimulus reflex"
+  popd
+}
+
 
 # generates soe scaffolds to serve as examples
 example() {
@@ -555,8 +559,7 @@ main() {
   pundit
   activejob
   activestorage
-  view_component
-  stimulus_reflex
+
   jquery
   bootstrap
   bootstrap_icons
@@ -577,6 +580,8 @@ main() {
   # flipper
   procfile
   experiment
+  view_component
+  stimulus_reflex
   example
   react
   ci
