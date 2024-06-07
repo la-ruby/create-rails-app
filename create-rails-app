@@ -356,17 +356,6 @@ procfile() {
   popd
 }
 
-
-
-# new code often comes to the experiment class first
-experiment() {
-  pushd /tmp/created-rails-app
-  cp ~/work/create-rails-app/create-rails-app/templates/test/models/experiment_test.rb test/models/
-  cp ~/work/create-rails-app/create-rails-app/templates/app/models/experiment.rb app/models/
-  commit "Added experiment class"
-  popd
-}
-
 #
 #
 #
@@ -579,7 +568,6 @@ main() {
   rollbar
   # flipper
   procfile
-  experiment
   view_component
   stimulus_reflex
   example
