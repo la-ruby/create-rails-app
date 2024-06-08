@@ -380,6 +380,10 @@ stimulus_reflex() {
   # ./bin/rails stimulus_reflex:install esbuild
   # ./bin/rails stimulus_reflex:install
   # commit "Install stimulus reflex"
+
+  # do we have expect
+  type expect
+  asdfgh
   popd
 }
 
