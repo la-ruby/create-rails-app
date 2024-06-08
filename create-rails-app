@@ -376,10 +376,10 @@ view_component() {
 #
 stimulus_reflex() {
   pushd /tmp/created-rails-app
-  bundle add stimulus_reflex
+  # bundle add stimulus_reflex
   # ./bin/rails stimulus_reflex:install esbuild
   # ./bin/rails stimulus_reflex:install
-  commit "Install stimulus reflex"
+  # commit "Install stimulus reflex"
   popd
 }
 
