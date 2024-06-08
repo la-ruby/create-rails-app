@@ -233,6 +233,16 @@ flash() {
   popd
 }
 
+# Adding modal wrapper element
+modals() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/modalopener_controller.js app/javascript/controllers/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/views/_modal_wrapper.html.erb app/views/
+  commit "Adding modal wrapper element"
+  popd
+}
+
+
 # some extra styles
 stylesheets() {
   pushd /tmp/created-rails-app
@@ -380,10 +390,6 @@ stimulus_reflex() {
   # ./bin/rails stimulus_reflex:install esbuild
   # ./bin/rails stimulus_reflex:install
   # commit "Install stimulus reflex"
-
-  # do we have expect
-  type expect
-  asdfgh
   popd
 }
 
