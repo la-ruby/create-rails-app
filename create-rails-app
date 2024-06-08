@@ -394,6 +394,13 @@ stimulus_reflex() {
 }
 
 
+# Aid debuggability
+tracing() {
+  pushd /tmp/created-rails-app
+  cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/debug.js app/javascript/  
+  popd
+}
+
 # generates soe scaffolds to serve as examples
 example() {
   pushd /tmp/created-rails-app
