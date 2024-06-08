@@ -344,7 +344,7 @@ rollbar() {
 	# ^ this ends up needing some manual editing
   echo '<%= render "/rollbar" if Rails.env.production? %>' >> app/views/_javascripts.html.erb
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/_rollbar.html.erb app/views/
-  replace_string "if Rails.env.test?" "if !Rails.env.production?" config/initializers/rollbar.rb
+  replace_string "if Rails.env.test" "if !Rails.env.production" config/initializers/rollbar.rb
   commit "Install rollbar"
   popd
 }
