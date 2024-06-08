@@ -1,0 +1,12 @@
+.booking-strip {
+  height: 20px;
+  line-height: 18px;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.day {
+  height: 86px;
+  outline: 0.5px solid rgb(218,220,224);
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+}

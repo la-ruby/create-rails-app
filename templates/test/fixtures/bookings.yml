@@ -1,0 +1,23 @@
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# 
+# # This model initially had no columns defined. If you add columns to the
+# # model remove the "{}" from the fixture names and add the columns immediately
+# # below each fixture, per the syntax in the comments below
+# #
+# one:
+#   starting: <%= 21.days.ago.to_i %>
+#   ending: <%= 14.days.ago.to_i %>
+#   name: "Acme 1"
+#   gmail: true
+#   granted: true
+#   trello: true
+# 
+# 
+# two:
+#   starting: <%= 7.days.ago.to_i %>
+#   ending: <%= 1.days.ago.to_i %>
+#   name: "Acme 2"
+#   gmail: true
+#   granted: true
+#   trello: true
+

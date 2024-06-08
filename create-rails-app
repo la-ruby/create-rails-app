@@ -393,6 +393,10 @@ stimulus_reflex() {
   # bundle add stimulus_reflex
   # ./bin/rails stimulus_reflex:install esbuild
   # ./bin/rails stimulus_reflex:install
+
+  # gem "stimulus_reflex", github: "stimulusreflex/stimulus_reflex", branch: "main"
+  # yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/[commit sha].tar.gz
+
   # commit "Install stimulus reflex"
   popd
 }
@@ -416,6 +420,26 @@ example() {
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
   echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seeds.rb
   commit "Added example model, controller, etc"
+  popd
+}
+
+# adding booking app as an example
+example2() {
+  pushd /tmp/created-rails-app
+  mkdir app/components/
+  mkdir app/reflexes/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/views/bookings app/views/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/controllers/bookings_controller.rb app/controllers/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/models/booking.rb app/models/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/models/concerns/auto_color.rb app/models/concerns/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/comonents/bookings* app/components/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/bookings.css app/assets/stylesheets/b
+  cp -r ~/work/create-rails-app/create-rails-app/templates/app/reflexes/* app/reflexes/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/test/fixtures/bookings.yml test/fixtures/
+  cp -r ~/work/create-rails-app/create-rails-app/templates/test/system/bookings* test/system/  
+  echo "@import 'bookings';" >> app/assets/stylesheets/application.bootstrap.scss
+  echo "Booking.seed" >> db/seeds.rb
+  commit "Added example booking app"
   popd
 }
 
@@ -593,6 +617,7 @@ main() {
   view_component
   stimulus_reflex
   example
+  example2
   react
   ci
   readme

@@ -1,0 +1,36 @@
+<div id="calendar-cell-<%=@date.to_time.to_i%>"
+     data-reflex="click->BookingsIndex#new_"
+     class="col day text-center m-0 px-0 py-1 overflow-scroll"  style="
+       <%= 'width: 100px; overflow: scroll;' if @date.day == 30 %>
+        ">
+
+  <% if day_of_week_label? %>
+    <div class="day-of-week pe-none" style="color: gray"><%= @date.strftime("%a").upcase %></div>
+  <% end %>
+
+  <% if month_label? %><%= @date.strftime("%b") %><% end %>
+
+  <%= @date.day %>
+
+  <% bookings.each do |booking| %>
+    <div id="booking-strip-<%=booking.id%>-<%=@date.to_time.to_i%>"
+         data-reflex="click->BookingsIndex#edit"
+	 class="text-muted booking-strip"
+	 style="background-color: rgb(<%= booking.red %>, <%= booking.green %>, <%= booking.blue %>);
+      <% if booking.starts?(@date) %>
+          border: 1px solid rgb(<%= booking.red %>, <%= booking.green %>, <%= booking.blue %>);
+          border-bottom-left-radius: 15px;
+          border-top-left-radius: 15px;
+      <% end %>
+      <% if booking.ends?(@date) %>
+          border: 1px solid rgb(<%= booking.red %>, <%= booking.green %>, <%= booking.blue %>);
+          border-bottom-right-radius: 15px;
+          border-top-right-radius: 15px;
+      <% end %>
+      ">
+      <small class="text-nowrap text-white pe-none">
+	<%= booking.name if booking.starts?(@date) %>
+      </small>
+    </div>
+  <% end %>
+</div>

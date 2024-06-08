@@ -1,0 +1,18 @@
+<div id="partial-bookings-index">
+  <%= render '/bookings/nav' %>
+
+  <%
+    row = 0
+    (
+      (Date.strptime(session[:bookings_index_month], "%B %Y").sunday              - 7.days)..
+      (Date.strptime(session[:bookings_index_month], "%B %Y").end_of_month.sunday + 6.days)
+    ).group_by { |date| date - date.wday }.each do |week_start, dates| %>
+      <div class="row">
+        <% dates.each do |date| %>
+          <%= render BookingsCellComponent.new(date: date, row: row) %>
+        <% end %>
+      </div>
+      <% row+= 1 %>
+  <% end %>
+
+</div>
