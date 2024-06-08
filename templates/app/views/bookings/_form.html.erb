@@ -1,0 +1,97 @@
+<%
+  calendar_range = (
+    (Date.strptime(session[:bookings_index_month], "%B %Y").sunday              - 7.days)..
+    (Date.strptime(session[:bookings_index_month], "%B %Y").end_of_month.sunday + 6.days)
+  )
+  new_or_edit = booking.id ? 'edit' : 'new'
+%>
+
+<div id="partial-bookings-form" class="modal" data-bs-backdrop="static" data-controller="modalopener">
+  <div class="modal-dialog">
+    <div class="modal-content px-2">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5"><%= new_or_edit.capitalize%> Booking <%= Faker::Name.last_name %></h1>
+      </div>
+      <div class="modal-body">
+        <% url = booking.id ? booking_path(booking) : '/bookings' %>
+        <% verb = booking.id ? :patch : :post %>
+        <%= form_with(id: 'bookings-edit-modal-form', url: url, method: verb, class: "row g-3")  do |form| %>
+
+        <div class="row g-2">
+
+          <div class="col-md-6">
+            <label for="inputState" class="form-label">From</label>
+            <select id="inputState" class="form-select" name="booking[starting]" required>
+              <option disabled selected value>-- select -- </option>
+              <% calendar_range.each do |item| %>
+                <option
+                  value="<%= item.to_time.to_i %>"
+                  <% selected = (item == Time.at(booking.starting).to_date)
+                     disabled = (item.wday != 1 && !selected)
+                     %>
+                  <%= 'selected' if selected %>
+                  <%= 'disabled' if disabled %>>
+                  <%= item.strftime("%m-%d-%Y") %>
+                </option>
+              <% end %>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputState" class="form-label">To</label>
+            <select id="inputState" class="form-select" name="booking[ending]" required>
+              <option disabled selected value>-- select -- </option>
+              <% calendar_range.each do |item| %>
+              <option
+                value="<%= item.to_time.to_i %>"
+                <%= 'selected' if booking.ending && item == Time.at(booking.ending).to_date %>
+                <%= 'disabled' if item.wday != 5 %>>
+                <%= item.strftime("%m-%d-%Y") %>
+              </option>
+              <% end %>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label for="bookingname" class="form-label">Your name (or company)</label>
+            <%= text_field :booking, :name, value: booking.name, class: "form-control", id: "bookingname", required: true %>
+          </div>
+          <div class="col-12 mt-1">
+            <div class="form-check">
+              <%= check_box_tag 'booking[gmail]', '1', booking.gmail, id: 'gridCheck1', class: 'form-check-input' %>
+              <label class="form-check-label" for="gridCheck1">
+                A gmail account for the role exists
+              </label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <%= check_box_tag 'booking[granted]', '1', booking.granted, id: 'gridCheck2', class: 'form-check-input' %>
+              <label class="form-check-label" for="gridCheck2">
+                Access has been granted
+              </label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <%= check_box_tag 'booking[trello]', '1', booking.trello, id: 'gridCheck3', class: 'form-check-input' %>
+              <label class="form-check-label" for="gridCheck3">
+                Trello tasks created
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-<%=new_or_edit%>-bookings-modal-dismiss" type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-reflex="click->Misc#dismiss">DISMISS</button>
+        <% if new_or_edit == "edit" %>
+        <button id="btn-delete-booking-<%= booking.id %>" type="button" class="btn btn-danger" data-bs-dismiss="modal" data-reflex="click->BookingsIndex#remove">DELETE</button>
+        <% end %>
+        <button id="btn-<%= new_or_edit %>-bookings-form-save" type="submit" class="btn btn-primary" form="bookings-edit-modal-form" data-bs-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
