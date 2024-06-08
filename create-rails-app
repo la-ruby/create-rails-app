@@ -237,7 +237,7 @@ flash() {
 stylesheets() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/debug.css app/assets/stylesheets/
-  echo "@import 'debug';" >> app/assets/stylesheets/application.bootstrap.scss
+  echo "// @import 'debug';" >> app/assets/stylesheets/application.bootstrap.scss
   commit "Added some extra css"
   popd
 }
