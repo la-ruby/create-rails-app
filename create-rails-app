@@ -60,12 +60,13 @@ randomize_name() {
   popd
 }
 
-# using newer version of turbo-rails
+# turbo / stimulus / hotwire / ...
 hotwired() {
   pushd /tmp/created-rails-app
   replace_line 'gem "turbo-rails' "gem 'turbo-rails', :github => 'hotwired/turbo-rails', :branch => 'main'" Gemfile
   bundle install
-  commit "Hotwire setup"
+  insert_line_after 'viewport' '    <meta name="turbo-refresh-method" content="morph">' app/views/layouts/application.html.erb
+  commit "Turbo setup"
   popd
 }
 
@@ -238,6 +239,7 @@ modals() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/app/javascript/controllers/modalopener_controller.js app/javascript/controllers/
   cp ~/work/create-rails-app/create-rails-app/templates/app/views/_modal_wrapper.html.erb app/views/
+  insert_line_after 'yield' "    <%= render '/modal_wrapper' %>" app/views/layouts/application.html.erb
   commit "Adding modal wrapper element"
   popd
 }
