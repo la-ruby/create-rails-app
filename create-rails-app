@@ -419,6 +419,8 @@ example() {
   ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
   echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seeds.rb
+  # reduce noise
+  rm test/system/examples_test.rb
   commit "Added example model, controller, etc"
   popd
 }
@@ -606,6 +608,7 @@ main() {
   administrate
   kaminari
   flash
+  modals
   stylesheets
   constants
   factory_bot

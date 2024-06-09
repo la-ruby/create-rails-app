@@ -16,7 +16,7 @@ class BookingsController < ApplicationController
         format.turbo_stream {
           render turbo_stream: [
                    turbo_stream.replace("partial-bookings-form", partial: "/bookings/form", locals: { booking: @booking}),
-                   turbo_stream.replace("partial-flash", partial: "/flash", locals: { })
+                   turbo_stream.replace("partial-flash", partial: "/flashes", locals: { })
                  ]
         }
       end
@@ -40,7 +40,7 @@ class BookingsController < ApplicationController
         format.turbo_stream {
           render turbo_stream: [
                    turbo_stream.replace("partial-bookings-form", partial: "/bookings/form", locals: { booking: @booking}),
-                   turbo_stream.replace("partial-flash", partial: "/flash", locals: { })
+                   turbo_stream.replace("partial-flash", partial: "/flashes", locals: { })
                  ]
         }
       end
