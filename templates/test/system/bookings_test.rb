@@ -11,6 +11,9 @@ class BookingsTest < ApplicationSystemTestCase
     find('#btn-prev-month').click
     find('#btn-next-month').click
     find('#btn-next-month').click
+    find("#partial-bookings-nav .dropdown").click
+    click_link "Exit"
+    sleep 1
   end
 
   test "should create booking" do

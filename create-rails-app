@@ -423,6 +423,7 @@ example() {
   rm test/system/examples_test.rb
   rm test/controllers/examples_controller_test.rb
   rm app/controllers/examples_controller.rb
+  rm app/models/example.rb
   rm -rf app/views/bookings/
   commit "Added example model, controller, etc"
   popd

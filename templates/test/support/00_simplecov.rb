@@ -9,6 +9,7 @@ unless ENV['SKIP_COVERAGE']
     # Ignoring rails base classes
     add_filter 'app/channels/application_cable'
     add_filter 'app/mailers/application_mailer.rb'
+    add_filter 'app/reflexes/example_reflex.rb'
     add_filter 'app/jobs/application_job.rb'
     # Ignoring examples
     add_filter 'app/controllers/examples_controller.rb'
