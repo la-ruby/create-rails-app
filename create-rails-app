@@ -429,14 +429,15 @@ example2() {
   mkdir app/components/
   mkdir app/reflexes/
   cp -r ~/work/create-rails-app/create-rails-app/templates/app/views/bookings app/views/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/controllers/bookings_controller.rb app/controllers/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/models/booking.rb app/models/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/models/concerns/auto_color.rb app/models/concerns/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/components/bookings* app/components/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/bookings.css app/assets/stylesheets/b
-  cp -r ~/work/create-rails-app/create-rails-app/templates/app/reflexes/* app/reflexes/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/test/fixtures/bookings.yml test/fixtures/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/test/system/bookings* test/system/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/controllers/bookings_controller.rb app/controllers/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/models/booking.rb app/models/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/models/concerns/auto_color.rb app/models/concerns/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/components/bookings* app/components/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/bookings.css app/assets/stylesheets/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/reflexes/* app/reflexes/
+  cp ~/work/create-rails-app/create-rails-app/templates/test/fixtures/bookings.yml test/fixtures/
+  cp ~/work/create-rails-app/create-rails-app/templates/test/system/bookings* test/system/
+  cp ~/work/create-rails-app/create-rails-app/templates/app/helpers/application_helper.rb app/helpers/
   insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/db/schema_bookings.rb db/schema.rb
   insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/config/routes_bookings.rb config/routes.rb
   echo "@import 'bookings';" >> app/assets/stylesheets/application.bootstrap.scss
