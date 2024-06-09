@@ -436,7 +436,9 @@ example2() {
   cp -r ~/work/create-rails-app/create-rails-app/templates/app/assets/stylesheets/bookings.css app/assets/stylesheets/b
   cp -r ~/work/create-rails-app/create-rails-app/templates/app/reflexes/* app/reflexes/
   cp -r ~/work/create-rails-app/create-rails-app/templates/test/fixtures/bookings.yml test/fixtures/
-  cp -r ~/work/create-rails-app/create-rails-app/templates/test/system/bookings* test/system/  
+  cp -r ~/work/create-rails-app/create-rails-app/templates/test/system/bookings* test/system/
+  insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/db/schema_bookings.rb db/schema.rb
+  insert_file_before_last_line ~/work/create-rails-app/create-rails-app/templates/config/routes_bookings.rb config/routes.rb
   echo "@import 'bookings';" >> app/assets/stylesheets/application.bootstrap.scss
   echo "Booking.seed" >> db/seeds.rb
   commit "Added example booking app"
