@@ -419,7 +419,7 @@ example() {
   ./bin/rails db:migrate
   ./bin/rails g factory_bot:model Example title:string body:text seed:boolean
   echo 'Example.where(seed: true).destroy_all' >> db/seeds.rb
-  echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seeds.rb
+  # echo '10.times { FactoryBot.create(:example, seed: true) }' >> db/seeds.rb
   # reduce noise
   rm test/system/examples_test.rb
   rm test/controllers/examples_controller_test.rb
