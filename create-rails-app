@@ -396,6 +396,7 @@ stimulus_reflex() {
 
   # gem "stimulus_reflex", github: "stimulusreflex/stimulus_reflex", branch: "main"
   # yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/[commit sha].tar.gz
+  # rubocop -A app/ --only Layout
 
   # commit "Install stimulus reflex"
   popd
