@@ -12,8 +12,9 @@ class BookingsTest < ApplicationSystemTestCase
     find('#btn-next-month').click
     find('#btn-next-month').click
     find("#partial-bookings-nav .dropdown").click
+    sleep 1 # Capybara::ElementNotFound: Unable to find visible link "Exit"
     click_link "Exit"
-    sleep 1
+    sleep 0.5 # Eelenium::WebDriver::Error::ElementNotInteractableError: element not interactable
   end
 
   test "should create booking" do

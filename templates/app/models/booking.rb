@@ -10,17 +10,13 @@ class Booking < ApplicationRecord
   def ending_after_starting_validation
     return if !ending || !starting
 
-    if Time.at(ending) <= Time.at(starting)
-      errors.add(:ending, "must be after the starting time")
-    end
+    errors.add(:ending, "must be after the starting time") if Time.at(ending) <= Time.at(starting)
   end
 
   def oversize_validation
     return if !ending || !starting
 
-    if (Time.at(ending) -  Time.at(starting)) > 14.days
-      errors.add(:base, "date range was too big")
-    end
+    errors.add(:base, "date range was too big") if (Time.at(ending) -  Time.at(starting)) > 14.days
   end
 
   # def no_edit_past_validation
@@ -34,25 +30,23 @@ class Booking < ApplicationRecord
     (Time.at(starting).to_date..Time.at(ending).to_date).to_a
   end
 
+  # :reek:TooManyStatements
   def self.seed
     starting = Date.new(2024,5,27)
     ending = Date.new(2024,5,31)
 
     5.times do |index|
-      name = (index % 2 == 0 ? "Acme Corp #{index}" : "Acme Corp #{index}#{'_'*20}")
-
       Booking.create!(
         starting: starting.to_time.to_i,
         ending: ending.to_time.to_i,
-        name: name,
+        name: (index % 2 == 0 ? "Acme Corp #{index}" : "Acme Corp #{index}#{'_'*20}"),
         gmail: true,
         granted: true,
         trello: true
       )
-      starting = starting +  3.weeks
-      ending = ending + 3.weeks
+      starting += 3.weeks
+      ending += 3.weeks
     end
-
   end
 
   def self.new_record(preferred_starting)
