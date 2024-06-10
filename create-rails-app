@@ -383,25 +383,6 @@ view_component() {
 }
 
 
-#
-#
-#
-#
-#
-stimulus_reflex() {
-  pushd /tmp/created-rails-app
-  # bundle add stimulus_reflex
-  # ./bin/rails stimulus_reflex:install esbuild
-  # ./bin/rails stimulus_reflex:install
-
-  # gem "stimulus_reflex", github: "stimulusreflex/stimulus_reflex", branch: "main"
-  # yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/[commit sha].tar.gz
-  # rubocop -A app/ --only Layout
-
-  # commit "Install stimulus reflex"
-  popd
-}
-
 
 # Aid debuggability
 tracing() {
@@ -425,7 +406,7 @@ example() {
   rm test/controllers/examples_controller_test.rb
   rm app/controllers/examples_controller.rb
   rm app/models/example.rb
-  rm -rf app/views/bookings/
+  rm -rf app/views/examples/
   commit "Added example model, controller, etc"
   popd
 }
@@ -480,6 +461,31 @@ ci() {
   popd
 }
 
+
+#
+#
+#
+#
+#
+stimulus_reflex() {
+  pushd /tmp/created-rails-app
+  echo 'gem "stimulus_reflex", github: "stimulusreflex/stimulus_reflex", branch: "main"' >> Gemfile
+  bundle install
+  yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/496e560.tar.gz
+  yarn install
+  ./bin/rails stimulus_reflex:install
+
+  # bundle add stimulus_reflex
+  
+  # ./bin/rails stimulus_reflex:install esbuild
+  # ./bin/rails stimulus_reflex:install
+  # gem "stimulus_reflex", github: "stimulusreflex/stimulus_reflex", branch: "main"
+  # yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/[commit sha].tar.gz
+  # rubocop -A app/ --only Layout
+
+  # commit "Install stimulus reflex"
+  popd
+}
 
 readme() {
   pushd /tmp/created-rails-app
