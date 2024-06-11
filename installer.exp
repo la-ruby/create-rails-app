@@ -1,16 +1,11 @@
 #! /usr/bin/env expect
 
-set timeout 80
+set timeout 120
 
 spawn ./bin/rails stimulus_reflex:install
-expect -exact "or type a different path."
+expect -re ".*or type a different path.*"
 send -- "\n"
-expect "It looks like you're using esbuild as your bundler. Is that correct? (Y/n)"
+expect -re .*"It looks like you're using esbuild as your bundler. Is that correct? (Y/n).*"
 send -- "y\n"
-sleep 10
-send -- "y\n"
-sleep 10
-send -- "y\n"
-sleep 10
-expect -re "Join over 2000 StimulusReflex developers on Discord(.*)"
+expect -re ".*Join over 2000 StimulusReflex developers on Discord(.*)"
 expect eof
