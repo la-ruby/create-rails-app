@@ -1,4 +1,6 @@
-#!/usr/bin/env expect -f
+#! /usr/bin/env expect
+
+set timeout -1
 
 spawn ./bin/rails stimulus_reflex:install
 expect -exact "ExamplefooEnter pass phrase: "
