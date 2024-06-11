@@ -45,6 +45,9 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.3.1
+      - name: Install expect
+        run: |
+          sudo apt-get -yqq install expect
       - name: Run
         run: bash -ex ./create-rails-app
 

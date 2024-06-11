@@ -32,10 +32,6 @@ jobs:
       with:
         bundler-cache: true
 
-    - name: Install expect
-      run: |
-        sudo apt-get -yqq install expect
-
     - name: Install PostgreSQL client
       run: |
         sudo apt-get -yqq install libpq-dev
