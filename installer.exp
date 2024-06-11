@@ -7,5 +7,6 @@ expect -exact "or type a different path."
 send -- "\n"
 expect "It looks like you're using esbuild as your bundler. Is that correct? (Y/n)"
 send -- "y\n"
+sleep 60
 expect -re "Join over 2000 StimulusReflex developers on Discord(.*)"
 expect eof
