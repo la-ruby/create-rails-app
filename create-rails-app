@@ -415,7 +415,7 @@ example() {
 example2() {
   pushd /tmp/created-rails-app
   mkdir app/components/
-  mkdir app/reflexes/
+  mkdir app/reflexes/ || true
   cp -r ~/work/create-rails-app/create-rails-app/templates/app/views/bookings app/views/
   cp ~/work/create-rails-app/create-rails-app/templates/app/controllers/bookings_controller.rb app/controllers/
   cp ~/work/create-rails-app/create-rails-app/templates/app/models/booking.rb app/models/
