@@ -1,8 +1,8 @@
 #! /usr/bin/env expect
 
-set timeout -1
+set timeout 10
 
 spawn ./bin/rails stimulus_reflex:install
-expect -exact "ExamplefooEnter pass phrase: "
-send -- "Examplebaa\n"
+expect -exact "or type a different path."
+send -- "\n"
 expect eof
