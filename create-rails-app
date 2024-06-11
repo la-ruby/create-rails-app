@@ -473,7 +473,7 @@ stimulus_reflex() {
   bundle install
   yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/496e560.tar.gz
   yarn install
-  ./bin/rails stimulus_reflex:install
+  ~/work/create-rails-app/create-rails-app/installer.exp
 
   # bundle add stimulus_reflex
   
