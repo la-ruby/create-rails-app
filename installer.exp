@@ -5,4 +5,6 @@ set timeout 10
 spawn ./bin/rails stimulus_reflex:install
 expect -exact "or type a different path."
 send -- "\n"
+expect "It looks like you're using esbuild as your bundler. Is that correct? (Y/n)"
+send -- "y\n"
 expect eof
