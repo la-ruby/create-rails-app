@@ -1,4 +1,4 @@
-#!/usr/bin/env expect
+#!/usr/bin/env expect -f
 
 spawn ./bin/rails stimulus_reflex:install
 expect -exact "ExamplefooEnter pass phrase: "
