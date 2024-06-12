@@ -7,7 +7,7 @@ expect -re ".*or type a different path.*"
 send -- "\n"
 expect -re ".*It looks like you're using esbuild as your bundler. Is that correct? (Y/n).*"
 send -- "y\n"
-expect -r ".*broadcaster.rb.*"
+expect -re ".*broadcaster.rb.*"
 sleep 1
 send -- "a\n"
 sleep 1
