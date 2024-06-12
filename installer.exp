@@ -7,6 +7,11 @@ expect -re ".*or type a different path.*"
 send -- "\n"
 expect -re ".*It looks like you're using esbuild as your bundler. Is that correct? (Y/n).*"
 send -- "y\n"
-
+expect -r ".*broadcaster.rb.*"
+sleep 1
+send -- "a\n"
+sleep 1
+send -- "a\n"
+sleep 1
 expect -re ".*Join over 2000 StimulusReflex developers on Discord(.*)"
 expect eof
