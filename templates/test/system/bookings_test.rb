@@ -9,20 +9,24 @@ class BookingsTest < ApplicationSystemTestCase
     visit bookings_url
     assert_selector "#test1", text: "Tap on a date to book ..."
     find('#btn-prev-month').click
-    sleep 0.5
+    sleep 1
     find('#btn-next-month').click
-    sleep 0.5
+    sleep 1
     find('#btn-next-month').click
     sleep 1
     find("#partial-bookings-nav .dropdown").click
     sleep 1 # Capybara::ElementNotFound: Unable to find visible link "Exit"
     click_link "Exit"
-    sleep 1 # Eelenium::WebDriver::Error::ElementNotInteractableError: element not interactable
+    sleep 0.5 # Eelenium::WebDriver::Error::ElementNotInteractableError: element not interactable
   end
 
   test "should create booking" do
     visit bookings_url
+    sleep 1
     find("#calendar-cell-1716793200").click
+    sleep 1
+    #find("#calendar-cell-1716793200").click
+    #sleep 1
     fill_in('bookingname', with: 'Test123')
     click_button 'Save'
     assert_selector "#partial-flash", text: "Saved"
