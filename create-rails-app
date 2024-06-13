@@ -469,7 +469,7 @@ ci() {
 #
 stimulus_reflex() {
   pushd /tmp/created-rails-app
-  echo 'gem "stimulus_reflex", github: "la-ruby/stimulus_reflex", branch: "tracing"' >> Gemfile
+  echo 'gem "stimulus_reflex", github: "la-ruby/stimulus_reflex", branch: "noprompt"' >> Gemfile
   bundle install
   yarn add stimulus_reflex@https://github.com/stimulusreflex/dev-builds/archive/refs/tags/stimulus_reflex/496e560.tar.gz
   yarn install
