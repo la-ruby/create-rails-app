@@ -32,6 +32,10 @@ jobs:
       with:
         bundler-cache: true
 
+    - name: Chrome for rails system tests
+      run: |
+        sudo apt-get -yqq install google-chrome-stable
+
     - name: Install PostgreSQL client
       run: |
         sudo apt-get -yqq install libpq-dev
