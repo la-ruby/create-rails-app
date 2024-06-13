@@ -37,9 +37,9 @@ jobs:
       with:
         chrome-version: stable
 
-    - name: Install PostgreSQL client
+    - name: Install PostgreSQL client and chrome
       run: |
-        sudo apt-get -yqq install libpq-dev
+        sudo apt-get -yqq install libpq-dev google-chrome-stable
 
     - name: Build App
       env:
