@@ -26,7 +26,6 @@ class BookingsTest < ApplicationSystemTestCase
     find("#calendar-cell-1716793200").click
     sleep 1
     #find("#calendar-cell-1716793200").click
-    #sleep 1
     fill_in('bookingname', with: 'Test123')
     click_button 'Save'
     assert_selector "#partial-flash", text: "Saved"
@@ -35,6 +34,7 @@ class BookingsTest < ApplicationSystemTestCase
   test "cannot create booking" do
     visit bookings_url
     find("#calendar-cell-1716793200").click
+    sleep 1
     fill_in('bookingname', with: 'x')
     click_button 'Save'
     assert_selector "#partial-flash", text: "Name is too short (minimum is 2 characters)"
@@ -43,7 +43,9 @@ class BookingsTest < ApplicationSystemTestCase
 
   test "should edit a booking" do
     visit bookings_url
+    sleep 1
     first(".booking-strip").click
+    sleep 1
     fill_in('bookingname', with: 'Lorem Ipsum Dolor')
     click_button 'Save'
     assert_selector "#partial-flash", text: "Saved"
@@ -51,7 +53,9 @@ class BookingsTest < ApplicationSystemTestCase
 
   test "cannot edit booking" do
     visit bookings_url
+    sleep 1
     first(".booking-strip").click
+    sleep 1
     fill_in('bookingname', with: 'y')
     click_button 'Save'
     assert_selector "#partial-flash", text: "Name is too short (minimum is 2 characters)"
@@ -60,7 +64,11 @@ class BookingsTest < ApplicationSystemTestCase
 
   test "should delete booking, and scroll is preserved with morph" do
     visit bookings_url
+    # save_screenshot
+    #debugger
     evaluate_script "$(\"div:contains('__________')\").scrollLeft(100)"
+    #save_screenshot
+    #debugger
     first(".booking-strip").click
     assert_text "Acme Corp 0"
     click_button 'DELETE'
