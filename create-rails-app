@@ -281,6 +281,7 @@ testing() {
   chmod +x ./bin/autotest
   # parallelize not used atm
   replace_string 'parallelize' "\x23\x20parallelize" test/test_helper.rb # using escapes to avoid 'not terminated' error
+  replace_string 'chrome' 'headless_chrome' test/application_system_test_case.rb
   commit "Setup test framework"
   popd
 }
