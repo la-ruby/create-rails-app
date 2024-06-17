@@ -285,6 +285,7 @@ testing() {
   commit "Setup test framework"
 
   # Fix time in tests
+  mkdir test/support || true
   cp ~/work/create-rails-app/create-rails-app/templates/test/support/time_travel.rb test/support/
   insert_line_after '00_simplecov' 'require_relative "support/time_travel"' test/test_helper.rb  
   insert_line_after 'Add more helper methods' 'include TimeTravel'
@@ -301,7 +302,6 @@ simplecov() {
   echo "coverage" >> .gitignore
   cat ~/work/create-rails-app/create-rails-app/templates/test/test_helper.rb.tt test/test_helper.rb > /tmp/file3
   mv /tmp/file3 test/test_helper.rb
-  mkdir test/support || true
   cp ~/work/create-rails-app/create-rails-app/templates/test/support/00_simplecov.rb test/support/
   string='Dir[File.expand_path('\''support/**/*.rb'\'', __dir__)].sort.each { |rb| require(rb) }'
   mysed -i "/class ActiveSupport.*/i $string" test/test_helper.rb
