@@ -1,4 +1,4 @@
-<div id="calendar-cell-<%=@date.to_time.to_i%>"
+<div id="calendar-cell-<%=@date.in_time_zone("UTC").to_time.to_i%>"
      data-reflex="click->BookingsIndex#new_"
      class="col day text-center m-0 px-0 py-1 overflow-scroll"  style="
        <%= 'width: 100px; overflow: scroll;' if @date.day == 30 %>
@@ -13,7 +13,7 @@
   <%= @date.day %>
 
   <% bookings.each do |booking| %>
-    <div id="booking-strip-<%=booking.id%>-<%=@date.to_time.to_i%>"
+    <div id="booking-strip-<%=booking.id%>-<%=@date.in_time_zone("UTC").to_time.utc.to_i%>"
          data-reflex="click->BookingsIndex#edit"
 	 class="text-muted booking-strip"
 	 style="background-color: rgb(<%= booking.red %>, <%= booking.green %>, <%= booking.blue %>);

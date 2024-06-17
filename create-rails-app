@@ -283,6 +283,12 @@ testing() {
   replace_string 'parallelize' "\x23\x20parallelize" test/test_helper.rb # using escapes to avoid 'not terminated' error
   replace_string 'chrome' 'headless_chrome' test/application_system_test_case.rb
   commit "Setup test framework"
+
+  # Fix time in tests
+  cp ~/work/create-rails-app/create-rails-app/templates/test/support/time_travel.rb test/support/
+  insert_line_after '00_simplecov' 'require_relative "support/time_travel"' test/test_helper.rb  
+  insert_line_after 'Add more helper methods' 'include TimeTravel'
+  insert_line_after "time_zone" '    config.time_zone = "UTC"'
   popd
 }
 

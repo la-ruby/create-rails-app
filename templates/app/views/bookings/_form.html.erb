@@ -25,8 +25,8 @@
               <option disabled selected value>-- select -- </option>
               <% calendar_range.each do |item| %>
                 <option
-                  value="<%= item.to_time.to_i %>"
-                  <% selected = (item == Time.at(booking.starting).to_date)
+                  value="<%= item.in_time_zone("UTC").to_time.to_i %>"
+                  <% selected = (item == Time.at(booking.starting).utc.to_date)
                      disabled = (item.wday != 1 && !selected)
                      %>
                   <%= 'selected' if selected %>
@@ -43,8 +43,8 @@
               <option disabled selected value>-- select -- </option>
               <% calendar_range.each do |item| %>
               <option
-                value="<%= item.to_time.to_i %>"
-                <%= 'selected' if booking.ending && item == Time.at(booking.ending).to_date %>
+                value="<%= item.in_time_zone("UTC").to_time.to_i %>"
+                <%= 'selected' if booking.ending && item == Time.at(booking.ending).utc.to_date %>
                 <%= 'disabled' if item.wday != 5 %>>
                 <%= item.strftime("%m-%d-%Y") %>
               </option>
