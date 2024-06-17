@@ -290,6 +290,7 @@ testing() {
   insert_line_after '00_simplecov' 'require_relative "support/time_travel"' test/test_helper.rb  
   insert_line_after 'Add more helper methods' 'include TimeTravel'
   insert_line_after "time_zone" '    config.time_zone = "UTC"'
+  commit "Fix time in tests"
   popd
 }
 
