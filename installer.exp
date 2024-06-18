@@ -8,10 +8,14 @@ send -- "\n"
 expect -re ".*It looks like you're using esbuild as your bundler. Is that correct? (Y/n).*"
 send -- "y\n"
 expect -re ".*broadcaster.rb.*"
+
+# needed?
 sleep 1
 send -- "a\n"
 sleep 1
 send -- "a\n"
-sleep 1
+
+
+sleep 40
 expect -re ".*Join over 2000 StimulusReflex developers on Discord(.*)"
 expect eof
