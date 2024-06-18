@@ -1,6 +1,9 @@
-name: .github/workflows/verify.yml
+name: .github/workflows/tests.yml
 
-on: [push]
+on:
+  push:
+    branches:    
+      - main
 
 jobs:
   #
@@ -41,7 +44,7 @@ jobs:
       run: |
         sudo apt-get -yqq install libpq-dev google-chrome-stable
 
-    - name: Build App
+    - name: Db Setup
       env:
         PGHOST: localhost
         PGUSER: postgres
@@ -50,7 +53,7 @@ jobs:
       run: |
         bin/rails db:setup
 
-    - name: Prep assets
+    - name: bundle and yarn
       env:
         PGHOST: localhost
         PGUSER: postgres
@@ -59,14 +62,14 @@ jobs:
       run: |
         bundle install && yarn install && yarn build:css && yarn build
 
-    - name: Execute unit tests
+    - name: Tests
       env:
         PGHOST: localhost
         PGUSER: postgres
         PGPASSWORD: postgres
         RAILS_ENV: test
       run: |
-        HEADLESS=1 ./bin/rails test:all
+        ./bin/rails test:all
 
   #
   #
