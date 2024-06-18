@@ -7,9 +7,9 @@ class BookingsTest < ApplicationSystemTestCase
 
   test "visiting the index, can go forward and back" do
     visit bookings_url
-    all(".col.day").each do |elem|
-      puts "#{elem['id']} #{elem.text.gsub(/\n/, '')} #{Time.now.utc.to_i}"
-    end
+    # all(".col.day").each do |elem|
+    #   puts "#{elem['id']} #{elem.text.gsub(/\n/, '')} #{Time.now.utc.to_i}"
+    # end
     assert_selector ".nav-link", text: "January 1970"
     find('#btn-next-month').click
     assert_selector ".nav-link", text: "February 1970"
