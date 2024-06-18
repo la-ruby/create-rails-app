@@ -3,7 +3,7 @@ class BookingsController < ApplicationController
 
   def index
     if !session[:bookings_index_month]
-      session[:bookings_index_month] = Date.today.beginning_of_month.strftime("%B %Y")
+      session[:bookings_index_month] = DateTime.now.utc.to_date.beginning_of_month.strftime("%B %Y")
     end
   end
 
