@@ -287,7 +287,7 @@ testing() {
   # Fix time in tests
   mkdir test/support || true
   cp ~/work/create-rails-app/create-rails-app/templates/test/support/time_travel.rb test/support/
-  insert_line_after 'require_relative' 'require_relative "support/time_travel"' test/test_helper.rb  
+  insert_line_before 'require_relative' 'require_relative "support/time_travel"' test/test_helper.rb  
   insert_line_after 'Add more helper methods' 'include TimeTravel'
   insert_line_after "time_zone" '    config.time_zone = "UTC"'
   commit "Fix time in tests"
