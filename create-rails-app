@@ -494,6 +494,17 @@ stimulus_reflex() {
   popd
 }
 
+
+# ViewComponentReflex allows you to write reflexes right in your view component code.
+# It builds upon stimulus_reflex and view_component
+view_component_reflex() {
+  pushd /tmp/created-rails-app
+  echo 'gem "view_component_reflex", :github => "joshleblanc/view_component_reflex", :branch => "main"' >> Gemfile
+  bundle install
+  commit "Install view_component_reflex gem"
+  popd
+}
+
 readme() {
   pushd /tmp/created-rails-app
   cp ~/work/create-rails-app/create-rails-app/templates/README.md.tt README.md
