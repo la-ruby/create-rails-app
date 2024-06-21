@@ -196,18 +196,6 @@ fontawesome() {
   popd
 }
 
-# install flatpickr - lightweight and powerful datetime picker.
-flatpickr() {
-  pushd /tmp/created-rails-app
-  (cd public
-     curl -s -L -O https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css
-     curl -s -L -O https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js)
-  echo '<link rel="stylesheet" href="/flatpickr.min.css">' >> app/views/_stylesheets.html.erb
-  echo '<script src="/flatpickr.min.js"></script>' >> app/views/_javascripts.html.erb
-  commit "Installed flatpickr"
-  popd
-}
-
 
 administrate() {
   pushd /tmp/created-rails-app
@@ -628,12 +616,10 @@ main() {
   pundit
   activejob
   activestorage
-
   jquery
   bootstrap
   bootstrap_icons
   fontawesome
-  flatpickr
   administrate
   kaminari
   flash
